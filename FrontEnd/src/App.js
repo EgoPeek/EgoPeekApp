@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Login from "./components/Login/Login"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    // main entrance point where all of our routes are going to be placed
+    <div className='App main-container' style={{height:'100%'}}>
+      <Router>
+        <Routes>
+          {/* when we eventually put a home page just pull in the file */}
+          {/* <Route path='/home' exact component={home}></Route> */}
+          <Route path='/login' element={<Login />} />
+          <Route path='*' element={
+            <div>
+              404 not found
+            </div>} />
+        </Routes>
+      </Router>
     </div>
   );
 }
