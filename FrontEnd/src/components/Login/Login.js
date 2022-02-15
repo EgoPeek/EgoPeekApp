@@ -4,7 +4,7 @@ Description: Login screen for user to input username and password
 */
 
 import './Login.css'
-import { useEffect } from 'react'
+import { useEffect,useState } from 'react'
 import { Link } from 'react-router-dom'
 import { TextField, FormControl, makeStyles } from '@material-ui/core'
 import { GreenButton } from '../Misc/Buttons'
@@ -25,9 +25,30 @@ const Login = () => {
         return () => {
             document.body.style.background = "#171621"
         }
-
     }, [])
     const classes = useStyles()
+
+    //hooks to keep track of userName and password
+    const [email, setEmail] = useState('UserName or Email')
+    const [password, setPassword] = useState('Password')
+
+    const checkForValidEmail = async()=>{
+        //ping api endpoint
+        const data = {
+            email,
+            password
+        }
+
+        const response = await fetch('/api/login',{
+            method:'POST',
+            credentials:'include',
+            headers:{
+                'Content-Type' : 'application/json',
+                'Accept': 'application/json'
+            },
+            body:JSON.stringify(data)
+        })
+    }
 
 
     return (
@@ -42,6 +63,9 @@ const Login = () => {
                     <FormControl>
                         <h2 style={{ textAlign: 'center' }}>Log In</h2>
                         <LogInTextInput
+                            onChange = {(props)=>{
+                                setEmail(props.target.value)
+                            }}
                             label="Username or Email"
                             variant="outlined"
                             size='small'
@@ -49,6 +73,9 @@ const Login = () => {
                             required
                         />
                         <LogInTextInput className={classes.TextField}
+                            onChange ={(props)=>{
+                                setPassword(props.target.value)
+                            }}
                             margin="normal"
                             label="Password"
                             variant="outlined"
@@ -56,7 +83,7 @@ const Login = () => {
                             type='password'
                             required
                         />
-                        <GreenButton className={classes.fields} variant="outlined">Submit</GreenButton>
+                        <GreenButton className={classes.fields} variant="outlined" onClick={checkForValidEmail}>Submit</GreenButton>
                     </FormControl>
                 </div>
             </div>

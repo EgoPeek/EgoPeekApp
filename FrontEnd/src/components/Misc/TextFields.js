@@ -31,10 +31,10 @@ const letStyles = makeStyles({
         '& .MuiFormLabel-root.Mui-focused': {
             color: 'white',
         },
-        '& :hover':{
-            borderColor:"blue"
+        '& :hover': {
+            borderColor: "blue"
         },
-        backgroundColor:'#171621'
+        backgroundColor: '#171621'
 
     }
 })
@@ -48,5 +48,7 @@ export const LogInTextInput = (props) => {
         variant={props.variant}
         size={props.size}
         type={props.type}
-        required></TextField>
+        required 
+        onChange={props.onChange}
+        />
 }
