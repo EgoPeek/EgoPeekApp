@@ -8,6 +8,10 @@ authors = ["natebush707 <natebush707@gmail.com>"]
 python = "^3.9"
 fastapi = "^0.73.0"
 uvicorn = "^0.17.1"
+SQLAlchemy = "^1.4.31"
+mysqlclient = "^2.1.0"
+mysql-connector = "^2.2.9"
+PyMySQL = "^1.0.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
