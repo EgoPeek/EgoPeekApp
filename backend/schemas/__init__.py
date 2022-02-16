@@ -1,1 +1,1 @@
-from backend.schemas.schema import Schema
+from backend.schemas.schema import UserBase, UserDisplay
