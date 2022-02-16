@@ -62,6 +62,8 @@ const Login = () => {
                 <div className='form'>
                     <FormControl>
                         <h2 style={{ textAlign: 'center' }}>Log In</h2>
+                        {/* pulls in custom LogInTextInput component cause react is stupid
+                        and I had to to a bunch of nonsense to customize the css */}
                         <LogInTextInput
                             onChange = {(props)=>{
                                 setEmail(props.target.value)
