@@ -1,14 +1,8 @@
 from sqlalchemy.engine import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from backend.env import DATABASE_URL
 
-# global variables
-DB_NAME = 'EgoPeekDB'
-USER = 'admin'
-PASSWORD ='EgoPeek4550'
-ENDPOINT = 'ego-peek-db.cjt7d0e8tkzl.us-west-1.rds.amazonaws.com'
-PORT = 3306
-DATABASE_URL = f'mysql+mysqldb://{USER}:{PASSWORD}@{ENDPOINT}:{PORT}/{DB_NAME}'
 
 # initialize engine and session
 engine = create_engine(DATABASE_URL)
