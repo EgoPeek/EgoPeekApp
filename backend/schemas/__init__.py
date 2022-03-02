@@ -1,1 +1,1 @@
-from backend.schemas.schema import UserRequest, UserResponse
+from backend.schemas.schema import UserRequest, UserResponse, LoginRequest

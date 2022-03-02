@@ -1,6 +1,7 @@
 from backend import schemas
 from sqlalchemy.orm.session import Session
 from .models import DbUser
+from .hash import Hash
 
 """
     TO DO:
@@ -13,7 +14,7 @@ def create_user(db: Session, request: schemas.UserRequest):
     new_user = DbUser(
         username = request.username,
         email = request.email,
-        password = request.password # HASH THIS
+        password = Hash.encrypt(request.password)
      )
     db.add(new_user)
     db.commit()
@@ -34,7 +35,7 @@ def update_user_data(db:Session, username: str, request: schemas.UserRequest):
     user.update({
         DbUser.username: request.username,
         DbUser.email: request.email,
-        DbUser.password: request.password # HASH THIS
+        DbUser.password: Hash.encrypt(request.password)
     })
     db.commit()
     return{'success': True}

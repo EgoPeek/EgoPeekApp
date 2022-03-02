@@ -69,7 +69,7 @@ def test_SQL(database: Session = Depends(get_database)):
     names = [row for row in result]
     print(names)
 
-
+    
 @router.put('/alter/table')
 def test_alter(database: Session = Depends(get_database)):
     print('attempting to alter table schema')
