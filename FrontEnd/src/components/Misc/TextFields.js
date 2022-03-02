@@ -39,7 +39,7 @@ const letStyles = makeStyles({
     }
 })
 
-export const LogInTextInput = (props) => {
+export const TextInputStandard = (props) => {
     const classes = letStyles()
 
     return <TextField className={classes.txt}
@@ -48,7 +48,7 @@ export const LogInTextInput = (props) => {
         variant={props.variant}
         size={props.size}
         type={props.type}
-        required 
+        required
         onChange={props.onChange}
         />
 }

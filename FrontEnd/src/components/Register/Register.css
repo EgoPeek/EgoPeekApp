@@ -1,0 +1,33 @@
+.register{
+    padding-top: 10rem;
+}
+
+.register-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+.register-form{
+    background-color: #24222f44;
+    padding: 3rem;
+    padding-top: 1.4rem;
+    border-radius: 12px;
+    text-align: center;
+}
+.button-grouping{
+    display: grid;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.button-spacing{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+}
+
+.submit-button{
+    width: 100%;
+}

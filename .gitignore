@@ -4,3 +4,6 @@ __pycache__/
 
 # environment variables
 env.py
+
+#react build file
+build
