@@ -5,10 +5,11 @@ Description: Login screen for user to input username and password
 
 import './Login.css'
 import { useEffect,useState } from 'react'
-import { Link } from 'react-router-dom'
 import { TextField, FormControl, makeStyles } from '@material-ui/core'
 import { GreenButton } from '../Misc/Buttons'
-import { LogInTextInput } from '../Misc/TextFields'
+import { TextInputStandard } from '../Misc/TextFields'
+import "../Misc/TitleAndLogo"
+import TitleAndLogo from '../Misc/TitleAndLogo'
 
 const useStyles = makeStyles({
     fields: {
@@ -54,17 +55,14 @@ const Login = () => {
     return (
         <div className='Login'>
             <div>
-                <div className="title-and-logo">
-                    <Link to='/' className='company-title'> <h2>EgoPeek</h2> </Link>
-                    <p>logo</p>
-                </div>
+                <TitleAndLogo />
 
                 <div className='form'>
                     <FormControl>
                         <h2 style={{ textAlign: 'center' }}>Log In</h2>
                         {/* pulls in custom LogInTextInput component cause react is stupid
                         and I had to to a bunch of nonsense to customize the css */}
-                        <LogInTextInput
+                        <TextInputStandard
                             onChange = {(props)=>{
                                 setEmail(props.target.value)
                             }}
@@ -74,7 +72,7 @@ const Login = () => {
                             autoComplete='off'
                             required
                         />
-                        <LogInTextInput className={classes.TextField}
+                        <TextInputStandard className={classes.TextField}
                             onChange ={(props)=>{
                                 setPassword(props.target.value)
                             }}

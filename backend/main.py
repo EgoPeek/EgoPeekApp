@@ -4,7 +4,7 @@ from backend.api.v1 import user_router
 from backend.auth import auth_router
 from backend.core import settings
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 # build routers
