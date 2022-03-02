@@ -21,4 +21,5 @@ function App() {
   );
 }
 
+// testing from js file 
 export default App;
