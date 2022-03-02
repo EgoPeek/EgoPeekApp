@@ -3,7 +3,7 @@ from fastapi import FastAPI, Request
 from backend.api.v1 import api_router
 from backend.core import settings
 from fastapi.staticfiles import StaticFiles
-from FrontEnd import build
+# from FrontEnd import build
 from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 
@@ -15,8 +15,8 @@ templates = Jinja2Templates(directory="FrontEnd/build")
 backend.mount("/static", StaticFiles(directory="FrontEnd/build/static", html = True), name="static")
 
 # serve front end from root
-@backend.get("/", response_class = HTMLResponse)
-async def serve_frontend(request: Request):
+@backend.get("/{rest_of_path:path}", response_class = HTMLResponse)
+async def serve_frontend(request: Request, rest_of_path: str):
     return templates.TemplateResponse("index.html", {"request": request})
 
 if __name__ == "__main__":
