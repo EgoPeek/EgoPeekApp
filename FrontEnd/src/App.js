@@ -14,8 +14,8 @@ function App() {
           {/* when we eventually put a home page just pull in the file */}
           {/* <Route path='/home' exact component={home}></Route> */}
           <Route path='/login' element={<Login />} />
-          <Route path='/home' element={<Home/>} />
           <Route path='/register' element={<Register/>} />
+          <Route path='/home' element={<Home/>} />
           <Route path='*' element={
             <div>
               404 not found

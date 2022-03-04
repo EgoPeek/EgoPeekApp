@@ -3,8 +3,8 @@
     description: custom textfield for log in screen
 */
 
-import { TextField, makeStyles } from '@material-ui/core'
-import { green, blue } from '@material-ui/core/colors'
+import { TextField} from '@mui/material'
+import {makeStyles} from '@mui/styles'
 
 const letStyles = makeStyles({
     txt: {

@@ -5,8 +5,9 @@ Description: Login screen for user to input username and password
 
 import './Login.css'
 import { useEffect,useState } from 'react'
-import { TextField, FormControl, makeStyles } from '@material-ui/core'
+import { TextField, FormControl} from '@mui/material'
 import { GreenButton } from '../Misc/Buttons'
+import { makeStyles} from '@mui/styles'
 import { TextInputStandard } from '../Misc/TextFields'
 import "../Misc/TitleAndLogo"
 import TitleAndLogo from '../Misc/TitleAndLogo'
@@ -40,6 +41,7 @@ const Login = () => {
             password
         }
 
+        //verifys user input correct details for login
         const response = await fetch('/api/login',{
             method:'POST',
             credentials:'include',

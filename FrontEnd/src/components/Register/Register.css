@@ -16,6 +16,8 @@
     padding-top: 1.4rem;
     border-radius: 12px;
     text-align: center;
+    -webkit-box-shadow: 8px 2px 24px 4px rgba(58, 63, 92, 0.637); 
+    box-shadow: 8px 2px 24px 4px rgba(58, 63, 92, 0.658);
 }
 .button-grouping{
     display: grid;
@@ -30,4 +32,8 @@
 
 .submit-button{
     width: 100%;
+}
+
+.alert-banner{
+    margin-bottom: 1.5rem;
 }

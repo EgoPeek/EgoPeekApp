@@ -2,13 +2,18 @@
   "name": "front-end",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://0.0.0.0:5000",
   "dependencies": {
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.4.4",
+    "@mui/material": "^5.4.4",
+    "@mui/styles": "^5.4.4",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "proxy": "^1.0.2",
+    "axios": "^0.26.0",
+    "http-proxy-middleware": "^2.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
@@ -23,7 +28,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "client": "npm run start --ignore client",
+    "dev": "concurrently \"cd ../ && poetry run python -m backend.main\" \"npm run client\""
   },
   "eslintConfig": {
     "extends": [
@@ -42,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0"
   }
 }
