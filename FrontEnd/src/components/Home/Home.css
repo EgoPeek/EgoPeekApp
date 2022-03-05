@@ -1,0 +1,55 @@
+.home {
+  padding-top: 1rem;
+  padding-bottom: 35rem;
+  text-align: center;
+  background-color: rgb(17, 17, 31);
+}
+
+.homeIMG-container {
+  position: absolute;
+  left: 110rem;
+  top: 3rem;
+}
+
+.home-intro {
+  width: 7in;
+  font-size: 220%;
+  position: absolute;
+  top: 10rem;
+  left: 10rem;
+}
+
+.home-intro2 {
+  font-size: 220%;
+  position: absolute;
+  top: 21rem;
+  left: 16rem;
+}
+
+.home-description {
+  padding: 7rem;
+  padding-right: 13rem;
+  padding-left: 13rem;
+  font-size: 200%;
+  padding-bottom: 9rem;
+  text-align: center;
+  background-color: rgb(29, 28, 41);
+  position: relative;
+  top: 51rem;
+}
+
+.login-button {
+  position: relative;
+  top: 30rem;
+  right: 52rem;
+  width: 4cm;
+  height: 1.8cm;
+}
+
+.signup-button {
+  position: relative;
+  top: 30rem;
+  right: 47rem;
+  width: 4cm;
+  height: 1.8cm;
+}
