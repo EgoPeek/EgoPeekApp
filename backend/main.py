@@ -1,16 +1,17 @@
 import uvicorn
 from fastapi import FastAPI, Request
-from backend.api.v1 import user_router
+from backend.api.v1 import user_router, post_router
 from backend.auth import auth_router
 from backend.core import settings
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse, HTMLResponse
+from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 # build routers
 backend = FastAPI(title=settings.PROJECT_NAME)
 backend.include_router(user_router, prefix=settings.API_V1_STR)
 backend.include_router(auth_router, prefix=settings.API_V1_STR)
+backend.include_router(post_router, prefix=settings.API_V1_STR)
 
 # template for front end static file
 templates = Jinja2Templates(directory="FrontEnd/build")

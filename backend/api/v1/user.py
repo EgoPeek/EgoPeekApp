@@ -78,4 +78,10 @@ def test_SQL(database: Session = Depends(get_database)):
 def test_alter(database: Session = Depends(get_database)):
     print('attempting to alter table schema')
     result = database.execute('ALTER TABLE user MODIFY email varchar(60)')
+
+@router.delete('/delete/table/{name}')
+def delete_table(name, database: Session = Depends(get_database)):
+    print(f'attempting to delete table: {name}')
+    result = database.execute(f'DROP TABLE IF EXISTS {name};')
+    return result
 """
