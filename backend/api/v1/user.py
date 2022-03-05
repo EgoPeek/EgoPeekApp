@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
+from fastapi.exceptions import HTTPException
 from backend import schemas
 from backend.database import get_database, models, engine
 from sqlalchemy.orm.session import Session
@@ -17,6 +18,9 @@ def create_new_user(request: schemas.UserRequest, database: Session = Depends(ge
     Inputs: {username: str, email: str, password: str}
     Outputs: {id: int, username: str, email: str}
     """
+    if db_user.check_duplicates(database, request.username, request.email):
+        raise HTTPException(status_code = status.HTTP_422_UNPROCESSABLE_ENTITY,
+                            detail = "Username or Email already exists.")
     return db_user.create_user(database, request)
 
 

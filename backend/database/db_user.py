@@ -46,3 +46,9 @@ def delete_user_data(db: Session, username: str):
     db.delete(user)
     db.commit()
     return{'success': True}
+
+
+def check_duplicates(db: Session, username: str, email: str):
+    if db.query(DbUser).filter(DbUser.username == username).first() or db.query(DbUser).filter(DbUser.email == email).first():
+        return True
+    return False
