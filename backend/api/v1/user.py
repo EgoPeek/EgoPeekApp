@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, Response
 from fastapi.exceptions import HTTPException
 from backend import schemas
 from backend.database import get_database
@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.post('/', response_model=schemas.UserResponse)
-def create_new_user(request: schemas.UserRequest, database: Session = Depends(get_database)):
+def create_new_user(response: Response, request: schemas.UserRequest, database: Session = Depends(get_database)):
     """
     Creates a new user in the EgoPeek database.
     Inputs: {'username': str, 'email': str, 'password': str}
@@ -19,6 +19,7 @@ def create_new_user(request: schemas.UserRequest, database: Session = Depends(ge
     if db_user.check_duplicates(database, request.username, request.email):
         raise HTTPException(status_code = status.HTTP_422_UNPROCESSABLE_ENTITY,
                             detail = 'Username or Email already exists.')
+    response.status_code = status.HTTP_201_CREATED
     return db_user.create_user(database, request)
 
 
