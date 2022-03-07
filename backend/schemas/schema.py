@@ -31,6 +31,14 @@ class User(BaseModel):
     class Config():
         orm_mode = True
 
+# Class Comment for PostResponse, to relate comment data to post
+class Comment(BaseModel):
+    message: str
+    username: str
+    timestamp: datetime
+    class Config():
+        orm_mode = True
+
 class PostResponse(BaseModel):
     user_id: int
     post_id: int
@@ -40,5 +48,20 @@ class PostResponse(BaseModel):
     message: Optional[str]
     timestamp: datetime
     user: User
+    comments: List[Comment]
+    class Config():
+        orm_mode = True
+
+class CommentRequest(BaseModel):
+    username: str
+    message: str
+    post_id: int
+
+class CommentResponse(BaseModel):
+    comment_id: int
+    post_id: int
+    username: str
+    message: str
+    timestamp: datetime
     class Config():
         orm_mode = True
