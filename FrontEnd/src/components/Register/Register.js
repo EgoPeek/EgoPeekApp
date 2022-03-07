@@ -95,12 +95,12 @@ const Register = () => {
               </div>
             <FormControl className='button-grouping'>
               <div className='button-spacing'>
-                <TextInputStandard label='User Name' variant='outlined' size="small" onChange={(e) => { setUserName(e.target.value) }} />
-                <TextInputStandard label='Email' variant='outlined' size="small" onChange={(e) => { setEmail(e.target.value) }} />
+                <TextInputStandard margin='dense' label='User Name' variant='outlined' size="small" onChange={(e) => { setUserName(e.target.value) }} />
+                <TextInputStandard margin='dense' label='Email' variant='outlined' size="small" onChange={(e) => { setEmail(e.target.value) }} />
               </div>
               <div className='button-spacing'>
-                <TextInputStandard type='password' label='Password' variant='outlined' size="small" onChange={(e) => { setPassword(e.target.value) }} />
-                <TextInputStandard type='password' label='Re-Enter Password' variant='outlined' size="small" onChange={(e) => { setSecondPassword(e.target.value) }} />
+                <TextInputStandard margin='dense' type='password' label='Password' variant='outlined' size="small" onChange={(e) => { setPassword(e.target.value) }} />
+                <TextInputStandard margin='dense' type='password' label='Re-Enter Password' variant='outlined' size="small" onChange={(e) => { setSecondPassword(e.target.value) }} />
               </div>
             </FormControl>
             <GreenButton onClick={onRegisterSubmit} className='submit-button' variant='outlined'>Submit</GreenButton>

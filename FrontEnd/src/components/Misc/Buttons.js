@@ -4,27 +4,16 @@
 */
 
 import React from 'react'
-import { green, blue } from '@mui/material/colors'
-import { Button,} from '@mui/material'
-import { withStyles} from '@mui/styles'
+import { green } from '@mui/material/colors'
+import { Button } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
-
-export const GreenButton = withStyles(({marginTop})=>({
-    root: {
-        borderColor:green[400]
-        ,'&:hover': {
-            backgroundColor: green[500],
-        },
-        color:'white'
+export const GreenButton = styled(Button)(()=>({
+    color:green[200],
+    borderColor: green[400],
+    ':hover':{
+        backgroundColor:green[500],
+        borderColor: green[300]
     }
-}))(Button)
-
-export const BlueButton = withStyles({
-    root: {
-        backgroundColor: blue[400],
-        '&:hover': {
-            backgroundColor: blue[500]
-        }
-    }
-})(Button)
+}))
 

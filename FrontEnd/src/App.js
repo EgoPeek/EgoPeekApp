@@ -8,7 +8,7 @@ function App() {
   return (
 
     // main entrance point where all of our routes are going to be placed
-    <div className='App main-container' style={{height:'100%'}}>
+    <div className='App main-container'>
       <Router>
         <Routes>
           {/* when we eventually put a home page just pull in the file */}
@@ -16,6 +16,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register/>} />
           <Route path='/home' element={<Home/>} />
+          <Route path='/' element={<Home/>} />
           <Route path='*' element={
             <div>
               404 not found

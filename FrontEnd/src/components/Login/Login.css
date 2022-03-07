@@ -1,7 +1,3 @@
-:root{
-    background: rgb(2,0,36);
-    background: linear-gradient(42deg, rgba(2,0,36,1) 0%, rgba(19,16,39,1) 51%, rgba(33,28,65,1) 100%);
-}
 
 .Login{
     display: flex;

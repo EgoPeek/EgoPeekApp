@@ -20,18 +20,17 @@
     box-shadow: 8px 2px 24px 4px rgba(58, 63, 92, 0.658);
 }
 .button-grouping{
-    display: grid;
-    flex-wrap: wrap;
     width: 100%;
 }
 .button-spacing{
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 3rem;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
 }
 
 .submit-button{
-    width: 100%;
+    width: 70%;
 }
 
 .alert-banner{
