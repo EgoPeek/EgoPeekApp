@@ -1,35 +1,33 @@
 from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
 from backend import schemas
-from backend.database import get_database, models, engine
+from backend.database import get_database
 from sqlalchemy.orm.session import Session
 from backend.database import db_user
 from typing import List
 
 router = APIRouter()
 
-models.Base.metadata.create_all(engine)
-
 
 @router.post('/', response_model=schemas.UserResponse)
 def create_new_user(request: schemas.UserRequest, database: Session = Depends(get_database)):
     """
     Creates a new user in the EgoPeek database.
-    Inputs: {username: str, email: str, password: str}
-    Outputs: {id: int, username: str, email: str}
+    Inputs: {'username': str, 'email': str, 'password': str}
+    Outputs: {'id': int, 'username': str, 'email': str}
     """
     if db_user.check_duplicates(database, request.username, request.email):
         raise HTTPException(status_code = status.HTTP_422_UNPROCESSABLE_ENTITY,
-                            detail = "Username or Email already exists.")
+                            detail = 'Username or Email already exists.')
     return db_user.create_user(database, request)
 
 
-@router.get('/', response_model=List[schemas.UserResponse])
-def get_all_users(database: Session = Depends(get_database)):
+@router.get('/all', response_model=List[schemas.UserResponse])
+def retrieve_all_users(database: Session = Depends(get_database)):
     """
     Returns all users and their emails currently entered in the EgoPeek database.
     Inputs: None
-    Outputs: {id: int, username: str, email: str}
+    Outputs: {'id': int, 'username': str, 'email': str}
     """
     return db_user.get_all_user_data(database)
 
@@ -39,7 +37,7 @@ def retrieve_user(username, database: Session = Depends(get_database)):
     """
     Retrieves user information from the EgoPeek database.
     Inputs: {username: str}
-    Outputs: {id: int, username: str, email: str}
+    Outputs: {'id': int, 'username': str, 'email': str}
     """
     return db_user.get_user_data(database, username)
 
@@ -48,8 +46,8 @@ def retrieve_user(username, database: Session = Depends(get_database)):
 def update_user(username: str, request: schemas.UserRequest, database: Session = Depends(get_database)):
     """
     Updates user data stored in EgoPeek database.
-    Inputs: {username: str, email: str, password: str}
-    Outputs: {success: bool}
+    Inputs: {'username': str, 'email': str, 'password': str}
+    Outputs: {'success': bool, 'message': str}
     """
     return db_user.update_user_data(database, username, request)
 
@@ -58,8 +56,8 @@ def update_user(username: str, request: schemas.UserRequest, database: Session =
 def delete_user(username, database: Session = Depends(get_database)):
     """
     Deletes user data from EgoPeek database.
-    Inputs: {username: str}
-    Outputs: {success: bool}
+    Inputs: {'username': str}
+    Outputs: {'success': bool, 'message': str}
     """
     return db_user.delete_user_data(database, username)
 
