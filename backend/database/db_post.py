@@ -1,7 +1,7 @@
 from backend import schemas
 from sqlalchemy.orm.session import Session
 from .models import DbPost
-import datetime
+from datetime import datetime
 from fastapi.exceptions import HTTPException
 from fastapi import status
 
@@ -12,7 +12,7 @@ def create_post(db: Session, request: schemas.PostRequest):
         video_url = request.video_url,
         content_path_type = request.content_path_type,
         message = request.message,
-        timestamp = datetime.datetime.now(),
+        timestamp = datetime.now(),
         user_id = request.user_id
     )
     db.add(new_post)
@@ -25,14 +25,29 @@ def get_all_posts(db: Session):
     return db.query(DbPost).all()
 
 
+def get_all_user_posts(db: Session, user_id: int):
+    return db.query(DbPost).filter(DbPost.user_id == user_id).all()
+
+
+def get_post(db: Session, post_id: int):
+    return db.query(DbPost).filter(DbPost.post_id == post_id).first()
+
+
+def update_post(db: Session, post_id: int, request: schemas.PostRequest):
+    result = db.query(DbPost).filter(DbPost.post_id == post_id)
+    result.update({
+            DbPost.image_url: request.image_url,
+            DbPost.video_url: request.video_url,
+            DbPost.content_path_type: request.content_path_type,
+            DbPost.message: request.message,
+            DbPost.timestamp: datetime.now()
+        })
+    db.commit()
+    return {'success': True, 'message': 'Updated post ID: {post_id}'}
+
+
 def delete_post(db: Session, user_id: int, post_id: int):
     result = db.query(DbPost).filter(DbPost.post_id == post_id).first()
-    if not result:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                detail=f'Post ID: {post_id} not found.')
-    if result.user_id != user_id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
-                detail=f'User {user_id} did not create post ID: {post_id}.')
     db.delete(result)
     db.commit()
-    return True
+    return {'success': True, 'message': 'Deleted post ID: {post_id}'}

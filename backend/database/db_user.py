@@ -6,7 +6,6 @@ from .hash import Hash
 """
     TO DO:
     1. Add exception handling
-    2. Add password hashing
 """
 
 def create_user(db: Session, request: schemas.UserRequest):
@@ -22,15 +21,14 @@ def create_user(db: Session, request: schemas.UserRequest):
     return new_user
 
 
-def get_all_user_data(db:Session):
+def get_all_user_data(db: Session):
     return db.query(DbUser).all()
 
-
-def get_user_data(db:Session, username: str):
+def get_user_data(db: Session, username: str):
     return db.query(DbUser).filter(DbUser.username == username).first()
 
 
-def update_user_data(db:Session, username: str, request: schemas.UserRequest):
+def update_user_data(db: Session, username: str, request: schemas.UserRequest):
     user = db.query(DbUser).filter(DbUser.username == username)
     user.update({
         DbUser.username: request.username,
@@ -38,14 +36,14 @@ def update_user_data(db:Session, username: str, request: schemas.UserRequest):
         DbUser.password: Hash.encrypt(request.password)
     })
     db.commit()
-    return{'success': True}
+    return{'success': True, 'message': f'Updated user: {username}'}
 
 
 def delete_user_data(db: Session, username: str):
     user = db.query(DbUser).filter(DbUser.username == username).first()
     db.delete(user)
     db.commit()
-    return{'success': True}
+    return{'success': True, 'message': f'Deleted user: {username}'}
 
 
 def check_duplicates(db: Session, username: str, email: str):
