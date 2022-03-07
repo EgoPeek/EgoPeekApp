@@ -1,3 +1,4 @@
+
 from .db import Base
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.sql.schema import ForeignKey
@@ -9,17 +10,28 @@ class DbUser(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(15))
     email = Column(String(254))
-    password = Column(String(15))
+    password = Column(String(256))
     posts = relationship('DbPost', back_populates='user')
 
 
 class DbPost(Base):
     __tablename__ = 'post'
     post_id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
     image_url = Column(String(500))
     video_url = Column(String(500))
     content_path_type = Column(String(8))
     message = Column(String(1000))
     timestamp = Column(DateTime)
-    user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship('DbUser', back_populates='posts')
+    comments = relationship('DbComment', back_populates='post')
+
+
+class DbComment(Base):
+    __tablename__ = 'comment'
+    comment_id = Column(Integer, primary_key=True, index=True)
+    post_id = Column(Integer, ForeignKey('post.post_id'))
+    message = Column(String(1000))
+    username = Column(String(15))
+    timestamp = Column(DateTime)
+    post = relationship("DbPost", back_populates="comments")
