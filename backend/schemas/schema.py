@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Json
 from typing import Optional, List
 from datetime import datetime
 
@@ -7,10 +7,27 @@ class UserRequest(BaseModel):
     email: str
     password: str
 
+# subclass for UserResponse
+class Post(BaseModel):
+    post_id: int
+    message: Optional[str]
+    timestamp: datetime
+    class Config():
+        orm_mode = True
+
+# subclass for UserResponse
+class Friend(BaseModel):
+    friend_id: int
+    friend_status: str
+    class Config():
+        orm_mode = True
+
 class UserResponse(BaseModel):
     id: int
     username: str
     email: str
+    posts: List[Post]
+    friends: List[Friend]
     class Config():
         orm_mode = True
 
@@ -65,3 +82,19 @@ class CommentResponse(BaseModel):
     timestamp: datetime
     class Config():
         orm_mode = True
+
+class FriendRequest(BaseModel):
+    user_id: int
+    friend_id: int
+    message: Optional[str]  
+    answer: Optional[str]   # only for responding to a request 'friends' or 'declined'
+
+class FriendResponse(BaseModel):
+    request_id: int
+    user_id: int
+    friend_id: int
+    message: Optional[str]
+    friend_status: str
+    class Config():
+        orm_mode = True
+
