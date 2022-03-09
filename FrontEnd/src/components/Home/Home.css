@@ -1,39 +1,35 @@
-.home {
-  position: relative;
-}
+.home{
+  background-color: #171621;
 
+}
 .home-header {
   padding: 1rem;
   text-align: center;
-  font-size: 150%;
-}
-
-.home-left {
-  padding-left: 3%;
-  padding-bottom: 2%;
-  position: absolute;
-  width: 40%;
+  font-size: 2rem;
 }
 
 .home-info {
   text-align: center;
-  font-size: xx-large;
+  font-size: 1.5rem;
+}
+.home-left {
+  margin-bottom: 30px;
+}
+.home-image-spacing {
+  width: 100;
 }
 
-.home-button {
-  position: relative;
-  left: 25%;
-  top: 1rem;
-  width: 50%;
-  height: 7rem;
-  align-items: center;
+.home-container{
+  display:flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
-.button-spacing {
+.home-button-spacing {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  height: 4rem;
+  justify-content: space-evenly;
+  height: 3.2rem;
 }
 
 .login-button {
@@ -44,30 +40,19 @@
   width: 25%;
 }
 
-.home-right {
-  padding: 0%;
-  width: 30%;
-  height: 385%;
-  position: absolute;
-  top: 3rem;
-  right: 5%;
-}
 
-.home-Img {
-  position: absolute;
-  left: 4%;
-  top: 0rem;
+.home-img {
+  width: 400px;
+  height: 500px;
+  object-fit: cover;
 }
 
 .home-footer {
-  position: absolute;
-  top: 630%;
-  height: 13.5rem;
-  padding: 2%;
-  background-color: rgba(36, 34, 47, 1);
+  padding: 15px;
+  background-color: #24222F;
 }
 
 .footer-description {
   text-align: center;
-  font-size: 230%;
+  font-size: 2rem;
 }

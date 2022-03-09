@@ -81,7 +81,7 @@ const InterestPage = () => {
       <TextInputStandard size='small' sx={{ width: '70%' }} label="Search by tag" />
       <div className='tag-container'>
         <div className='chosen-tags interests'>
-          {selectedTags.map((x, i) => <Tag title={x} id={i}/>)}
+          {selectedTags.map((x, i) => <Tag title={x} key={i}/>)}
         </div>
         <div className='interests'>
           <Tag title='test' />
@@ -115,7 +115,6 @@ const RegisterForm = ({ accountCreated }) => {
   const onRegisterSubmit = async () => {
     //checks for valid email, username, and matching passwords
     accountCreated(true)
-
     if (password !== secondPassword || password === '') {
       setError(true)
       setErrorMessage('Password do not match')
