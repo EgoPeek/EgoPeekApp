@@ -1,55 +1,73 @@
 .home {
-  padding-top: 1rem;
-  padding-bottom: 35rem;
-  text-align: center;
-  background-color: rgb(17, 17, 31);
-}
-
-.homeIMG-container {
-  position: absolute;
-  left: 110rem;
-  top: 3rem;
-}
-
-.home-intro {
-  width: 7in;
-  font-size: 220%;
-  position: absolute;
-  top: 10rem;
-  left: 10rem;
-}
-
-.home-intro2 {
-  font-size: 220%;
-  position: absolute;
-  top: 21rem;
-  left: 16rem;
-}
-
-.home-description {
-  padding: 7rem;
-  padding-right: 13rem;
-  padding-left: 13rem;
-  font-size: 200%;
-  padding-bottom: 9rem;
-  text-align: center;
-  background-color: rgb(29, 28, 41);
   position: relative;
-  top: 51rem;
+}
+
+.home-header {
+  padding: 1rem;
+  text-align: center;
+  font-size: 150%;
+}
+
+.home-left {
+  padding-left: 3%;
+  padding-bottom: 2%;
+  position: absolute;
+  width: 40%;
+}
+
+.home-info {
+  text-align: center;
+  font-size: xx-large;
+}
+
+.home-button {
+  position: relative;
+  left: 25%;
+  top: 1rem;
+  width: 50%;
+  height: 7rem;
+  align-items: center;
+}
+
+.button-spacing {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 4rem;
 }
 
 .login-button {
-  position: relative;
-  top: 30rem;
-  right: 52rem;
-  width: 4cm;
-  height: 1.8cm;
+  width: 25%;
 }
 
 .signup-button {
-  position: relative;
-  top: 30rem;
-  right: 47rem;
-  width: 4cm;
-  height: 1.8cm;
+  width: 25%;
+}
+
+.home-right {
+  padding: 0%;
+  width: 30%;
+  height: 385%;
+  position: absolute;
+  top: 2rem;
+  right: 5%;
+}
+
+.home-Img {
+  position: absolute;
+  left: 20%;
+  top: 0rem;
+}
+
+.home-footer {
+  position: absolute;
+  top: 630%;
+  height: 13.5rem;
+  padding: 2%;
+  background-color: rgba(36, 34, 47, 1);
+}
+
+.footer-description {
+  text-align: center;
+  font-size: 230%;
 }
