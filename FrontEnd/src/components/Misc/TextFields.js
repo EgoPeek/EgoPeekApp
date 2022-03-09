@@ -3,52 +3,35 @@
     description: custom textfield for log in screen
 */
 
-import { TextField} from '@mui/material'
-import {makeStyles} from '@mui/styles'
+import { TextField } from '@mui/material'
+import { styled } from '@mui/material/styles'
+import { green } from '@mui/material/colors'
 
-const letStyles = makeStyles({
-    txt: {
-        '& input:valid + fieldset': {
-            borderColor: 'white',
-        },
-        '& .MuiInput-underline:after': {
-            borderBottomColor: 'white',
-        },
-        '& .MuiOutlinedInput-root': {
-            '&:hover fieldset': {
-                borderColor: 'white',
-            },
-            '&.Mui-focused fieldset': {
-                borderColor: 'white',
-            }
-        },
-        '& .MuiFormLabel-root': {
-            color: 'grey'
-        },
-        '& .MuiInputBase-root': {
-            color: 'white'
-        },
-        '& .MuiFormLabel-root.Mui-focused': {
-            color: 'white',
-        },
-        '& :hover': {
-            borderColor: "blue"
-        },
-        backgroundColor: '#171621'
+//updated version of using mui styles
+export const TextInputStandard = styled(TextField)(() => ({
+    backgroundColor: '#171621',
+    color:'white',
+    'fieldset':'white',
+    'label':{
+        color:'grey'
+    },
+    '& label.Mui-focused': {
+        color: 'white',
+    },
 
-    }
-})
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: 'grey',
+        },
+        '&:hover fieldset': {
+          borderColor: green[400],
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: green[400],
+        },
+        'input':{
+            color:'white'
+        }
+      },
 
-export const TextInputStandard = (props) => {
-    const classes = letStyles()
-
-    return <TextField className={classes.txt}
-        margin={props.margin}
-        label={props.label}
-        variant={props.variant}
-        size={props.size}
-        type={props.type}
-        required
-        onChange={props.onChange}
-        />
-}
+}))

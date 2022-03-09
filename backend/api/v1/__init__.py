@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
-from backend.api.v1 import tag, user, post, comment
+from backend.api.v1 import tag, user, post, comment, friend
+
 
 user_router = APIRouter()
 user_router.include_router(user.router, prefix='/users',tags=['user'])
@@ -12,4 +13,7 @@ comment_router = APIRouter()
 comment_router.include_router(comment.router, prefix='/comments',tags=['comment'])
 
 tag_router = APIRouter()
-tag_router.include_router(tag.router, prefix='/tags',tags=['tags'])
+tag_router.include_router(tag.router, prefix='/tags',tags=['tag'])
+
+friend_router = APIRouter()
+tag_router.include_router(friend.router, prefix='/friends',tags=['friend'])
