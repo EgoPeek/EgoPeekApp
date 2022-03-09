@@ -1,3 +1,10 @@
+/**
+ *  FileName: Home.js
+ *  Description: React component that displays the home page and gives a brief description of what our app is,
+ *    allows users to register or sign up
+ * 
+ */
+
 import { useEffect } from "react";
 import {useNavigate} from 'react-router-dom'
 import { GreenButton } from "../Misc/Buttons";
@@ -7,6 +14,7 @@ import homeIMG from "../../images/Home.jpg";
 const Home = () => {
   const navigate = useNavigate()
 
+  //don't worry about this I just didn't want to mess with the footer so I pulled a little sneaky
   useEffect(() => {
     document.body.style.backgroundColor = '#24222F'
     return () => {
@@ -14,9 +22,11 @@ const Home = () => {
     }
   }, [])
 
+  //redirects to register page
   const redirectToRegister = () => {
     navigate('/register')
   }
+  //redirects to login page
   const redirectToLogin = () => {
     navigate('/login')
   }
