@@ -15,14 +15,15 @@
 .home-left {
   margin-bottom: 30px;
 }
-.home-image-spacing {
-  width: 100;
+.home-right{
+  flex-basis: 200px;
 }
 
 .home-container{
   display:flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  margin: 100px 0
 }
 
 .home-button-spacing {
@@ -42,9 +43,8 @@
 
 
 .home-img {
-  width: 400px;
+  width: 300px;
   height: 500px;
-  object-fit: cover;
 }
 
 .home-footer {
