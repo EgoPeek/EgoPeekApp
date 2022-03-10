@@ -2,13 +2,15 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Login from "./components/Login/Login"
 import Home from "./components/Home/Home"
 import Register from './components/Register/Register';
-import './components/Misc/ProtectedRoute'
-import ProtectedRoute from './components/Misc/ProtectedRoute';
+import './components/Misc/CustomComponents/ProtectedRoute'
+import './components/UserFeed/UserFeed'
+import ProtectedRoute from './components/Misc/CustomComponents/ProtectedRoute';
+import UnProtectedRoute from './components/Misc/CustomComponents/UnProtectedRoutes'
+import UserFeed from './components/UserFeed/UserFeed';
+import useAuth from './hooks/useAuth';
 
 function App() {
   //session token will be stored in the brother and will be replaced later
-  const logedIn = false;
-
 
   return (
 
@@ -17,17 +19,19 @@ function App() {
       {/* renders this section if user is NOT logged in */}
       <Router>
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
 
-          {/* protected route that only allows users who are logged in */}
-          <Route path='/home' element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          } />
-          
+          {/* if a user is NOT logged in, only unprotected routes are shown*/}
+          <Route path='/' element={<UnProtectedRoute />}>
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+          </Route>
+
+          {/* if a user IS logged in protected routes are shown */}
+          <Route path='/' element={<ProtectedRoute />}>
+            <Route path='home' element={<UserFeed />} />
+          </Route>
+
           <Route path='*' element={
             <div>
               404 not found
