@@ -5,14 +5,14 @@
 
 import React from 'react'
 import { useEffect, useState } from 'react'
-import TitleAndLogo from '../Misc/TitleAndLogo'
-import { TextInputStandard } from '../Misc/TextFields'
-import { GreenButton } from '../Misc/Buttons'
+import { TextInputStandard } from '../Misc/Input/TextFields'
+import { GreenButton } from '../Misc/Input/Buttons'
 import { FormControl } from '@mui/material'
 import { Alert } from '@mui/material'
 import axios from 'axios'
-import "../Misc/TitleAndLogo"
+import "../Misc/CustomComponents/TitleAndLogo"
 import "./Register.css"
+import TitleAndLogo from '../Misc/CustomComponents/TitleAndLogo'
 
 const Register = () => {
   const [accountCreated, setAccountCreated] = useState(false)
@@ -114,7 +114,6 @@ const RegisterForm = ({ accountCreated }) => {
   //verifys and creates account with EgoPeek
   const onRegisterSubmit = async () => {
     //checks for valid email, username, and matching passwords
-    accountCreated(true)
     if (password !== secondPassword || password === '') {
       setError(true)
       setErrorMessage('Password do not match')

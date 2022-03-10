@@ -7,7 +7,7 @@
 
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
-import { GreenButton } from "../Misc/Buttons";
+import { GreenButton } from "../Misc/Input/Buttons";
 import "./Home.css";
 import homeIMG from "../../images/Home.jpg";
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './TitleAndLogo.css'
-import logo from '../../images/EGOPEEK_CLEAR.png'
+import logo from '../../../images/EGOPEEK_CLEAR.png'
 
 const TitleAndLogo = () => {
     return (

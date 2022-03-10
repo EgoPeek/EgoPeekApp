@@ -6,11 +6,11 @@ Description: Login screen for user to input username and password
 import './Login.css'
 import { useEffect,useState } from 'react'
 import { FormControl,Button } from '@mui/material'
-import { GreenButton } from '../Misc/Buttons'
+import { GreenButton } from '../Misc/Input/Buttons'
 import { makeStyles} from '@mui/styles'
-import { TextInputStandard } from '../Misc/TextFields'
-import "../Misc/TitleAndLogo"
-import TitleAndLogo from '../Misc/TitleAndLogo'
+import { TextInputStandard } from '../Misc/Input/TextFields'
+import TitleAndLogo from '../Misc/CustomComponents/TitleAndLogo'
+import { useNavigate } from 'react-router'
 
 const useStyles = makeStyles({
     fields: {
@@ -33,16 +33,20 @@ const Login = () => {
     //hooks to keep track of userName and password
     const [email, setEmail] = useState('UserName or Email')
     const [password, setPassword] = useState('Password')
+    const [error, setError] = useState(false)
+    const [errorMessage, seterrorMessage] = useState('')
+
+    const navigate = useNavigate()
 
     const checkForValidEmail = async()=>{
         //ping api endpoint
         const data = {
-            email,
-            password
+            username:email,
+            password:password
         }
 
         //verifys user input correct details for login
-        const response = await fetch('/api/login',{
+        const response = await fetch('/api/v1/login',{
             method:'POST',
             credentials:'include',
             headers:{
@@ -51,6 +55,17 @@ const Login = () => {
             },
             body:JSON.stringify(data)
         })
+
+        //converts it to json
+        const jsonRes = await response.json();
+        //if a sucess is read it stores users credentials within local storage and redirects them
+        if(jsonRes.success){
+            window.localStorage.setItem('auth',true)
+            navigate('/home',{replace:true})
+        }else{
+            console.log(jsonRes.reason)
+            seterrorMessage('Invalid username or password')
+        }
     }
 
 
