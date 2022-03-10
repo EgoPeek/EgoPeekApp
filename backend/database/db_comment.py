@@ -7,7 +7,7 @@ from datetime import datetime
 def create_comment(db: Session, request: schema.CommentRequest):
     new_comment = DbComment(
         message = request.message,
-        username = request.username,
+        user_id = request.user_id,
         post_id = request.post_id,
         timestamp = datetime.now()
     )
