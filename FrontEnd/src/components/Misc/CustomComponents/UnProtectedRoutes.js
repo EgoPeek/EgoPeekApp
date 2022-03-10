@@ -6,7 +6,7 @@ import useAuth from '../../../hooks/useAuth'
 const ProtectedRoute = ({children}) => {
     const auth = useAuth()
 
-    return auth ? <Navigate to="/home" /> : <Outlet />
+    return auth.isAuthenticated() ? <Navigate to="/home" /> : <Outlet />
 }
 
 export default ProtectedRoute

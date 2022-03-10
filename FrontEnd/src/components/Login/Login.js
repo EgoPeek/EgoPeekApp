@@ -11,6 +11,7 @@ import { makeStyles} from '@mui/styles'
 import { TextInputStandard } from '../Misc/Input/TextFields'
 import TitleAndLogo from '../Misc/CustomComponents/TitleAndLogo'
 import { useNavigate } from 'react-router'
+import useAuth from '../../hooks/useAuth'
 
 const useStyles = makeStyles({
     fields: {
@@ -36,7 +37,9 @@ const Login = () => {
     const [error, setError] = useState(false)
     const [errorMessage, seterrorMessage] = useState('')
 
+    //custom hooks
     const navigate = useNavigate()
+    const auth = useAuth()
 
     const checkForValidEmail = async()=>{
         //ping api endpoint
@@ -60,7 +63,7 @@ const Login = () => {
         const jsonRes = await response.json();
         //if a sucess is read it stores users credentials within local storage and redirects them
         if(jsonRes.success){
-            window.localStorage.setItem('auth',true)
+            auth.login()
             navigate('/home',{replace:true})
         }else{
             console.log(jsonRes.reason)

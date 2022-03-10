@@ -13,6 +13,7 @@ import axios from 'axios'
 import "../Misc/CustomComponents/TitleAndLogo"
 import "./Register.css"
 import TitleAndLogo from '../Misc/CustomComponents/TitleAndLogo'
+import useAuth from '../../hooks/useAuth'
 
 const Register = () => {
   const [accountCreated, setAccountCreated] = useState(false)
@@ -110,6 +111,7 @@ const RegisterForm = ({ accountCreated }) => {
   const [secondPassword, setSecondPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [error, setError] = useState(false)
+  const auth = useAuth()
 
   //verifys and creates account with EgoPeek
   const onRegisterSubmit = async () => {
@@ -146,7 +148,11 @@ const RegisterForm = ({ accountCreated }) => {
     try {
       const postRes = await axios.post(`/api/v1/users/`, body)
       if (postRes.status === 201) {
-        //do something to redirect user
+        //flags the parent component a success has been made
+        setUserName('')
+        setEmail('')
+        setPassword('')
+        auth.login()
         accountCreated(true)
       }
     } catch (error) {
