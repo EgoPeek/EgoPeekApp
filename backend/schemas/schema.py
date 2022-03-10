@@ -2,12 +2,11 @@ from pydantic import BaseModel, Json
 from typing import Optional, List
 from datetime import datetime
 
-class UserRequest(BaseModel):
-    username: str
-    email: str
-    password: str
+##################################################################
+#           SUB-CLASSES FOR RELATIONSHIP OUTPUT ONLY             #
+##################################################################
 
-# subclass for UserResponse
+# for UserResponse
 class Post(BaseModel):
     post_id: int
     message: Optional[str]
@@ -15,19 +14,74 @@ class Post(BaseModel):
     class Config():
         orm_mode = True
 
-# subclass for UserResponse
+# for UserResponse
 class Friend(BaseModel):
     friend_id: int
     friend_status: str
     class Config():
         orm_mode = True
 
+# for UserResponse
+class UserComment(BaseModel):
+    comment_id: int
+    message: Optional[str]
+    timestamp: datetime
+    class Config():
+        orm_mode = True
+
+# for UserResponse
+class UserLikes(BaseModel):
+    post_id: Optional[int]
+    comment_id: Optional[int]
+    class Config():
+        orm_mode = True
+
+# for PostResponse
+class User(BaseModel):
+    id: int
+    username: str
+    class Config():
+        orm_mode = True
+
+# for PostResponse
+class Comment(BaseModel):
+    message: str
+    user: User
+    timestamp: datetime
+    class Config():
+        orm_mode = True
+
+# for PostResponse
+class PostLike(BaseModel):
+    user: User
+    class Config():
+        orm_mode = True
+
+# for CommentResponse
+class CommentLike(BaseModel):
+    user: User
+    class Config():
+        orm_mode = True
+
+
+##################################################################
+#          SCHEMA CLASSES FOR INPUT/OUTPUT FILTERING             #
+##################################################################
+
+
+class UserRequest(BaseModel):
+    username: str
+    email: str
+    password: str
+
 class UserResponse(BaseModel):
     id: int
     username: str
     email: str
     posts: List[Post]
+    comments: List[UserComment]
     friends: List[Friend]
+    likes: List[UserLikes]
     class Config():
         orm_mode = True
 
@@ -42,44 +96,33 @@ class PostRequest(BaseModel):
     content_path_type: Optional[str]   # 'internal' or 'external'
     message: Optional[str]
 
-# Class User for PostResponse, to relate username to post
-class User(BaseModel):
-    username: str
-    class Config():
-        orm_mode = True
-
-# Class Comment for PostResponse, to relate comment data to post
-class Comment(BaseModel):
-    message: str
-    username: str
-    timestamp: datetime
-    class Config():
-        orm_mode = True
-
 class PostResponse(BaseModel):
-    user_id: int
     post_id: int
+    user: User
     image_url: Optional[str]
     video_url: Optional[str]
     content_path_type: Optional[str]
     message: Optional[str]
     timestamp: datetime
-    user: User
-    comments: List[Comment]
+    comments: Optional[List[Comment]]
+    like_count: Optional[int]
+    liked_by: List[PostLike]
     class Config():
         orm_mode = True
 
 class CommentRequest(BaseModel):
-    username: str
+    user_id: int
     message: str
     post_id: int
 
 class CommentResponse(BaseModel):
     comment_id: int
     post_id: int
-    username: str
+    user: User
     message: str
     timestamp: datetime
+    like_count: Optional[int]
+    liked_by: List[CommentLike]
     class Config():
         orm_mode = True
 
@@ -98,3 +141,13 @@ class FriendResponse(BaseModel):
     class Config():
         orm_mode = True
 
+class LikeRequest(BaseModel):
+    post_id: Optional[int]
+    comment_id: Optional[int]
+    user_id: int
+    username: str
+
+class LikeResponse(BaseModel):
+    user: User
+    class Config():
+        orm_mode = True

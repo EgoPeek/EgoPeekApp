@@ -1,1 +1,1 @@
-from backend.schemas.schema import UserRequest, UserResponse, LoginRequest, PostRequest, PostResponse, CommentRequest, CommentResponse, FriendRequest, FriendResponse
+from backend.schemas.schema import UserRequest, UserResponse, LoginRequest, PostRequest, PostResponse, CommentRequest, CommentResponse, FriendRequest, FriendResponse, LikeRequest, LikeResponse
