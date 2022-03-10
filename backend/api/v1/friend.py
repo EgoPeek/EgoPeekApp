@@ -1,4 +1,3 @@
-from pkgutil import get_data
 from fastapi import APIRouter, Depends, status
 from backend import schemas
 from backend.database import get_database
