@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from backend.api.v1 import tag, user, post, comment, friend
+from backend.api.v1 import tag, user, post, comment, friend, like
 
 
 user_router = APIRouter()
@@ -16,4 +16,7 @@ tag_router = APIRouter()
 tag_router.include_router(tag.router, prefix='/tags',tags=['tag'])
 
 friend_router = APIRouter()
-tag_router.include_router(friend.router, prefix='/friends',tags=['friend'])
+friend_router.include_router(friend.router, prefix='/friends',tags=['friend'])
+
+like_router = APIRouter()
+friend_router.include_router(like.router, prefix='/likes',tags=['like'])
