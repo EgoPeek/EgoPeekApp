@@ -7,7 +7,6 @@ import './components/UserFeed/UserFeed'
 import ProtectedRoute from './components/Misc/CustomComponents/ProtectedRoute';
 import UnProtectedRoute from './components/Misc/CustomComponents/UnProtectedRoutes'
 import UserFeed from './components/UserFeed/UserFeed';
-import useAuth from './hooks/useAuth';
 
 function App() {
   //session token will be stored in the brother and will be replaced later
@@ -19,6 +18,9 @@ function App() {
       {/* renders this section if user is NOT logged in */}
       <Router>
         <Routes>
+          {/* if you want to test a route simply place it at the top and navigate within the browser
+              place route within the appropriate location when finished
+           */}
 
           {/* if a user is NOT logged in, only unprotected routes are shown*/}
           <Route path='/' element={<UnProtectedRoute />}>

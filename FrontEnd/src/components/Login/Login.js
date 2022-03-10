@@ -5,7 +5,7 @@ Description: Login screen for user to input username and password
 
 import './Login.css'
 import { useEffect,useState } from 'react'
-import { FormControl,Button } from '@mui/material'
+import { FormControl } from '@mui/material'
 import { GreenButton } from '../Misc/Input/Buttons'
 import { makeStyles} from '@mui/styles'
 import { TextInputStandard } from '../Misc/Input/TextFields'

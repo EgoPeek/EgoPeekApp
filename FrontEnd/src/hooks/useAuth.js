@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 
 const useAuth = () => {
-    return true 
-    // window.localStorage.getItem('auth')
+    const auth = window.localStorage.getItem('auth')
+    return auth === 'true'
 }
 
 export default useAuth
