@@ -6,7 +6,7 @@
  */
 
 import { useEffect } from "react";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { GreenButton } from "../Misc/Buttons";
 import "./Home.css";
 import homeIMG from "../../images/Home.jpg";
@@ -33,13 +33,12 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="home-header">
-        <h1>EgoPeek</h1>
-      </div>
-
       <div className="home-container">
 
         <div className="home-left">
+          <div className="home-header">
+            <h1>EgoPeek</h1>
+          </div>
           <div className="home-info">
             <h2>Discover content from the games you love!</h2>
             <h3>Log in or Sign up below!</h3>
