@@ -4,10 +4,10 @@ Description: Login screen for user to input username and password
 */
 
 import './Login.css'
-import { useEffect,useState } from 'react'
-import { FormControl } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { FormControl, Alert } from '@mui/material'
 import { GreenButton } from '../Misc/Input/Buttons'
-import { makeStyles} from '@mui/styles'
+import { makeStyles } from '@mui/styles'
 import { TextInputStandard } from '../Misc/Input/TextFields'
 import TitleAndLogo from '../Misc/CustomComponents/TitleAndLogo'
 import { useNavigate } from 'react-router'
@@ -41,33 +41,34 @@ const Login = () => {
     const navigate = useNavigate()
     const auth = useAuth()
 
-    const checkForValidEmail = async()=>{
+    const checkForValidEmail = async () => {
         //ping api endpoint
         const data = {
-            username:email,
-            password:password
+            username: email,
+            password: password
         }
 
         //verifys user input correct details for login
-        const response = await fetch('/api/v1/login',{
-            method:'POST',
-            credentials:'include',
-            headers:{
-                'Content-Type' : 'application/json',
+        const response = await fetch('/api/v1/login', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body:JSON.stringify(data)
+            body: JSON.stringify(data)
         })
 
         //converts it to json
         const jsonRes = await response.json();
         //if a sucess is read it stores users credentials within local storage and redirects them
-        if(jsonRes.success){
+        if (jsonRes.success) {
             auth.login()
-            navigate('/home',{replace:true})
-        }else{
+            navigate('/home', { replace: true })
+        } else {
             console.log(jsonRes.reason)
             seterrorMessage('Invalid username or password')
+            setError(true)
         }
     }
 
@@ -77,13 +78,15 @@ const Login = () => {
             <div>
                 <TitleAndLogo />
 
-                <div className='form'>
-                    <FormControl>
-                        <h2 style={{ textAlign: 'center' }}>Log In</h2>
+                <form className='form'>
+                    <FormControl className='form-control'>
+                        <h2 style={{ textAlign: 'center', 'marginBottom':'40px'}}>Log In</h2>
+                        {error && <Alert className='alert-banner' onClose={() => { setError(false) }} severity='error'>{errorMessage}</Alert>}
+
                         {/* pulls in custom LogInTextInput component cause react is stupid
                         and I had to to a bunch of nonsense to customize the css */}
                         <TextInputStandard
-                            onChange = {(props)=>{
+                            onChange={(props) => {
                                 setEmail(props.target.value)
                             }}
                             label="Username or Email"
@@ -93,7 +96,7 @@ const Login = () => {
                             required
                         />
                         <TextInputStandard className={classes.TextField}
-                            onChange ={(props)=>{
+                            onChange={(props) => {
                                 setPassword(props.target.value)
                             }}
                             margin="normal"
@@ -105,7 +108,7 @@ const Login = () => {
                         />
                         <GreenButton className={classes.fields} variant="outlined" onClick={checkForValidEmail}>Submit</GreenButton>
                     </FormControl>
-                </div>
+                </form>
             </div>
         </div>
     );
