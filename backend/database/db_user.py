@@ -3,10 +3,6 @@ from sqlalchemy.orm.session import Session
 from .models import DbUser
 from .hash import Hash
 
-"""
-    TO DO:
-    1. Add exception handling
-"""
 
 def create_user(db: Session, request: schemas.UserRequest):
     print('creating new user')
@@ -23,6 +19,7 @@ def create_user(db: Session, request: schemas.UserRequest):
 
 def get_all_user_data(db: Session):
     return db.query(DbUser).all()
+
 
 def get_user_data(db: Session, username: str):
     return db.query(DbUser).filter(DbUser.username == username).first()
