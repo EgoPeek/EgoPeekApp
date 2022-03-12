@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI, Request
-from backend.api.v1 import user_router, post_router, comment_router, tag_router, friend_router, like_router
+from backend.api.v1 import user_router, post_router, comment_router, tag_router, friend_router, like_router, link_router
 from backend.auth import auth_router
 from backend.core import settings
 from fastapi.staticfiles import StaticFiles
@@ -22,6 +22,7 @@ backend.include_router(comment_router, prefix=settings.API_V1_STR)
 backend.include_router(tag_router, prefix=settings.API_V1_STR)
 backend.include_router(friend_router, prefix=settings.API_V1_STR)
 backend.include_router(like_router, prefix=settings.API_V1_STR)
+backend.include_router(link_router, prefix=settings.API_V1_STR)
 
 # handle CORS error for local development across ports
 backend.add_middleware(
@@ -38,9 +39,10 @@ templates = Jinja2Templates(directory="FrontEnd/build")
 # mount index for front end
 backend.mount("/static", StaticFiles(directory="FrontEnd/build/static", html = True), name="static")
 
-# mount directories for user file and image uploads
+# mount directories for user file, image, and avatar uploads
 backend.mount("/user_images", StaticFiles(directory="backend/user_images"), name="user_images")
 backend.mount("/user_videos", StaticFiles(directory="backend/user_videos"), name="user_videos")
+backend.mount("/user_avatars",  StaticFiles(directory="backend/user_avatars"), name="user_avatars")
 
 # serve front end from root
 @backend.get("/{rest_of_path:path}", response_class = HTMLResponse)
