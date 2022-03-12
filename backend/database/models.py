@@ -15,6 +15,7 @@ class DbUser(Base):
     likes = relationship('DbLike', back_populates='user')
     comments = relationship('DbComment', back_populates='user')
     friends = relationship('DbFriend', back_populates='user')
+    links = relationship('DbLink', back_populates='user')
 
 
 class DbPost(Base):
@@ -64,3 +65,13 @@ class DbLike(Base):
     user = relationship('DbUser', back_populates='likes')
     post_liked_by = relationship('DbPost', back_populates='liked_by')
     comment_liked_by = relationship('DbComment', back_populates='liked_by')
+
+
+class DbLink(Base):
+    __tablename__ = 'link'
+    link_id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    link_url = Column(String(500))
+    link_username = Column(String(50))
+    link_platform = Column(String(25))
+    user = relationship('DbUser', back_populates='links')
