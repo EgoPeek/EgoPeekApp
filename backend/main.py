@@ -38,6 +38,10 @@ templates = Jinja2Templates(directory="FrontEnd/build")
 # mount index for front end
 backend.mount("/static", StaticFiles(directory="FrontEnd/build/static", html = True), name="static")
 
+# mount directories for user file and image uploads
+backend.mount("/user_images", StaticFiles(directory="backend/user_images"), name="user_images")
+backend.mount("/user_videos", StaticFiles(directory="backend/user_videos"), name="user_videos")
+
 # serve front end from root
 @backend.get("/{rest_of_path:path}", response_class = HTMLResponse)
 async def serve_frontend(request: Request, rest_of_path: str):
