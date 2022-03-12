@@ -7,6 +7,7 @@ import './components/UserFeed/UserFeed'
 import ProtectedRoute from './components/Misc/CustomComponents/ProtectedRoute';
 import UnProtectedRoute from './components/Misc/CustomComponents/UnProtectedRoutes'
 import UserFeed from './components/UserFeed/UserFeed';
+import Account from './components/Account/Account';
 
 function App() {
   //session token will be stored in the brother and will be replaced later
@@ -27,6 +28,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path="/account" element={<Account />} /> {/* move to protected */}
           </Route>
 
           {/* if a user IS logged in protected routes are shown */}
