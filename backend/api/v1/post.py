@@ -1,10 +1,13 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, UploadFile, File
 from backend import schemas
 from backend.database import get_database
 from sqlalchemy.orm.session import Session
 from backend.database import db_post
 from fastapi.exceptions import HTTPException
 from typing import List
+import random
+import string
+import shutil
 
 router = APIRouter()
 
@@ -22,6 +25,46 @@ def create_post(request: schemas.PostRequest, database: Session = Depends(get_da
         raise HTTPException(status_code = status.HTTP_422_UNPROCESSABLE_ENTITY,
                             detail = "Path type must be 'internal' or 'external'.")
     return db_post.create_post(database, request)
+
+
+@router.post('/images')
+def upload_image(image: UploadFile = File(...)):
+    """
+    Uploads an image to the EgoPeek file directory for posting directly to the app instead of by url.
+    Inputs: file
+    Outputs: {'relative_image_path': str}
+    """
+    letters = string.ascii_letters
+    random_string = ''.join(random.choice(letters) for i in range(10))
+    unique_file_ending = f'_{random_string}.'
+    unique_filename = unique_file_ending.join(image.filename.rsplit('.', 1))
+    file_path = f'backend/user_images/{unique_filename}'
+    static_path = f'/user_images/{unique_filename}'
+
+    with open(file_path, "w+b") as buffer:
+        shutil.copyfileobj(image.file, buffer)
+
+    return{'relative_image_path': static_path}
+
+
+@router.post('/videos')
+def upload_video(video: UploadFile = File(...)):
+    """
+    Uploads a video to the EgoPeek file directory for posting directly to the app instead of by url.
+    Inputs: file
+    Outputs: {'relative_video_path': str}
+    """
+    letters = string.ascii_letters
+    random_string = ''.join(random.choice(letters) for i in range(10))
+    unique_file_ending = f'_{random_string}.'
+    unique_filename = unique_file_ending.join(video.filename.rsplit('.', 1))
+    file_path = f'backend/user_videos/{unique_filename}'
+    static_path = f'/user_images/{unique_filename}'
+
+    with open(file_path, "w+b") as buffer:
+        shutil.copyfileobj(video.file, buffer)
+
+    return{'relative_video_path': static_path}
 
 
 @router.get('/all', response_model = List[schemas.PostResponse])
