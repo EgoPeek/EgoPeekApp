@@ -7,16 +7,19 @@ const Account = () => {
     <div className="account">
       {/*<div className="header">
         <Header />
-  </div>*/}
+      </div>*/}
 
       <div className="account-container">
-        <div className="account-hamburger">
+        <div className="sidenav">
           <div className="account-info">
-            <span>account pic, contact, etc</span>
+            <span>pic</span>
+            <span>Name</span>
+            <span>links?</span>
+            <span></span>
           </div>
 
           <div className="account-bio">
-            <h1>bio goes here</h1>
+            <span>bio goes here but its a short one</span>
           </div>
 
           <div className="account-favorites">
