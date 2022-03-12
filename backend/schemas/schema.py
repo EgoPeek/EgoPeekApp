@@ -36,6 +36,15 @@ class UserLikes(BaseModel):
     class Config():
         orm_mode = True
 
+# for UserResponse
+class UserLinks(BaseModel):
+    link_id: int
+    link_platform: str
+    link_username: str
+    link_url: str
+    class Config():
+        orm_mode = True
+
 # for PostResponse
 class User(BaseModel):
     id: int
@@ -82,6 +91,7 @@ class UserResponse(BaseModel):
     comments: List[UserComment]
     friends: List[Friend]
     likes: List[UserLikes]
+    links: List[UserLinks]
     class Config():
         orm_mode = True
 
@@ -149,5 +159,20 @@ class LikeRequest(BaseModel):
 
 class LikeResponse(BaseModel):
     user: User
+    class Config():
+        orm_mode = True
+
+class LinkRequest(BaseModel):
+    user_id: int
+    link_platform: str
+    link_username: str
+    link_url: Optional[str]
+
+class LinkResponse(BaseModel):
+    user_id: int
+    link_id: int
+    link_platform: str
+    link_username: str
+    link_url: Optional[str]
     class Config():
         orm_mode = True
