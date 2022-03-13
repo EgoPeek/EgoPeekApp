@@ -6,7 +6,7 @@ from datetime import datetime
 #           SUB-CLASSES FOR RELATIONSHIP OUTPUT ONLY             #
 ##################################################################
 
-# for UserResponse
+# for ProfileResponse
 class Post(BaseModel):
     post_id: int
     message: Optional[str]
@@ -14,14 +14,14 @@ class Post(BaseModel):
     class Config():
         orm_mode = True
 
-# for UserResponse
+# for ProfileResponse
 class Friend(BaseModel):
     friend_id: int
     friend_status: str
     class Config():
         orm_mode = True
 
-# for UserResponse
+# for ProfileResponse
 class Comment(BaseModel):
     comment_id: int
     message: Optional[str]
@@ -29,27 +29,32 @@ class Comment(BaseModel):
     class Config():
         orm_mode = True
 
-# for UserResponse
+# for ProfileResponse
 class UserLikes(BaseModel):
     post_id: Optional[int]
     comment_id: Optional[int]
     class Config():
         orm_mode = True
 
-# for UserResponse
+# for ProfileResponse
 class Link(BaseModel):
     link_id: int
     link_platform: str
     link_username: str
-    link_url: str
+    link_url: Optional[str]
     class Config():
         orm_mode = True
 
-#for UserResponse
+#for ProfileResponse
 class Game(BaseModel):
     game_id: int
     game_title: str
     game_platform: str
+    game_username: Optional[str]
+    main_character: Optional[str]
+    current_rank: Optional[str]
+    highest_rank: Optional[str]
+    hours_played: Optional[int]
     class Config():
         orm_mode = True
 
@@ -80,6 +85,13 @@ class CommentLike(BaseModel):
     class Config():
         orm_mode = True
 
+# for ProfileResponse
+class ProfileUser(BaseModel):
+    id: int
+    username: str
+    email: str
+    class Config():
+        orm_mode = True
 
 ##################################################################
 #          SCHEMA CLASSES FOR INPUT/OUTPUT FILTERING             #
@@ -95,12 +107,6 @@ class UserResponse(BaseModel):
     id: int
     username: str
     email: str
-    posts: List[Post]
-    comments: List[Comment]
-    friends: List[Friend]
-    games: List[Game]
-    likes: List[UserLikes]
-    links: List[Link]
     class Config():
         orm_mode = True
 
@@ -205,5 +211,26 @@ class GameResponse(BaseModel):
     current_rank: Optional[str]
     highest_rank: Optional[str]
     hours_played: Optional[int]
+    class Config():
+        orm_mode = True
+
+class ProfileRequest(BaseModel):
+    user_id: int
+    avatar_path: Optional[str]
+    bio: Optional[str]
+    quote: Optional[str]
+
+class ProfileResponse(BaseModel):
+    user: ProfileUser
+    profile_id: int
+    avatar_path: Optional[str]
+    bio: Optional[str]
+    quote: Optional[str]
+    social_links: List[Link]
+    games: List[Game]
+    friends: List[Friend]
+    posts: List[Post]
+    comments: List[Comment]
+    likes: List[UserLikes]
     class Config():
         orm_mode = True
