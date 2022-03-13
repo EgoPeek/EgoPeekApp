@@ -1,55 +1,27 @@
-.account {
-  width: 100%;
-}
-
-.account-container {
-  height: 100vh;
+.account-main {
   display: flex;
 }
 
-.sidenav {
-  background-color: rgba(51, 49, 61, 1);
-  padding: 2em;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
+.sidebar-container {
   width: 20%;
-  /*position: fixed;
-  z-index: 1;
-  left: 0;
-  background-color: gray;
-  overflow-x: hidden;
-  transition: 0.5s;*/
+  min-height: 100vh;
+  background-color: rgba(51, 49, 61, 1);
 }
 
-/*.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}*/
-
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+.sidebar {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  text-align: center;
 }
 
 .account-bio {
-  margin: 20%;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 .posts-container {
+  padding: 3em;
   width: 80%;
-  padding: 2em;
   display: flex;
   justify-content: center;
-}
-
-.posts {
-  margin: 5%;
 }
