@@ -12,8 +12,8 @@ router = APIRouter()
 def create_link(request: schemas.LinkRequest, database: Session = Depends(get_database)):
     """
     Creates a link to another social media site for given user.
-    Inputs: {'user_id': int, 'link_url': str}
-    Outputs: {'success': bool, 'message': str}
+    Inputs: schema: LinkRequest
+    Outputs: schema: LinkResponse
     """
     return db_link.create_link(database, request)
 
@@ -23,7 +23,7 @@ def retrieve_all_db_links(database: Session = Depends(get_database)):
     """
     Retrieves all link data stored in the database.
     Inputs: None
-
+    Outputs: List[schema: LinkResponse]
     """
     return db_link.get_all_db_links(database)
 
@@ -32,6 +32,8 @@ def retrieve_all_db_links(database: Session = Depends(get_database)):
 def retrieve_all_user_links(user_id, database: Session = Depends(get_database)):
     """
     Retrieves all link data for a user.
+    Inputs: user_id: int
+    Outputs: List[schemas: LinkResponse]
     """
     return db_link.get_all_user_links(database, user_id)
 
@@ -40,6 +42,8 @@ def retrieve_all_user_links(user_id, database: Session = Depends(get_database)):
 def retrieve_link(link_id, database: Session = Depends(get_database)):
     """
     Retrieves the url associated with a given link_id.
+    Inputs: link_id: int
+    Outputs: schema: LinkResponse
     """
     return db_link.get_link(database, link_id)
 
@@ -48,6 +52,8 @@ def retrieve_link(link_id, database: Session = Depends(get_database)):
 def update_link(link_id, request: schemas.LinkRequest, database: Session = Depends(get_database)):
     """
     Updates the url associated with the given link_id.
+    Inputs: link_id: int, schema: LinkRequest
+    Outputs: {'success': bool, 'message': str}
     """
     return db_link.update_link(database, link_id, request)
 
@@ -56,5 +62,7 @@ def update_link(link_id, request: schemas.LinkRequest, database: Session = Depen
 def delete_link(link_id, database: Session = Depends(get_database)):
     """
     Deletes the given link entry from the EgoPeek database.
+    Inputs: link_id: int
+    Outputs: {'success': bool, 'messsage': str}
     """
     return db_link.delete_link(database, link_id)
