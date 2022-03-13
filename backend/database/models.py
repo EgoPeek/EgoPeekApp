@@ -1,4 +1,3 @@
-
 from .db import Base
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.sql.schema import ForeignKey
@@ -16,6 +15,7 @@ class DbUser(Base):
     comments = relationship('DbComment', back_populates='user')
     friends = relationship('DbFriend', back_populates='user')
     links = relationship('DbLink', back_populates='user')
+    games = relationship('DbGame', back_populates='user')
 
 
 class DbPost(Base):
@@ -75,3 +75,17 @@ class DbLink(Base):
     link_username = Column(String(50))
     link_platform = Column(String(25))
     user = relationship('DbUser', back_populates='links')
+
+
+class DbGame(Base):
+    __tablename__ = 'game'
+    game_id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    game_title = Column(String(100))
+    game_platform = Column(String(50))
+    game_username = Column(String(50))
+    main_character = Column(String(50))
+    current_rank = Column(String(50))
+    highest_rank = Column(String(50))
+    hours_played = Column(Integer)
+    user = relationship('DbUser', back_populates='games')
