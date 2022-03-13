@@ -22,7 +22,7 @@ class Friend(BaseModel):
         orm_mode = True
 
 # for UserResponse
-class UserComment(BaseModel):
+class Comment(BaseModel):
     comment_id: int
     message: Optional[str]
     timestamp: datetime
@@ -37,11 +37,19 @@ class UserLikes(BaseModel):
         orm_mode = True
 
 # for UserResponse
-class UserLinks(BaseModel):
+class Link(BaseModel):
     link_id: int
     link_platform: str
     link_username: str
     link_url: str
+    class Config():
+        orm_mode = True
+
+#for UserResponse
+class Game(BaseModel):
+    game_id: int
+    game_title: str
+    game_platform: str
     class Config():
         orm_mode = True
 
@@ -88,10 +96,11 @@ class UserResponse(BaseModel):
     username: str
     email: str
     posts: List[Post]
-    comments: List[UserComment]
+    comments: List[Comment]
     friends: List[Friend]
+    games: List[Game]
     likes: List[UserLikes]
-    links: List[UserLinks]
+    links: List[Link]
     class Config():
         orm_mode = True
 
@@ -169,10 +178,32 @@ class LinkRequest(BaseModel):
     link_url: Optional[str]
 
 class LinkResponse(BaseModel):
-    user_id: int
+    user: User
     link_id: int
     link_platform: str
     link_username: str
     link_url: Optional[str]
+    class Config():
+        orm_mode = True
+
+class GameRequest(BaseModel):
+    user_id: int
+    game_title: str
+    game_platform: str
+    game_username: Optional[str]
+    main_character: Optional[str]
+    current_rank: Optional[str]
+    highest_rank: Optional[str]
+    hours_played: Optional[int]
+
+class GameResponse(BaseModel):
+    user: User
+    game_id: int
+    game_title: str
+    game_platform: str
+    game_username: Optional[str]
+    current_rank: Optional[str]
+    highest_rank: Optional[str]
+    hours_played: Optional[int]
     class Config():
         orm_mode = True
