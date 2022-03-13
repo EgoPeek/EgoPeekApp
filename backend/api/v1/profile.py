@@ -1,9 +1,12 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, UploadFile, File
 from backend import schemas
 from backend.database import get_database
 from sqlalchemy.orm.session import Session
 from backend.database import db_profile
 from typing import List
+import string
+import random
+import shutil
 
 router = APIRouter()
 
@@ -16,6 +19,26 @@ def create_profile(request: schemas.ProfileRequest, database: Session = Depends(
     Outputs: schema: ProfileResponse
     """
     return db_profile.create_profile(database, request)
+
+
+@router.post('/avatars')
+def upload_avatar(avatar: UploadFile = File(...)):
+    """
+    Uploads an avatar to the EgoPeek file directory for profile display.
+    Inputs: file
+    Outputs: {'relative_avatar_path': str}
+    """
+    letters = string.ascii_letters
+    random_string = ''.join(random.choice(letters) for i in range(10))
+    unique_file_ending = f'_{random_string}.'
+    unique_filename = unique_file_ending.join(avatar.filename.rsplit('.', 1))
+    file_path = f'backend/user_avatars/{unique_filename}'
+    static_path = f'/user_avatars/{unique_filename}'
+
+    with open(file_path, "w+b") as buffer:
+        shutil.copyfileobj(avatar.file, buffer)
+
+    return{'relative_avatar_path': static_path}
 
 
 @router.get('/all', response_model = List[schemas.ProfileResponse])
