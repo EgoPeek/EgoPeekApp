@@ -1,6 +1,8 @@
 import "./Account.css";
+import "./Sidebar.js";
 import React, { Component } from "react";
 import Sidebar from "./Sidebar";
+import Posts from "./Posts";
 import Header from "../Misc/CustomComponents/Header";
 
 class Account extends Component {
@@ -10,11 +12,7 @@ class Account extends Component {
         {/*<Header />*/}
         <div className="account-main">
           <Sidebar />
-          <div className="posts-container">
-            <div className="posts">
-              <span>posts go here</span>
-            </div>
-          </div>
+          <Posts />
         </div>
       </div>
     );

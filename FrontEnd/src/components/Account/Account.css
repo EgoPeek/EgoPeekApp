@@ -3,14 +3,14 @@
 }
 
 .sidebar-container {
-  width: 20%;
   min-height: 100vh;
-  background-color: rgba(51, 49, 61, 1);
 }
 
 .sidebar {
-  padding-top: 2em;
-  padding-bottom: 2em;
+  background-color: rgba(51, 49, 61, 1);
+  height: 90%;
+  width: 120%;
+  padding: 1em;
   text-align: center;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .posts-container {
-  padding: 3em;
+  padding: 2em;
   width: 80%;
   display: flex;
   justify-content: center;

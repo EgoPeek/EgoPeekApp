@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import SidebarIcon from "./SidebarIcon";
 
 export default class Sidebar extends Component {
   state = {
@@ -46,13 +47,13 @@ export default class Sidebar extends Component {
   render() {
     return (
       <div className="sidebar-container">
-        {this.renderSidebar()}
         <div className="sidebar-icon">
-          {/*<SidebarIcon
+          <SidebarIcon
             isOpen={this.state.isOpen}
             handleClick={this.toggleSidebar}
-    />*/}
+          />
         </div>
+        {this.renderSidebar()}
       </div>
     );
   }
