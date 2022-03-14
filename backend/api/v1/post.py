@@ -77,6 +77,16 @@ def retrieve_all_db_posts(database: Session = Depends(get_database)):
     return db_post.get_all_posts(database)
 
 
+@router.get('/feed/{user_id}', response_model = List[schemas.PostResponse])
+def retrieve_user_feed(user_id, database: Session = Depends(get_database)):
+    """
+    Retrieves a feed comprising of a user's posts, their friend's posts, and their interests, ordered chronologically.
+    Inputs: user_id: int
+    Outputs: List[schema: PostResponse]
+    """
+    return db_post.get_user_feed(database, user_id)
+
+
 @router.get('/all/{user_id}', response_model = List[schemas.PostResponse])
 def retrieve_all_user_posts(user_id, database: Session = Depends(get_database)):
     """
