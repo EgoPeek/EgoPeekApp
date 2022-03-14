@@ -1,6 +1,6 @@
 from backend import schemas
 from sqlalchemy.orm.session import Session
-from .models import DbPost
+from .models import DbPost, DbFriend
 from datetime import datetime
 from fastapi.exceptions import HTTPException
 from fastapi import status
@@ -23,6 +23,17 @@ def create_post(db: Session, request: schemas.PostRequest):
 
 def get_all_posts(db: Session):
     return db.query(DbPost).all()
+
+
+def get_user_feed(db: Session, user_id: int):
+    # build list of friend ids for requested user
+    users = [row[0] for row in db.query(DbFriend.friend_id).filter(DbFriend.user_id == user_id).all()]
+    
+    # add user to list of ids to retrieve
+    users.append(user_id)
+    
+    # return all posts in the users list
+    return db.query(DbPost).filter(DbPost.user_id.in_(users)).order_by(DbPost.timestamp).all()
 
 
 def get_all_user_posts(db: Session, user_id: int):
