@@ -65,22 +65,24 @@ class User(BaseModel):
     class Config():
         orm_mode = True
 
+# for CommentResponse and PostResponse
+class CommentLike(BaseModel):
+    user: User
+    class Config():
+        orm_mode = True
+
 # for PostResponse
 class Comment(BaseModel):
     message: str
     user: User
     timestamp: datetime
+    like_count: Optional[int]
+    liked_by: List[CommentLike]
     class Config():
         orm_mode = True
 
 # for PostResponse
 class PostLike(BaseModel):
-    user: User
-    class Config():
-        orm_mode = True
-
-# for CommentResponse
-class CommentLike(BaseModel):
     user: User
     class Config():
         orm_mode = True
@@ -129,7 +131,7 @@ class PostResponse(BaseModel):
     content_path_type: Optional[str]
     message: Optional[str]
     timestamp: datetime
-    comments: Optional[List[Comment]]
+    comments: List[Comment]
     like_count: Optional[int]
     liked_by: List[PostLike]
     class Config():
