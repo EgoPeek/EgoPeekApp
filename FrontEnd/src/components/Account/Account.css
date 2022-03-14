@@ -4,11 +4,13 @@
 
 .sidebar-container {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar {
   background-color: rgba(51, 49, 61, 1);
-  height: 90%;
+  height: 100%;
   width: 120%;
   padding: 1em;
   text-align: center;
