@@ -1,3 +1,9 @@
+"""
+authenticate.py
+    - contains login endpoint to make sure provided username and password are valid
+    - future: oauth2 authentication implementation
+"""
+
 from fastapi import APIRouter, Depends
 from backend.database import get_database
 from sqlalchemy.orm.session import Session

@@ -1,3 +1,9 @@
+"""
+db.py
+    - pulls data from environment variables to create a connection to the EgoPeek database.
+    - yields database session to any function that requires database operations.
+"""
+
 from sqlalchemy.engine import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker

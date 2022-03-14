@@ -1,3 +1,9 @@
+"""
+hash.py
+    - Contains hash class for hashing passwords before entry in the database.
+    - Verify function for checking login passwords against stored hashed values.
+"""
+
 from passlib.context import CryptContext
 
 

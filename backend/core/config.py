@@ -1,3 +1,8 @@
+"""
+config.py
+    - contains configuration settings for backend server base url string, project name, and port
+"""
+
 from pydantic import BaseSettings
 
 class Settings(BaseSettings):

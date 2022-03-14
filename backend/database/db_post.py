@@ -1,9 +1,13 @@
+"""
+db_post.py
+    - contains functions for database operations relating to the post table
+    - functions from here are called by post-related CRUD endpoints
+"""
+
 from backend import schemas
 from sqlalchemy.orm.session import Session
 from .models import DbPost, DbFriend
 from datetime import datetime
-from fastapi.exceptions import HTTPException
-from fastapi import status
 
 
 def create_post(db: Session, request: schemas.PostRequest):

@@ -1,3 +1,10 @@
+"""
+schema.py
+    - Contains request and response schema to model input and output for all CRUD endpoints.
+    - Sub classes are used to further expand table relationships when they are included in main class schema.
+    - Ensures proper input and output formatting, as well as taking database objects and converting them to JSON for output to front end.
+"""
+
 from pydantic import BaseModel, Json
 from typing import Optional, List
 from datetime import datetime

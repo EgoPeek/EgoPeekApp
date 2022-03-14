@@ -1,1 +1,1 @@
-## Storage Folder for User Avatars
+## Storage Folder for User Images

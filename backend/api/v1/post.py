@@ -1,3 +1,10 @@
+"""
+post.py
+    - Contains CRUD endpoints for backend operations related to the post database table.
+    - Takes in REST api calls from the front end and returns requested post data for use in the front end application.
+    - Allows file upload for locally stored video and images related to user posts.
+"""
+
 from fastapi import APIRouter, Depends, status, UploadFile, File
 from backend import schemas
 from backend.database import get_database

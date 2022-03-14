@@ -1,3 +1,9 @@
+"""
+test_index.py
+    - template test file for pytest unit testing
+    - future: implement unit testing
+"""
+
 from typing import Dict
 from fastapi.testclient import TestClient
 from backend.core import settings
