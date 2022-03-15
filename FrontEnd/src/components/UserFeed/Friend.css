@@ -1,0 +1,11 @@
+.user-friend{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.user-icon{
+    margin-right: 10px;
+}
+
