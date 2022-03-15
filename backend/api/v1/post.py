@@ -66,7 +66,7 @@ def upload_video(video: UploadFile = File(...)):
     unique_file_ending = f'_{random_string}.'
     unique_filename = unique_file_ending.join(video.filename.rsplit('.', 1))
     file_path = f'backend/user_videos/{unique_filename}'
-    static_path = f'/user_images/{unique_filename}'
+    static_path = f'/user_videos/{unique_filename}'
 
     with open(file_path, "w+b") as buffer:
         shutil.copyfileobj(video.file, buffer)
