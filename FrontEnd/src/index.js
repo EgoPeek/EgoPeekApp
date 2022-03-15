@@ -1,3 +1,8 @@
+/**
+ * FileName: Index.js
+ * Description: Main entry point for the entire frontend directory
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
