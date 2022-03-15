@@ -7,3 +7,8 @@ env.py
 
 #react build file
 build
+
+#backend image location files
+user_avatars/
+user_images/
+user_videos/
