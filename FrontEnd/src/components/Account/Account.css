@@ -1,9 +1,15 @@
+.header-container {
+  /*position: fixed;*/
+  width: 100%;
+  z-index: 10;
+}
+
 .account-main {
   display: flex;
 }
 
 .sidebar-container {
-  min-height: 100vh;
+  height: 70rem;
   display: flex;
   flex-direction: column;
 }
@@ -11,9 +17,14 @@
 .sidebar {
   background-color: rgba(51, 49, 61, 1);
   height: 100%;
-  width: 120%;
+  width: 300px;
   padding: 2em;
   text-align: center;
+}
+
+.sidebar-icon {
+  display: flex;
+  justify-content: end;
 }
 
 .account-info {
@@ -28,8 +39,10 @@
 }
 
 .posts-container {
-  padding: 2em;
-  width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  height: 1100px;
+  width: 100%;
+  padding: 2em;
+  overflow: auto;
 }

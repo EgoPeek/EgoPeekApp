@@ -8,10 +8,19 @@ import Header from "../Misc/CustomComponents/Header";
 const Account = () => {
   return (
     <div className="account-page">
-      <Header />
+      <div className="header-container">
+        <Header />
+      </div>
       <div className="account-main">
         <Sidebar />
         <div className="posts-container">
+          <Posts />
+          <Posts />
+          <Posts />
+          <Posts />
+          <Posts />
+          <Posts />
+          <Posts />
           <Posts />
         </div>
       </div>
