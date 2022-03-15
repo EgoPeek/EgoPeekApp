@@ -1,0 +1,44 @@
+
+.header{
+    display: flex;
+    background-color: #24222F;
+    padding: 1.6rem;
+}
+
+.header-information{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    align-items: center;
+}
+.header-title{
+    margin-right: 5rem;
+}
+.header-item{
+    margin-right: 2rem;
+    text-decoration: none;
+    color: white
+}
+.header-item p{
+    font-size: 1.05rem;
+}
+.header-item:hover{
+    border-bottom: 2px white solid;
+}
+
+@media(max-width:673px){
+    .header-information{
+        flex-direction: column;
+    }
+    .header{
+        flex-direction: column;
+    }
+
+    .header-item{
+        margin-right: 0;
+    }
+    .header-title{
+        margin-right: 0;
+    }
+}

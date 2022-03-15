@@ -14,14 +14,20 @@ export default class Sidebar extends Component {
     return (
       <div className="sidebar">
         <div className="account-info">
-          <span>pic</span>
+          <div className="account-avatar">
+            <span>pic</span>
+          </div>
           <span>Name</span>
           <span>links?</span>
           <span></span>
         </div>
 
         <div className="account-bio">
-          <span>bio goes here but its a short one</span>
+          <p>
+            I am a pro Valorant player stuck in silver because my teammates play
+            with their monitors off. If you're a scrub don't add me. This is
+            text to see how the bio size will behave
+          </p>
         </div>
 
         <div className="account-favorites">

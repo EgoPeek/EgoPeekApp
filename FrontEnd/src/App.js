@@ -1,3 +1,9 @@
+/**
+ * FileName: App.js
+ * Description: Holds all of the Browser routes that the user can access through EgoPeek
+ *  locking visited routes only through a valid login
+ */
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Login from "./components/Login/Login"
 import Home from "./components/Home/Home"

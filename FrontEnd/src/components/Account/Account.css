@@ -12,18 +12,24 @@
   background-color: rgba(51, 49, 61, 1);
   height: 100%;
   width: 120%;
-  padding: 1em;
+  padding: 2em;
   text-align: center;
+}
+
+.account-info {
 }
 
 .account-bio {
   margin-top: 2em;
   margin-bottom: 2em;
+  height: fit-content;
+  max-width: fit-content;
+  border: 0.15em solid rgb(20, 21, 22);
 }
 
 .posts-container {
   padding: 2em;
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: center;
 }
