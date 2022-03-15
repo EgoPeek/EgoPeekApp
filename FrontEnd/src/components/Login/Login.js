@@ -41,29 +41,10 @@ const Login = () => {
     const navigate = useNavigate()
     const auth = useAuth()
 
-    const checkForValidEmail = async () => {
-        //ping api endpoint
-        const data = {
-            username: email,
-            password: password
-        }
-
-        //verifys user input correct details for login
-        const response = await fetch('/api/v1/login', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-
-        //converts it to json
-        const jsonRes = await response.json();
+    const handleLogin = async () => {
         //if a sucess is read it stores users credentials within local storage and redirects them
+        const jsonRes = await auth.login(email,password);
         if (jsonRes.success) {
-            auth.login()
             navigate('/home', { replace: true })
         } else {
             console.log(jsonRes.reason)
@@ -80,7 +61,7 @@ const Login = () => {
 
                 <form className='form'>
                     <FormControl className='form-control'>
-                        <h2 style={{ textAlign: 'center', 'marginBottom':'40px'}}>Log In</h2>
+                        <h2 style={{ textAlign: 'center', 'marginBottom': '40px' }}>Log In</h2>
                         {error && <Alert className='alert-banner' onClose={() => { setError(false) }} severity='error'>{errorMessage}</Alert>}
 
                         {/* pulls in custom LogInTextInput component cause react is stupid
@@ -106,7 +87,7 @@ const Login = () => {
                             type='password'
                             required
                         />
-                        <GreenButton className={classes.fields} variant="outlined" onClick={checkForValidEmail}>Submit</GreenButton>
+                        <GreenButton className={classes.fields} variant="outlined" onClick={handleLogin}>Submit</GreenButton>
                     </FormControl>
                 </form>
             </div>
