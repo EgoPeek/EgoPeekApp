@@ -2,7 +2,7 @@ import "./Account.css";
 import "./Sidebar.js";
 import React from "react";
 import Sidebar from "./Sidebar";
-import Posts from "../Misc/CustomComponents/UserPost";
+import UserPost from "../Misc/CustomComponents/UserPost";
 import Header from "../Misc/CustomComponents/Header";
 
 const Account = () => {
@@ -13,16 +13,7 @@ const Account = () => {
       </div>
       <div className="account-main">
         <Sidebar />
-        <div className="posts-container">
-          <Posts />
-          <Posts />
-          <Posts />
-          <Posts />
-          <Posts />
-          <Posts />
-          <Posts />
-          <Posts />
-        </div>
+        <div className="posts-container"></div>
       </div>
     </div>
   );

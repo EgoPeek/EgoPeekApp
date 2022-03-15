@@ -1,5 +1,4 @@
 .header-container {
-  /*position: fixed;*/
   width: 100%;
   z-index: 10;
 }
@@ -25,9 +24,6 @@
 .sidebar-icon {
   display: flex;
   justify-content: end;
-}
-
-.account-info {
 }
 
 .account-bio {
