@@ -1,3 +1,9 @@
+"""
+user.py
+    - Contains CRUD endpoints for backend operations related to the user database table.
+    - Takes in REST api calls from the front end and returns requested user data for use in the front end application.
+"""
+
 from fastapi import APIRouter, Depends, status, Response
 from fastapi.exceptions import HTTPException
 from backend import schemas

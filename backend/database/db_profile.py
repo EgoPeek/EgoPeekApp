@@ -1,3 +1,9 @@
+"""
+db_profile.py
+    - contains functions for database operations relating to the profile table
+    - functions from here are called by profile-related CRUD endpoints
+"""
+
 from sqlalchemy.orm import Session
 from .models import DbProfile
 from backend.schemas import schema

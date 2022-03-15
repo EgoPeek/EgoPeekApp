@@ -1,3 +1,9 @@
+"""
+db_link.py
+    - contains functions for database operations relating to the link table
+    - functions from here are called by link-related CRUD endpoints
+"""
+
 from sqlalchemy.orm import Session
 from .models import DbLink
 from backend.schemas import schema

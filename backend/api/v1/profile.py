@@ -1,3 +1,10 @@
+"""
+profile.py
+    - Contains CRUD endpoints for backend operations related to the profile database table.
+    - Takes in REST api calls from the front end and returns requested profile data for use in the front end application.
+    - Allows file upload for locally stored avatar images related to user profiles.
+"""
+
 from fastapi import APIRouter, Depends, UploadFile, File
 from backend import schemas
 from backend.database import get_database

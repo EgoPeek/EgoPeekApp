@@ -1,3 +1,9 @@
+"""
+db_comment.py
+    - contains functions for database operations relating to the comment table
+    - functions from here are called by comment-related CRUD endpoints
+"""
+
 from sqlalchemy.orm import Session
 from .models import DbComment
 from backend.schemas import schema

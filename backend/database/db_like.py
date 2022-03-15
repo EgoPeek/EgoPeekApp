@@ -1,3 +1,9 @@
+"""
+db_like.py
+    - contains functions for database operations relating to the like table
+    - functions from here are called by like-related CRUD endpoints
+"""
+
 from sqlalchemy.orm import Session
 from .models import DbLike, DbPost, DbComment
 from backend.schemas import schema

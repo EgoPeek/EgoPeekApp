@@ -1,3 +1,9 @@
+"""
+models.py
+    - Contains table models for all tables in the EgoPeek database.
+    - Explicitly defines relationships between tables, column data, and foreign keys.
+"""
+
 from .db import Base
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.sql.schema import ForeignKey

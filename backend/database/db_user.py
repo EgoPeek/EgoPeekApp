@@ -1,3 +1,9 @@
+"""
+db_user.py
+    - contains functions for database operations relating to the user table
+    - functions from here are called by user-related CRUD endpoints
+"""
+
 from backend import schemas
 from sqlalchemy.orm.session import Session
 from .models import DbUser

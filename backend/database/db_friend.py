@@ -1,3 +1,9 @@
+"""
+db_friend.py
+    - contains functions for database operations relating to the friend table
+    - functions from here are called by friend-related CRUD endpoints
+"""
+
 from sqlalchemy.orm import Session
 from .models import DbFriend
 from backend.schemas import schema

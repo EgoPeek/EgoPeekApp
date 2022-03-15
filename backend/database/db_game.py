@@ -1,3 +1,9 @@
+"""
+db_game.py
+    - contains functions for database operations relating to the game table
+    - functions from here are called by game-related CRUD endpoints
+"""
+
 from sqlalchemy.orm import Session
 from .models import DbGame
 from backend.schemas import schema

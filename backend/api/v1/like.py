@@ -1,3 +1,9 @@
+"""
+like.py
+    - Contains CRUD endpoints for backend operations related to the like database table.
+    - Takes in REST api calls from the front end and returns requested like data for use in the front end application.
+"""
+
 from fastapi import APIRouter, Depends, status
 from backend import schemas
 from backend.database import get_database
