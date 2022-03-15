@@ -26,4 +26,5 @@ def login(request: schemas.LoginRequest, database: Session = Depends(get_databas
         return {'success': False, 'reason': 'Invalid username.'}
     if not Hash.verify(user.password, request.password):
         return {'success': False, 'reason': 'Invalid password.'}
-    return {'success': True}
+
+    return {'user_id': user.id, 'username': user.username}
