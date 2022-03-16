@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import SidebarIcon from "./SidebarIcon";
+import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 export default class Sidebar extends Component {
   state = {
@@ -17,9 +19,17 @@ export default class Sidebar extends Component {
           <div className="account-avatar">
             <span>pic</span>
           </div>
-          <span>Name</span>
-          <span>links?</span>
-          <span></span>
+          <div className="name-container">
+            <span>Super long name for no reason</span>
+            <ForwardToInboxIcon />
+            <PersonAddIcon />
+            <div className="followers">
+              <span>Followers: 69</span>
+            </div>
+            <div className="post-amount">
+              <span>Posts: 2</span>
+            </div>
+          </div>
         </div>
 
         <div className="account-bio">

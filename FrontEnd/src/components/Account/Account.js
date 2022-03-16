@@ -13,7 +13,9 @@ const Account = () => {
       </div>
       <div className="account-main">
         <Sidebar />
-        <div className="posts-container"></div>
+        <div className="posts-container">
+          <p>posts go here</p>
+        </div>
       </div>
     </div>
   );

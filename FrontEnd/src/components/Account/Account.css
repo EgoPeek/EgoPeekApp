@@ -16,7 +16,7 @@
 .sidebar {
   background-color: rgba(51, 49, 61, 1);
   height: 100%;
-  width: 300px;
+  width: 400px;
   padding: 2em;
   text-align: center;
 }
@@ -26,9 +26,34 @@
   justify-content: end;
 }
 
+.account-info {
+  display: flex;
+  justify-content: left;
+  margin-bottom: 20%;
+}
+
+.account-avatar {
+  width: 20%;
+  border-radius: 50%;
+}
+
+.name-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  font-weight: bold;
+  font-size: large;
+  width: 100%;
+}
+
+.followers {
+  margin-top: 1rem;
+  width: 100%;
+}
+
 .account-bio {
-  margin-top: 2em;
-  margin-bottom: 2em;
+  margin: 2em;
+  margin-bottom: 4rem;
   height: fit-content;
   max-width: fit-content;
   border: 0.15em solid rgb(20, 21, 22);
@@ -37,8 +62,9 @@
 .posts-container {
   display: flex;
   flex-direction: column;
-  height: 1100px;
+  height: 800px;
   width: 100%;
   padding: 2em;
   overflow: auto;
+  text-align: center;
 }
