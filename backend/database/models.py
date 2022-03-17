@@ -23,6 +23,7 @@ class DbUser(Base):
     links = relationship('DbLink', back_populates='user')
     games = relationship('DbGame', back_populates='user')
     profile = relationship('DbProfile', back_populates='user')
+    sent_messages = relationship('DbMessage', back_populates='sender')
 
 
 class DbPost(Base):
@@ -30,6 +31,7 @@ class DbPost(Base):
     post_id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     profile_id = Column(Integer, ForeignKey('profile.profile_id'))
+    title = Column(String(100))
     image_url = Column(String(500))
     video_url = Column(String(500))
     content_path_type = Column(String(8))   # 'external' or 'internal'
@@ -124,3 +126,24 @@ class DbProfile(Base):
     posts = relationship('DbPost', back_populates='profile')
     comments = relationship('DbComment', back_populates='profile')
     likes = relationship('DbLike', back_populates='profile')
+
+
+class DbThread(Base):
+    __tablename__ = 'thread'
+    thread_id = Column(Integer, primary_key=True, index=True)
+    user1_id = Column(Integer, ForeignKey('user.id'))
+    user2_id = Column(Integer, ForeignKey('user.id')) # testing
+    messages = relationship('DbMessage', back_populates='thread')
+
+
+class DbMessage(Base):
+    __tablename__ = 'message'
+    message_id = Column(Integer, primary_key=True, index=True)
+    thread_id = Column(Integer, ForeignKey('thread.thread_id'))
+    sender_id = Column(Integer, ForeignKey('user.id'))
+    body = Column(String(1000))
+    sent_time = Column(DateTime)
+    message_status = Column(String(4))  # 'sent' or 'read'
+    read_time = Column(DateTime)
+    sender = relationship('DbUser', back_populates='sent_messages')
+    thread = relationship('DbThread', back_populates='messages')
