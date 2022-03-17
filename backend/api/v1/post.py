@@ -115,7 +115,7 @@ def retrieve_post(post_id, database: Session = Depends(get_database)):
 
 
 @router.put('/{post_id}')
-def update_post(post_id: str, request: schemas.PostRequest, database: Session = Depends(get_database)):
+def update_post(post_id, request: schemas.PostRequest, database: Session = Depends(get_database)):
     """
     Updates a post in the EgoPeek database.
     Inputs: 'post_id': str, {'user_id': int, 'image_url': str, 'video_url': str, 'content_path_type': str, 'message': str}

@@ -12,6 +12,7 @@ from datetime import datetime
 
 def create_post(db: Session, request: schemas.PostRequest):
     new_post = DbPost(
+        title = request.title,
         image_url = request.image_url,
         video_url = request.video_url,
         content_path_type = request.content_path_type,
@@ -51,6 +52,7 @@ def get_post(db: Session, post_id: int):
 def update_post(db: Session, post_id: int, request: schemas.PostRequest):
     result = db.query(DbPost).filter(DbPost.post_id == post_id)
     result.update({
+            DbPost.title: request.title,
             DbPost.image_url: request.image_url,
             DbPost.video_url: request.video_url,
             DbPost.content_path_type: request.content_path_type,
