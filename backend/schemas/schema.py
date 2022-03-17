@@ -5,7 +5,7 @@ schema.py
     - Ensures proper input and output formatting, as well as taking database objects and converting them to JSON for output to front end.
 """
 
-from pydantic import BaseModel, Json
+from pydantic import BaseModel
 from typing import Optional, List
 from datetime import datetime
 
@@ -16,6 +16,7 @@ from datetime import datetime
 # for ProfileResponse
 class Post(BaseModel):
     post_id: int
+    title: str
     message: Optional[str]
     timestamp: datetime
     class Config():
@@ -102,6 +103,18 @@ class ProfileUser(BaseModel):
     class Config():
         orm_mode = True
 
+# for ThreadResponse
+class Message(BaseModel):
+    message_id: int
+    sender: User
+    body: str
+    sent_time: datetime
+    message_status: str
+    read_time: Optional[datetime]
+    class Config():
+        orm_mode = True
+
+
 ##################################################################
 #          SCHEMA CLASSES FOR INPUT/OUTPUT FILTERING             #
 ##################################################################
@@ -125,6 +138,7 @@ class LoginRequest(BaseModel):
 
 class PostRequest(BaseModel):
     user_id: int
+    title: str
     image_url: Optional[str]
     video_url: Optional[str]
     content_path_type: Optional[str]   # 'internal' or 'external'
@@ -133,6 +147,7 @@ class PostRequest(BaseModel):
 class PostResponse(BaseModel):
     post_id: int
     user: User
+    title: str
     image_url: Optional[str]
     video_url: Optional[str]
     content_path_type: Optional[str]
@@ -241,5 +256,32 @@ class ProfileResponse(BaseModel):
     posts: List[Post]
     comments: List[Comment]
     likes: List[UserLikes]
+    class Config():
+        orm_mode = True
+
+class FirstMessageRequest(BaseModel):
+    sender_id: int
+    receiver_id: int
+    body: str
+
+class ReplyRequest(BaseModel):
+    thread_id: int
+    sender_id: int
+    body: str
+
+class MessageResponse(BaseModel):
+    thread_id: int
+    message_id: int
+    sender_id: int
+    body: str
+    sent_time: datetime
+    message_status: str
+    read_time: Optional[datetime]
+    class Config():
+        orm_mode = True
+
+class ThreadResponse(BaseModel):
+    thread_id: int
+    messages: List[Message]
     class Config():
         orm_mode = True
