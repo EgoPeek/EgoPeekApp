@@ -10,6 +10,7 @@ import './UserFeed.css'
 import UserPost from '../Misc/CustomComponents/UserPost'
 import Friend from './Friend'
 import useFetch from '../../hooks/useFetch'
+import CreatePost from './CreatePost'
 
 const UserFeed = () => {
     const userID = window.localStorage.getItem('userID')
@@ -21,9 +22,7 @@ const UserFeed = () => {
             <Header />
             <div className='user-feed-container'>
                 <div className='user-feed'>
-                    <div className='ms-paint post'>
-                        Post: post something, I won't give you a virus I promise
-                    </div>
+                    <CreatePost />    
                     {/* while the page is fetching post it'll just display loading sign */}
                     {isPending && <p>Loading...</p>}
                     {/* maps each post from API call to a userPost component */}

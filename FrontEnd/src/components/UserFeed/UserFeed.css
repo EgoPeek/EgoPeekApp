@@ -14,15 +14,6 @@
     margin-bottom: 1rem;
 }
 
-.ms-paint{
-    border: red 2px solid;
-    width: 100%;
-    height: 25px;
-    background-color: purple;
-    color: pink;
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
 
 .friend-card{
     overflow: hidden;

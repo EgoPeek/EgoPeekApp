@@ -18,7 +18,7 @@
 
 .userpost-image img{
     width: 100%;
-    object-fit: 100%;
+    object-fit: cover;
     height: 120px;
 }
 .userpost-image{

@@ -12,7 +12,7 @@ const imgReference = env.imgReference
 
 // @post post object that gets passed through
 const UserPost = ({post,className}) => {
-  const {comments, image_url, timestamp, user} = post
+  const {comments, image_url, timestamp, user,title} = post
   const dateObj = new Date(timestamp)
 
 
@@ -28,7 +28,7 @@ const UserPost = ({post,className}) => {
 
       <div className='userpost-information'>
         <div className='post-title post-element'>
-          <h2>title</h2>
+          <h2>{title}</h2>
         </div>
 
         <div className='post-user post-element'>

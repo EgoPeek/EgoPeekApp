@@ -1,0 +1,19 @@
+.create-post{
+    display: flex;
+    height: min-content;
+    border-radius: 7px;
+    margin-bottom: 15px;
+    background-color: #24222F;
+    padding: .8rem;
+    align-items: center;
+}
+
+.create-post-img img{
+    height: 40px;
+    width: 100%;
+    border-radius: 50%;
+    display: block;
+}
+.create-post-img{
+    margin-right: 10px;
+}
