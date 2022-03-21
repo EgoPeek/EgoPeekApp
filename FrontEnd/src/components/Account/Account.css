@@ -10,10 +10,11 @@
 .sidebar-container {
   background-color: rgba(51, 49, 61, 1);
   background: linear-gradient(
-    15deg,
-    rgba(27, 25, 37, 1) 55%,
-    rgba(49, 47, 59, 1) 100%
+    8deg,
+    rgba(23, 22, 33, 1) 10%,
+    rgba(51, 49, 61, 1) 100%
   );
+
   height: 100%;
   display: flex;
   flex-direction: column;

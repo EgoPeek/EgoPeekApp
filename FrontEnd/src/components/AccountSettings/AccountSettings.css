@@ -1,0 +1,73 @@
+.usersettings {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.settings-left {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 20%;
+}
+
+.avatar-container {
+  margin-top: 5%;
+  margin-left: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.avatar {
+  background-color: aqua;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+
+.edit-bio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+  text-align: center;
+  margin-top: 5%;
+}
+
+.settings-bio {
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.settings-main {
+  margin-left: 2%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 60%;
+}
+
+.settings-info {
+  font-size: large;
+  margin-top: 5%;
+}
+
+.edit-favorites {
+  margin-top: 10%;
+  width: 80%;
+}
+
+.select-favorites {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.account-dropdown {
+  margin-top: 1%;
+  min-width: 25%;
+  width: fit-content;
+  text-align: center;
+  font-size: larger;
+}
