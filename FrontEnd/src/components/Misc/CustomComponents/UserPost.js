@@ -12,8 +12,18 @@ const imgReference = env.imgReference
 
 // @post post object that gets passed through
 const UserPost = ({post,className}) => {
-  const {comments, image_url, timestamp, user,title} = post
+  const {comments, image_url, timestamp, user,title, content_path_type} = post
   const dateObj = new Date(timestamp)
+  const [imageUrl, setImageUrl] = useState('')
+
+  // set imageUrl and videoUrl based on whether it's a link or an uploaded file
+  useEffect(() => {
+    if (post.content_path_type == 'external') {
+      setImageUrl(post.image_url)
+    } else {
+      setImageUrl(imgReference + post.image_url)
+    }
+  }, [])
 
 
   return (
@@ -23,7 +33,7 @@ const UserPost = ({post,className}) => {
       </div>
       
       <div className='userpost-image'>
-        <img src={`${imgReference}${image_url}`}></img>
+        <img src={imageUrl}></img>
       </div>
 
       <div className='userpost-information'>
