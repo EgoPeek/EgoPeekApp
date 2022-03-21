@@ -47,7 +47,7 @@ const InternalImageOrVideo = ({
                             }
                             {FILETYPES_VIDEO.includes(files[0].type) &&
                                 <video controls onMouseOver={() => setHoverToShow(true)} onMouseLeave={() => { setHoverToShow(false) }}
-                                    className="uploaded-img-src" > <source src={blob} type={files[0].type} />
+                                    className="uploaded-img-src" > <source src={blob}/>
                                     </video>
                             }
                         </div>

@@ -14,7 +14,7 @@ import CreatePost from './CreatePost'
 
 const UserFeed = () => {
     const userID = window.localStorage.getItem('userID')
-    const { data: post, isPending, error } = useFetch(`/api/v1/posts/all/${userID}`)
+    const { data: post, isPending, error } = useFetch(`/api/v1/posts/feed/${userID}`)
 
 
     return (

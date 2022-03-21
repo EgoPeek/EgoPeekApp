@@ -6,6 +6,7 @@
 
 
 import React, { useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import Header from '../Misc/CustomComponents/Header'
 import { TextInputPost, TextInputStandard } from '../Misc/Input/TextFields'
 import { TextareaAutosize } from '@mui/material'
@@ -36,6 +37,7 @@ const Submit = () => {
     const [description, setDescription] = useState('')
     const [imageDescription, setImageDescription] = useState('')
     const [title, setTitle] = useState('')
+    const navigate = useNavigate()
 
 
     const addTag = (e) => {
@@ -69,6 +71,7 @@ const Submit = () => {
         try{
             const res = await axios.post('/api/v1/posts/',body)
             console.log(res.data)
+            return(res.data)
         }catch(err){
             console.log(err)
         }
@@ -88,6 +91,7 @@ const Submit = () => {
         try{
             const res = await axios.post('/api/v1/posts/',body)
             console.log(res.data)
+            return res.data
         }catch(err){
             console.log(err)
         }
@@ -145,6 +149,7 @@ const Submit = () => {
         try{
             const res = await axios.post('/api/v1/posts/',body)
             console.log(res.data)
+            return res.data
         }catch(err){
             console.log(err)
         }
@@ -152,17 +157,20 @@ const Submit = () => {
     }
 
     // probably add error handling or something before being able to post
-    const onButtonSubmit = ()=>{
+    const onButtonSubmit = async ()=>{
+        let redirect = null;
         if(highLighted===1){
             //1 is text post
-            postMessage()
+            await postMessage()
         }else if(highLighted === 2){
             //2 is source post
-            postInternalSource()
+            await postInternalSource()
         }else if(highLighted === 3){
             // 3 is url post
-            postExternalSource()
+            await postExternalSource()
         }
+        // this will be replaced in the future to redirect to user home or to the actual page itself
+        navigate('/home')
     }
 
     return (

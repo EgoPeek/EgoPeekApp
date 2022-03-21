@@ -36,11 +36,11 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
-            <Route path="/account" element={<Account />} /> {/* move to protected */}
           </Route>
 
           {/* if a user IS logged in protected routes are shown */}
           <Route path='/' element={<ProtectedRoute />}>
+            <Route path="/account" element={<Account />} /> {/* move to protected */}
             <Route path='/home' element={<UserFeed />} />
             <Route path='/submit' element={<Submit />}/>
           </Route>
