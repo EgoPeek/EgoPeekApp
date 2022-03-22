@@ -3,37 +3,39 @@
  * Description: User Post component that can re re used where ever a post needs to be created
  */
 
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './UserPost.css'
-import tempImage from '../../../images/Valorant.jpg'
 import env from '../../../env.json'
-import axios from 'axios'
 const imgReference = env.imgReference
 
 // @post post object that gets passed through
-const UserPost = ({post,className}) => {
-  const {comments, image_url, timestamp, user,title, content_path_type} = post
+const UserPost = ({ post, className }) => {
+  const { comments, image_url, timestamp, user, title, content_path_type } = post
   const dateObj = new Date(timestamp)
   const [imageUrl, setImageUrl] = useState('')
 
   // set imageUrl and videoUrl based on whether it's a link or an uploaded file
   useEffect(() => {
-    if (post.content_path_type == 'external') {
-      setImageUrl(post.image_url)
+
+
+    if (content_path_type === 'external') {
+      setImageUrl(image_url)
     } else {
-      setImageUrl(imgReference + post.image_url)
+      setImageUrl(imgReference + image_url)
     }
   }, [])
 
 
   return (
-    <div className={`userpost-main-container ${className}` }>
+    <div className={`userpost-main-container ${className}`}>
       <div className='userpost-votes'>
         Likes
       </div>
-      
+
       <div className='userpost-image'>
+
         <img src={imageUrl}></img>
+
       </div>
 
       <div className='userpost-information'>

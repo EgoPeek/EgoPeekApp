@@ -11,6 +11,7 @@ import UserPost from '../Misc/CustomComponents/UserPost'
 import Friend from './Friend'
 import useFetch from '../../hooks/useFetch'
 import CreatePost from './CreatePost'
+import { TextInputStandard } from '../Misc/Input/TextFields'
 
 const UserFeed = () => {
     const userID = window.localStorage.getItem('userID')
@@ -31,6 +32,9 @@ const UserFeed = () => {
 
                 <div className='friends-list'>
                     <h2>Friends</h2>
+                    <div className='search-friends'>
+                        <TextInputStandard  label="search or add friends" size='small'/>
+                    </div>
                     <Friend friendInfo='friend info' className='friend-card' />
                     <Friend friendInfo='friend info' className='friend-card' />
                     <Friend friendInfo='friend info' className='friend-card' />

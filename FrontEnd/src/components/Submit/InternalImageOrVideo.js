@@ -21,13 +21,14 @@ const InternalImageOrVideo = ({
     setBlob,
     blob,
     setImageDescription,
+    videoElem,
     ...otherProps
 }) => {
     const [hoverToShow, setHoverToShow] = useState(false)
 
-
     const removeImg = () => {
         setFiles([])
+        setBlob('')
         setHoverToShow(false)
     }
 
@@ -38,16 +39,16 @@ const InternalImageOrVideo = ({
                 :
                 <div className='complete-upload'>
                     <div className='upload-container'>
-                        <div className='hover-container'  >
-                            {hoverToShow && <h2 onClick={removeImg} className='img-hover-message'>click to remove</h2>}
+                        <div className='hover-container' onClick={removeImg} >
+                            {hoverToShow && <h2 className='img-hover-message'>click to remove</h2>}
                             {FILETYPES_IMG.includes(files[0].type) &&
                                 <img onMouseOver={() => setHoverToShow(true)} onMouseLeave={() => { setHoverToShow(false) }}
                                     src={blob}
                                     className="uploaded-img-src"></img>
                             }
                             {FILETYPES_VIDEO.includes(files[0].type) &&
-                                <video controls onMouseOver={() => setHoverToShow(true)} onMouseLeave={() => { setHoverToShow(false) }}
-                                    className="uploaded-img-src" > <source src={blob}/>
+                                <video ref={videoElem} controls onMouseOver={() => setHoverToShow(true)} onMouseLeave={() => { setHoverToShow(false) }}
+                                    className="uploaded-img-src" src={blob}>
                                     </video>
                             }
                         </div>

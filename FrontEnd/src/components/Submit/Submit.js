@@ -5,8 +5,8 @@
  */
 
 
-import React, { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import React, { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../Misc/CustomComponents/Header'
 import { TextInputPost, TextInputStandard } from '../Misc/Input/TextFields'
 import { TextareaAutosize } from '@mui/material'
@@ -38,6 +38,7 @@ const Submit = () => {
     const [imageDescription, setImageDescription] = useState('')
     const [title, setTitle] = useState('')
     const navigate = useNavigate()
+    const videoElem = useRef(null)
 
 
     const addTag = (e) => {
@@ -68,17 +69,17 @@ const Submit = () => {
             message: ''
         }
 
-        try{
-            const res = await axios.post('/api/v1/posts/',body)
+        try {
+            const res = await axios.post('/api/v1/posts/', body)
             console.log(res.data)
-            return(res.data)
-        }catch(err){
+            return (res.data)
+        } catch (err) {
             console.log(err)
         }
 
     }
 
-    const postMessage = async ()=> {
+    const postMessage = async () => {
         const body = {
             user_id: window.localStorage.getItem('userID'),
             title: title,
@@ -88,11 +89,11 @@ const Submit = () => {
             message: description
         }
 
-        try{
-            const res = await axios.post('/api/v1/posts/',body)
+        try {
+            const res = await axios.post('/api/v1/posts/', body)
             console.log(res.data)
             return res.data
-        }catch(err){
+        } catch (err) {
             console.log(err)
         }
     }
@@ -121,17 +122,47 @@ const Submit = () => {
 
         } else if (FILETYPES_VIDEO.includes(file.type)) {
             //hit video endpoint
+            const canvas = document.createElement('canvas')
+            canvas.width = videoElem.current.videoWidth;
+            canvas.height = videoElem.current.videoHeight;
+
+            canvas
+                .getContext("2d")
+                .drawImage(
+                    videoElem.current,
+                    0,
+                    0,
+                    videoElem.current.videoWidth,
+                    videoElem.current.videoHeight
+                );
+            const res = await fetch(canvas.toDataURL())
+            const blob = await res.blob()
+            const imgFile = new File([blob], "video_thumbnail.png", {
+                type: "image/png"
+            }); 
+
+            console.log(imgFile)
+            const thumbnail = new FormData()
+            thumbnail.append('image', imgFile)
             formData.append('video', file)
             try {
 
-                const res = await axios.post('/api/v1/posts/videos', formData, {
+                const imageRes = await axios.post('/api/v1/posts/images', thumbnail, {
                     headers: {
                         accept: 'application/json',
                         'Content-Type': 'multipart/form-data'
                     },
                 })
-                console.log(res)
-                videoPath = res.data.relative_video_path;
+                const videoRes = await axios.post('/api/v1/posts/videos', formData, {
+                    headers: {
+                        accept: 'application/json',
+                        'Content-Type': 'multipart/form-data'
+                    },
+                })
+                console.log(imageRes)
+                console.log(videoRes)
+                videoPath = videoRes.data.relative_video_path;
+                imagePath = imageRes.data.relative_image_path
             } catch (err) {
                 console.log(err)
             }
@@ -146,26 +177,26 @@ const Submit = () => {
             message: imageDescription
         }
 
-        try{
-            const res = await axios.post('/api/v1/posts/',body)
+        try {
+            const res = await axios.post('/api/v1/posts/', body)
             console.log(res.data)
             return res.data
-        }catch(err){
+        } catch (err) {
             console.log(err)
         }
 
     }
 
     // probably add error handling or something before being able to post
-    const onButtonSubmit = async ()=>{
+    const onButtonSubmit = async () => {
         let redirect = null;
-        if(highLighted===1){
+        if (highLighted === 1) {
             //1 is text post
             await postMessage()
-        }else if(highLighted === 2){
+        } else if (highLighted === 2) {
             //2 is source post
             await postInternalSource()
-        }else if(highLighted === 3){
+        } else if (highLighted === 3) {
             // 3 is url post
             await postExternalSource()
         }
@@ -208,11 +239,11 @@ const Submit = () => {
 
                             <div className='post-body'>
                                 {highLighted === 1 && <TextPost setDescription={setDescription} />}
-                                {highLighted === 2 && <InternalImageOrVideo files={files} setFiles={setFiles} blob={blob} setBlob={setBlob} setImageDescription={setImageDescription}/>}
+                                {highLighted === 2 && <InternalImageOrVideo videoElem={videoElem} files={files} setFiles={setFiles} blob={blob} setBlob={setBlob} setImageDescription={setImageDescription} />}
                                 {highLighted === 3 && <ExternalLink setUrlLink={setUrlLink} />}
 
                                 <div className='submit-post'>
-                                    <GreenButton variant='outlined' fullWidth  onClick={onButtonSubmit}>Submit</GreenButton>
+                                    <GreenButton variant='outlined' fullWidth onClick={onButtonSubmit}>Submit</GreenButton>
 
                                 </div>
                             </div>
