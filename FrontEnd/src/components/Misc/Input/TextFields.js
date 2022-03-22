@@ -9,11 +9,10 @@ import { green } from '@mui/material/colors'
 
 //updated version of using mui styles
 export const TextInputStandard = styled(TextField)(() => ({
-    backgroundColor: '#171621',
-    color:'white',
-    'fieldset':'white',
-    'label':{
-        color:'grey'
+    color: 'white',
+    'fieldset': 'white',
+    'label': {
+        color: 'grey'
     },
     '& label.Mui-focused': {
         color: 'white',
@@ -21,17 +20,47 @@ export const TextInputStandard = styled(TextField)(() => ({
 
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
-          borderColor: 'grey',
+            borderColor: 'grey',
         },
         '&:hover fieldset': {
-          borderColor: green[400],
+            borderColor: green[400],
         },
         '&.Mui-focused fieldset': {
             borderColor: green[400],
         },
-        'input':{
-            color:'white'
+        'input': {
+            color: 'white',
+            backgroundColor: '#171621',
         }
-      },
+    },
+
+}))
+
+export const TextInputPost = styled(TextField)(() => ({
+    color: 'white',
+    'fieldset': 'white',
+    'label': {
+        color: 'grey',
+
+    },
+    '& label.Mui-focused': {
+        color: 'white',
+    },
+
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderColor: 'grey',
+        },
+        '&:hover fieldset': {
+            borderColor: 'white',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: 'white',
+        },
+        'input': {
+            color: 'white',
+            background: '#171621',
+        }
+    },
 
 }))

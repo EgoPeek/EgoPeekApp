@@ -5,6 +5,7 @@
     padding: 1.5rem;
     border: solid 1px #24222F;
     border-radius: 12px;
+    margin-bottom: 1rem;
 }
 .userpost-main-container:hover{
     cursor: pointer;
@@ -16,13 +17,15 @@
     margin-right: 1rem;
 }
 
-.userpost-image img{
+.userpost-image img, video{
     width: 100%;
-    object-fit: 100%;
+    object-fit: cover;
     height: 120px;
 }
+
+
 .userpost-image{
-    margin-right: 2.5rem;
+    margin-right: 1.5rem;
 }
 
 

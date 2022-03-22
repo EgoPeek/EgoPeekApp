@@ -4,25 +4,16 @@
     justify-content: space-around;
 }
 .user-feed{
-    width: 75%;
+    width: 70%;
 }
-.friends-List{
-    width: 20%;
-    overflow:hidden;
+
+.friends-list h2{
+    margin-bottom: 1rem;
 }
 .container-post{
     margin-bottom: 1rem;
 }
 
-.ms-paint{
-    border: red 2px solid;
-    width: 100%;
-    height: 25px;
-    background-color: purple;
-    color: pink;
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
 
 .friend-card{
     overflow: hidden;
@@ -32,8 +23,14 @@
     background-color: #24222F;
     border-radius: 12px;
     padding: 30px;
-    width: 10%;
+    width: 18%;
     height: fit-content;
     position: sticky;
     top: 35px;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
