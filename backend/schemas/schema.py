@@ -95,14 +95,6 @@ class PostLike(BaseModel):
     class Config():
         orm_mode = True
 
-# for ProfileResponse
-class ProfileUser(BaseModel):
-    id: int
-    username: str
-    email: str
-    class Config():
-        orm_mode = True
-
 # for ThreadResponse
 class Message(BaseModel):
     message_id: int
@@ -114,6 +106,19 @@ class Message(BaseModel):
     class Config():
         orm_mode = True
 
+# for ProfileResponse
+class UserProfile(BaseModel):
+    id: int
+    username: str
+    email: str
+    social_links: Optional[List[Link]]
+    games: Optional[List[Game]]
+    friends: Optional[List[Friend]]
+    posts: Optional[List[Post]]
+    comments: Optional[List[Comment]]
+    likes: Optional[List[UserLikes]]
+    class Config():
+        orm_mode = True
 
 ##################################################################
 #          SCHEMA CLASSES FOR INPUT/OUTPUT FILTERING             #
@@ -245,17 +250,11 @@ class ProfileRequest(BaseModel):
     quote: Optional[str]
 
 class ProfileResponse(BaseModel):
-    user: ProfileUser
+    user: UserProfile
     profile_id: int
     avatar_path: Optional[str]
     bio: Optional[str]
     quote: Optional[str]
-    social_links: List[Link]
-    games: List[Game]
-    friends: List[Friend]
-    posts: List[Post]
-    comments: List[Comment]
-    likes: List[UserLikes]
     class Config():
         orm_mode = True
 

@@ -36,7 +36,7 @@ def retrieve_all_db_friends(database: Session = Depends(get_database)):
     return db_friend.get_all_db_friends(database)
 
 
-@router.get('/all/{user_id}')
+@router.get('/all/{user_id}', response_model = List[schemas.FriendResponse])
 def retrieve_all_user_friends(user_id, database: Session = Depends(get_database)):
     """
     Retrieves all friends for the specified user from the EgoPeek database.
