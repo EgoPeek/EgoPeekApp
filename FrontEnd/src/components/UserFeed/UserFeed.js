@@ -12,28 +12,38 @@ import Friend from './Friend'
 import useFetch from '../../hooks/useFetch'
 import CreatePost from './CreatePost'
 import { TextInputStandard } from '../Misc/Input/TextFields'
+import DisplayPost from './DisplayPost'
+import { useState } from 'react'
 
 const UserFeed = () => {
     const userID = window.localStorage.getItem('userID')
     const { data: post, isPending, error } = useFetch(`/api/v1/posts/feed/${userID}`)
-
+    const [showPost, setShowPost] = useState(false)
+    const [postInfo, setPostInfo] = useState(null)
+    
+    const displayPost = (topic,e) => {
+        setPostInfo(topic)
+        setShowPost(true)
+        console.log(topic)
+    }
 
     return (
         <div>
             <Header />
             <div className='user-feed-container'>
+                {showPost && <DisplayPost post={postInfo}/>}
                 <div className='user-feed'>
-                    <CreatePost />    
+                    <CreatePost />
                     {/* while the page is fetching post it'll just display loading sign */}
                     {isPending && <p>Loading...</p>}
                     {/* maps each post from API call to a userPost component */}
-                    {post && post.map((item, i) => <UserPost post={item} key={i} />)}
+                    {post && post.map((item, i) => <UserPost onClick={()=>displayPost(item)} post={item} key={i} />)}
                 </div>
 
                 <div className='friends-list'>
                     <h2>Friends</h2>
                     <div className='search-friends'>
-                        <TextInputStandard  label="search or add friends" size='small'/>
+                        <TextInputStandard label="search or add friends" size='small' />
                     </div>
                     <Friend friendInfo='friend info' className='friend-card' />
                     <Friend friendInfo='friend info' className='friend-card' />
