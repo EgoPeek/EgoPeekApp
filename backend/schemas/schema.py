@@ -120,6 +120,12 @@ class UserProfile(BaseModel):
     class Config():
         orm_mode = True
 
+# for FriendListResponse
+class Avatar(BaseModel):
+    avatar_path: str
+    class Config():
+        orm_mode = True
+
 ##################################################################
 #          SCHEMA CLASSES FOR INPUT/OUTPUT FILTERING             #
 ##################################################################
@@ -192,6 +198,13 @@ class FriendResponse(BaseModel):
     friend_id: int
     message: Optional[str]
     friend_status: str
+    class Config():
+        orm_mode = True
+
+class FriendListResponse(BaseModel):
+    id: int
+    username: str
+    profile: Optional[List[Avatar]]
     class Config():
         orm_mode = True
 
