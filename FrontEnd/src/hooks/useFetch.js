@@ -13,11 +13,11 @@ const useFetch = (url) => {
             try {
                 const res = await axios.get(url)
                 console.log(res)
-                setIsPending(false)
                 setData(res.data)
-            } catch (e) {
                 setIsPending(false)
+            } catch (e) {
                 setError(e.message)
+                setIsPending(false)
             }
         }
         userFeed();
