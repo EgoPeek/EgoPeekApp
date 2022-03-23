@@ -46,6 +46,14 @@ def retrieve_all_user_friends(user_id, database: Session = Depends(get_database)
     return db_friend.get_all_user_friends(database, user_id)
 
 
+@router.get('/list/{user_id}', response_model = List[schemas.FriendListResponse])
+def retrieve_friend_list_data(user_id, database: Session = Depends(get_database)):
+    """
+    
+    """
+    return db_friend.get_friend_list(database, user_id)
+
+
 @router.put('/responses')
 def update_friend_request(request: schemas.FriendRequest, database: Session = Depends(get_database)):
     """
