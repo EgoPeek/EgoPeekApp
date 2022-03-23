@@ -16,7 +16,7 @@ import { TextInputStandard } from '../Misc/Input/TextFields'
 const UserFeed = () => {
     const userID = window.localStorage.getItem('userID')
     const { data: post, isPending, error } = useFetch(`/api/v1/posts/feed/${userID}`)
-
+    const {data: friends, isPending: friendsPending, error: friendsError} = useFetch(`/api/v1/friends/list/${userID}`)
 
     return (
         <div>
@@ -35,11 +35,10 @@ const UserFeed = () => {
                     <div className='search-friends'>
                         <TextInputStandard  label="search or add friends" size='small'/>
                     </div>
-                    <Friend friendInfo='friend info' className='friend-card' />
-                    <Friend friendInfo='friend info' className='friend-card' />
-                    <Friend friendInfo='friend info' className='friend-card' />
-                    <Friend friendInfo='friend info' className='friend-card' />
-                    <Friend friendInfo='friend info' className='friend-card' />
+                    {/* while the page is fetching friends it'll just display loading sign */}
+                    {friendsPending && <p>Loading...</p>}
+                    {/* maps each friend from API call to a Friend component */}
+                    {friends && friends.map((item, i) => <Friend friendInfo={item} key={i} />)}
                 </div>
             </div>
         </div>
