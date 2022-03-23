@@ -5,7 +5,7 @@ db_friend.py
 """
 
 from sqlalchemy.orm import Session
-from .models import DbFriend
+from .models import DbFriend, DbUser
 from backend.schemas import schema
 
 
@@ -57,6 +57,13 @@ def get_all_db_friends(db: Session):
 
 def get_all_user_friends(db: Session, user_id: int):
     return db.query(DbFriend).filter(DbFriend.user_id == user_id).all()
+
+
+def get_friend_list(db: Session, user_id: int):
+    result = db.query(DbFriend).filter(DbFriend.user_id == user_id).all()
+    friends = [friend.friend_id for friend in result]
+    friend_data = db.query(DbUser).filter(DbUser.id.in_(friends)).all()
+    return friend_data
 
 
 def delete_friends(db: Session, user_id: int, friend_id: int):
