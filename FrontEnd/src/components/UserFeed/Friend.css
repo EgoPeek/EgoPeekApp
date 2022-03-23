@@ -6,6 +6,10 @@
 }
 
 .user-icon{
-    margin-right: 10px;
+    height: 140px;
+    width: 140px;
+    padding: .5rem;
+    margin-right: 5px;
+    overflow: hidden;
 }
 
