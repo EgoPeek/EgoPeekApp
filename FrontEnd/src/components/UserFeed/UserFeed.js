@@ -53,7 +53,7 @@ const UserFeed = () => {
                     {/* while the page is fetching friends it'll just display loading sign */}
                     {friendsPending && <p>Loading...</p>}
                     {/* maps each friend from API call to a Friend component */}
-                    {friends && friends.map((item, i) => <Friend friendInfo={item} key={i} />)}
+                    {friends.length > 0 ? friends.map((item, i) => <Friend friendInfo={item} key={i} />) : <p>there are no friends?</p>}
                 </div>
             </div>
         </div>

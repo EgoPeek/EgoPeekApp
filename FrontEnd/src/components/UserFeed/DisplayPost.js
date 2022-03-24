@@ -1,16 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { GreenButton } from '../Misc/Input/Buttons'
 import { TextInputStandard } from '../Misc/Input/TextFields'
 import CloseIcon from '@mui/icons-material/Close';
 import Comment from './Comment'
 import './DisplayPost.css'
-import {Button } from '@mui/material';
+import { Button } from '@mui/material';
+import axios from 'axios';
 
 const DisplayPost = ({ post, closeDisplay, ...props }) => {
-    const { comments, like_count, content_path_type, title, message, timestamp, user, video_url, image_url } = post
+    const { post_id, comments, like_count, content_path_type, title, message, timestamp, user, video_url, image_url } = post
     const isVideo = video_url === ""
 
-    const dateObj = new Date(timestamp) 
+    const dateObj = new Date(timestamp)
+    const [comment, setComment] = useState('')
+    const userID = window.localStorage.getItem('userID')
+
+    const addComment = async () => {
+        const body = {
+            user_id: userID,
+            message: comment,
+            post_id: post_id
+        }
+        try {
+            const res = await axios.post('/api/v1/comments/', body)
+            const newComment = res.data
+            comments.push(newComment)
+            console.log(res.data)
+            setComment('')
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     return (
         <div className='display-post-container' {...props}>
@@ -19,7 +39,7 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
                 <div className='display-post'>
 
                     <div className='close-button' onClick={closeDisplay}>
-                        <Button sx={{color:'white'}} startIcon={<CloseIcon/>}>Close</Button>
+                        <Button sx={{ color: 'white' }} startIcon={<CloseIcon />}>Close</Button>
                     </div>
                     <h1>{title}</h1>
                     <div className='display-top-half'>
@@ -40,7 +60,7 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
                                 <div className='post-info'>
                                     <div className='post-info-details'>
                                         <p>
-                                            Like Count: {like_count}
+                                            Like Count: {like_count}0
                                         </p>
                                     </div>
                                     {/* <div className='content-dislikes'>
@@ -69,15 +89,12 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
                         </div>
                     </div>
                     <div className='post-create-comment'>
-                        <TextInputStandard autoComplete='off' fullWidth size='small' variant='outlined' placeholder='Type a comment'></TextInputStandard>
-                        <GreenButton variant='outlined'>Submit</GreenButton>
+                        <TextInputStandard onChange={(e) => { setComment(e.target.value) }} autoComplete='off' fullWidth size='small' variant='outlined' placeholder='Type a comment'></TextInputStandard>
+                        <GreenButton onClick={addComment} variant='outlined'>Submit</GreenButton>
                     </div>
                     <div className='display-comments-container'>
-                        <Comment commenter='user-info' />
-                        <Comment commenter='user-info' />
-                        <Comment commenter='user-info' />
-                        <Comment commenter='user-info' />
-                        <Comment commenter='user-info' />
+                        {comments.map((item, i) => <Comment commenter={item} key={i} />)}
+
                     </div>
                 </div>
             </div>

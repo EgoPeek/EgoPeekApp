@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react'
 import './UserPost.css'
 import env from '../../../env.json'
+import EGOPEEKIMG from '../../../images/EGOPEEK.png'
 const imgReference = env.imgReference
 
 // @post post object that gets passed through
@@ -34,7 +35,7 @@ const UserPost = ({ post, ...props }) => {
 
       <div className='userpost-image'>
 
-        <img src={imageUrl}></img>
+        <img src={imageUrl ==='' ? EGOPEEKIMG : imageUrl}></img>
 
       </div>
 
