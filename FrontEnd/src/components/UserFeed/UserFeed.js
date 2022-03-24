@@ -20,25 +20,29 @@ const UserFeed = () => {
     const { data: post, isPending, error } = useFetch(`/api/v1/posts/feed/${userID}`)
     const [showPost, setShowPost] = useState(false)
     const [postInfo, setPostInfo] = useState(null)
-    
-    const displayPost = (topic,e) => {
+    const { data: friends, isPending: friendsPending, error: friendsError } = useFetch(`/api/v1/friends/list/${userID}`)
+
+    const displayPost = (topic, e) => {
         setPostInfo(topic)
         setShowPost(true)
         console.log(topic)
     }
-    const {data: friends, isPending: friendsPending, error: friendsError} = useFetch(`/api/v1/friends/list/${userID}`)
+
+    const closeDisplay = () => { 
+        setShowPost(false)
+     }
 
     return (
         <div>
             <Header />
+            {showPost && <DisplayPost post={postInfo} closeDisplay={closeDisplay}/>}
             <div className='user-feed-container'>
-                {showPost && <DisplayPost post={postInfo}/>}
                 <div className='user-feed'>
                     <CreatePost />
                     {/* while the page is fetching post it'll just display loading sign */}
                     {isPending && <p>Loading...</p>}
                     {/* maps each post from API call to a userPost component */}
-                    {post && post.map((item, i) => <UserPost onClick={()=>displayPost(item)} post={item} key={i} />)}
+                    {post && post.map((item, i) => <UserPost onClick={() => displayPost(item)} post={item} key={i} />)}
                 </div>
 
                 <div className='friends-list'>

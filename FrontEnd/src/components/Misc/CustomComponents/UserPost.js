@@ -9,7 +9,7 @@ import env from '../../../env.json'
 const imgReference = env.imgReference
 
 // @post post object that gets passed through
-const UserPost = ({ post, className }) => {
+const UserPost = ({ post, ...props }) => {
   const { comments, image_url, timestamp, user, title, content_path_type } = post
   const dateObj = new Date(timestamp)
   const [imageUrl, setImageUrl] = useState('')
@@ -27,7 +27,7 @@ const UserPost = ({ post, className }) => {
 
 
   return (
-    <div className={`userpost-main-container ${className}`}>
+    <div className='userpost-main-container' {...props}>
       <div className='userpost-votes'>
         Likes
       </div>
