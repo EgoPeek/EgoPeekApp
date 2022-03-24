@@ -28,14 +28,14 @@ const UserFeed = () => {
         console.log(topic)
     }
 
-    const closeDisplay = () => { 
+    const closeDisplay = () => {
         setShowPost(false)
-     }
+    }
 
     return (
         <div>
             <Header />
-            {showPost && <DisplayPost post={postInfo} closeDisplay={closeDisplay}/>}
+            {showPost && <DisplayPost post={postInfo} closeDisplay={closeDisplay} />}
             <div className='user-feed-container'>
                 <div className='user-feed'>
                     <CreatePost />
@@ -51,9 +51,11 @@ const UserFeed = () => {
                         <TextInputStandard label="search or add friends" size='small' />
                     </div>
                     {/* while the page is fetching friends it'll just display loading sign */}
-                    {friendsPending && <p>Loading...</p>}
-                    {/* maps each friend from API call to a Friend component */}
-                    {friends.length > 0 ? friends.map((item, i) => <Friend friendInfo={item} key={i} />) : <p>there are no friends?</p>}
+                    {friendsPending ? <p>Loading...</p>
+                        :
+                        /* maps each friend from API call to a Friend component */ 
+                        friends.size > 0 ? friends.map((item, i) => <Friend friendInfo={item} key={i} />) : <p>there are no friends?</p>
+                    }
                 </div>
             </div>
         </div>
