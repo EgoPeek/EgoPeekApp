@@ -151,7 +151,7 @@ class UserProfile(BaseModel):
 
 # for FriendListResponse
 class Avatar(BaseModel):
-    avatar_path: str
+    avatar_path: Optional[str]
     class Config():
         orm_mode = True
 
