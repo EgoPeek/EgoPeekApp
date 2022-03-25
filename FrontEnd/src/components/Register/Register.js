@@ -138,7 +138,7 @@ const RegisterForm = ({ accountCreated }) => {
       return
     }
 
-    const body = {
+    let body = {
       username: userName,
       email: email,
       password: password
@@ -149,10 +149,11 @@ const RegisterForm = ({ accountCreated }) => {
       const postRes = await axios.post(`/api/v1/users/`, body)
       if (postRes.status === 201) {
         //flags the parent component a success has been made
+        auth.login(body.username,body.password)
+        body = {} 
         setUserName('')
         setEmail('')
         setPassword('')
-        auth.login()
         accountCreated(true)
       }
     } catch (error) {

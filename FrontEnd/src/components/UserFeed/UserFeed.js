@@ -10,33 +10,52 @@ import './UserFeed.css'
 import UserPost from '../Misc/CustomComponents/UserPost'
 import Friend from './Friend'
 import useFetch from '../../hooks/useFetch'
+import CreatePost from './CreatePost'
+import { TextInputStandard } from '../Misc/Input/TextFields'
+import DisplayPost from './DisplayPost'
+import { useState } from 'react'
 
 const UserFeed = () => {
     const userID = window.localStorage.getItem('userID')
-    const { data: post, isPending, error } = useFetch(`/api/v1/posts/all/${userID}`)
+    const { data: post, isPending, error } = useFetch(`/api/v1/posts/feed/${userID}`)
+    const [showPost, setShowPost] = useState(false)
+    const [postInfo, setPostInfo] = useState(null)
+    const { data: friends, isPending: friendsPending, error: friendsError } = useFetch(`/api/v1/friends/list/${userID}`)
 
+    const displayPost = (topic, e) => {
+        setPostInfo(topic)
+        setShowPost(true)
+        console.log(topic)
+    }
+
+    const closeDisplay = () => {
+        setShowPost(false)
+    }
 
     return (
         <div>
             <Header />
+            {showPost && <DisplayPost post={postInfo} closeDisplay={closeDisplay} />}
             <div className='user-feed-container'>
                 <div className='user-feed'>
-                    <div className='ms-paint post'>
-                        Post: post something, I won't give you a virus I promise
-                    </div>
+                    <CreatePost />
                     {/* while the page is fetching post it'll just display loading sign */}
                     {isPending && <p>Loading...</p>}
                     {/* maps each post from API call to a userPost component */}
-                    {post && post.map((item, i) => <UserPost post={item} key={i} />)}
+                    {post && post.map((item, i) => <UserPost onClick={() => displayPost(item)} post={item} key={i} />)}
                 </div>
 
                 <div className='friends-list'>
                     <h2>Friends</h2>
-                    <Friend friendInfo='friend info' className='friend-card' />
-                    <Friend friendInfo='friend info' className='friend-card' />
-                    <Friend friendInfo='friend info' className='friend-card' />
-                    <Friend friendInfo='friend info' className='friend-card' />
-                    <Friend friendInfo='friend info' className='friend-card' />
+                    <div className='search-friends'>
+                        <TextInputStandard label="search or add friends" size='small' />
+                    </div>
+                    {/* while the page is fetching friends it'll just display loading sign */}
+                    {friendsPending ? <p>Loading...</p>
+                        :
+                        /* maps each friend from API call to a Friend component */ 
+                        friends.size > 0 ? friends.map((item, i) => <Friend friendInfo={item} key={i} />) : <p>there are no friends?</p>
+                    }
                 </div>
             </div>
         </div>

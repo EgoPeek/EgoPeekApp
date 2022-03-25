@@ -1,0 +1,28 @@
+.display-comment{
+    display: flex;
+    flex-direction: row;
+    margin: 1rem 0;
+}
+.user-img{
+    margin-right: 1.3rem;
+}
+
+
+.comment-user{
+    display: flex;
+}
+.comment-user p{
+    margin: 0;
+    margin-right: 1em;
+    font-size: 0.9rem;
+}
+
+.comment-content p{
+    margin: 0;
+}
+.comment-msg{
+    font-size: 1.2rem;
+}
+.comment-reply{
+    font-size: 0.9rem;
+}

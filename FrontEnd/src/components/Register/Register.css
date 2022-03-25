@@ -54,7 +54,6 @@
     max-width: fit-content;
 }
 .tag{
-    flex-basis: 10%;
     background-color: #171621;
     padding: 8px;
     padding-right: 6%;
