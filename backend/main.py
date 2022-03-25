@@ -46,6 +46,7 @@ backend.mount("/static", StaticFiles(directory="FrontEnd/build/static", html = T
 backend.mount("/user_images", StaticFiles(directory="backend/user_images"), name="user_images")
 backend.mount("/user_videos", StaticFiles(directory="backend/user_videos"), name="user_videos")
 backend.mount("/user_avatars",  StaticFiles(directory="backend/user_avatars"), name="user_avatars")
+backend.mount("/logo_images", StaticFiles(directory="backend/logo_images"), name="logo_images")
 
 # serve front end from root
 @backend.get("/{rest_of_path:path}", response_class = HTMLResponse)
