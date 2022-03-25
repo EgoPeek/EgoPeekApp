@@ -12,14 +12,21 @@
     position: relative;
     height: 90%;
     overflow-y: scroll;
+    background-color: rgba(0, 0, 0, 0.979);
+    margin: 0 2rem;
+    border-radius: 12px;
+    -ms-overflow-style: none; /* IE and Edge /
+  scrollbar-width: none; / Firefox */
 }
+.display-post-buffer::-webkit-scrollbar {
+    display: none;
+  }
 .display-post{
-    background-color: rgba(0, 0, 0, 0.911);
     position: relative;
-    margin: 2rem;
     padding: 2rem;
     border-radius: 12px;
 }
+
 .close-button{
     position: absolute;
     right: 0;
