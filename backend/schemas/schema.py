@@ -45,6 +45,13 @@ class UserLikes(BaseModel):
         orm_mode = True
 
 # for ProfileResponse
+class Hashtag(BaseModel):
+    hashtag_id: int
+    hashtag_label: str
+    class Config():
+        orm_mode = True
+
+# for ProfileResponse
 class Link(BaseModel):
     link_id: int
     link_platform: str
@@ -79,6 +86,13 @@ class CommentLike(BaseModel):
     class Config():
         orm_mode = True
 
+# for CommentResponse
+class commentTag(BaseModel):
+    hashtag_id: int
+    hashtag_label: str
+    class Config():
+        orm_mode = True
+
 # for PostResponse
 class Comment(BaseModel):
     message: str
@@ -92,6 +106,13 @@ class Comment(BaseModel):
 # for PostResponse
 class PostLike(BaseModel):
     user: User
+    class Config():
+        orm_mode = True
+
+# for PostResponse
+class postTag(BaseModel):
+    hashtag_id: int
+    hashtag_label: str
     class Config():
         orm_mode = True
 
@@ -156,6 +177,7 @@ class PostResponse(BaseModel):
     comments: List[Comment]
     like_count: Optional[int]
     liked_by: List[PostLike]
+    used_hashtag: List[postTag]
     class Config():
         orm_mode = True
 
@@ -172,6 +194,24 @@ class CommentResponse(BaseModel):
     timestamp: datetime
     like_count: Optional[int]
     liked_by: List[CommentLike]
+    used_hashtag: List[commentTag]
+    class Config():
+        orm_mode = True
+
+class HashtagRequest(BaseModel):
+    hashtag_label: str
+    post_id: Optional[int]
+    comment_id: Optional[int]
+    user_id: Optional[int]
+
+class HashtagResponse(BaseModel):
+    hashtag_id: int
+    hashtag_label: str
+    hashtag_counter: int
+    post_used_hashtag: Optional[List[Post]]
+    comment_used_hashtag: Optional[List[Comment]]
+    user: Optional[User]
+    # profile: Optional[ProfileUser]
     class Config():
         orm_mode = True
 
@@ -256,6 +296,7 @@ class ProfileResponse(BaseModel):
     posts: List[Post]
     comments: List[Comment]
     likes: List[UserLikes]
+    interest_hashtags: List[Hashtag]            
     class Config():
         orm_mode = True
 
