@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI, Request
-from backend.api.v1 import user_router, post_router, comment_router, tag_router, friend_router, like_router, link_router, game_router, profile_router, message_router
+from backend.api.v1 import user_router, post_router, comment_router, hashtag_router, friend_router, like_router, link_router, game_router, profile_router, message_router
 from backend.auth import auth_router
 from backend.core import settings
 from fastapi.staticfiles import StaticFiles
@@ -19,7 +19,7 @@ backend.include_router(user_router, prefix=settings.API_V1_STR)
 backend.include_router(auth_router, prefix=settings.API_V1_STR)
 backend.include_router(post_router, prefix=settings.API_V1_STR)
 backend.include_router(comment_router, prefix=settings.API_V1_STR)
-backend.include_router(tag_router, prefix=settings.API_V1_STR)
+backend.include_router(hashtag_router, prefix=settings.API_V1_STR)
 backend.include_router(friend_router, prefix=settings.API_V1_STR)
 backend.include_router(like_router, prefix=settings.API_V1_STR)
 backend.include_router(link_router, prefix=settings.API_V1_STR)
