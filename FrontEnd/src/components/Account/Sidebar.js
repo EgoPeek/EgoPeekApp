@@ -1,17 +1,21 @@
 import React, { Component } from "react";
+import { useState } from "react";
 import SidebarIcon from "./SidebarIcon";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
-export default class Sidebar extends Component {
-  state = {
-    isOpen: true,
-  };
+const Sidebar = ({ data }) => {
+  const { data: Accountdata, isPending, error: AccountError } = data;
 
-  renderSidebar = () => {
-    if (!this.state.isOpen) {
+  const [showSidebar, setShowSidebar] = useState(true);
+
+  const renderSidebar = () => {
+    if (showSidebar == false) {
       return null;
     }
+
+    /*const friendArray = [Accountdata.user.friends];
+    const friendAmount = friendArray.length;*/
 
     return (
       <div className="sidebar">
@@ -20,24 +24,20 @@ export default class Sidebar extends Component {
             <span>pic</span>
           </div>
           <div className="name-container">
-            <span>Super long name for no reason</span>
+            <span>{isPending ? "..." : Accountdata.user.username}</span>
             <ForwardToInboxIcon />
             <PersonAddIcon />
             <div className="followers">
-              <span>Followers: 69</span>
+              <span>Friends:</span>
             </div>
             <div className="post-amount">
-              <span>Posts: 2</span>
+              <span>Posts: </span>
             </div>
           </div>
         </div>
 
         <div className="account-bio">
-          <p>
-            I am a pro Valorant player stuck in silver because my teammates play
-            with their monitors off. If you're a scrub don't add me. This is
-            text to see how the bio size will behave
-          </p>
+          <p>{isPending ? "..." : Accountdata.bio}</p>
         </div>
 
         <div className="account-favorites">
@@ -54,23 +54,17 @@ export default class Sidebar extends Component {
     );
   };
 
-  toggleSidebar = () => {
-    this.setState((prevState) => ({
-      isOpen: !prevState.isOpen,
-    }));
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
   };
 
-  render() {
-    return (
-      <div className="sidebar-container">
-        <div className="sidebar-icon">
-          <SidebarIcon
-            isOpen={this.state.isOpen}
-            handleClick={this.toggleSidebar}
-          />
-        </div>
-        {this.renderSidebar()}
+  return (
+    <div className="sidebar-container">
+      <div className="sidebar-icon">
+        <SidebarIcon isOpen={showSidebar} handleClick={toggleSidebar} />
       </div>
-    );
-  }
-}
+      {renderSidebar()}
+    </div>
+  );
+};
+export default Sidebar;

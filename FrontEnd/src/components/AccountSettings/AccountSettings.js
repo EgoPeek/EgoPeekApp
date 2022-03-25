@@ -4,9 +4,15 @@ import "./AccountSettings.css";
 import EditIcon from "@mui/icons-material/Edit";
 import Divider from "@mui/material/Divider";
 import Dropdown from "./Dropdown";
+import useFetch from "../../hooks/useFetch";
+import { TextInputStandard } from "../Misc/Input/TextFields";
 
 const UserSettings = () => {
-  /* handles setting games with the dropdown */
+  const userID = window.localStorage.getItem("userID");
+  const { data, isPending, error } = useFetch(`/api/v1/profiles/${userID}`);
+
+  const SetBio = () => {};
+
   const [Game1, setGame1] = useState("Game1");
   const [Game2, setGame2] = useState("Game2");
   const [Game3, setGame3] = useState("Game3");
@@ -34,9 +40,17 @@ const UserSettings = () => {
           </div>
         </div>
         <div className="edit-bio">
-          <h3>Bio</h3>
+          <h2>Bio</h2>
           <div className="settings-bio">
-            <p>this is a test bio used during production to see behavior :)</p>
+            <TextInputStandard
+              onChange={(props) => {
+                SetBio(props.target.value);
+              }}
+              style={{ width: "100%" }}
+              label="Enter Bio"
+              multiline
+              maxRows={8}
+            />
           </div>
         </div>
       </div>
@@ -44,8 +58,8 @@ const UserSettings = () => {
       <div className="settings-main">
         {/* top container with user info */}
         <div className="settings-info">
-          <p>Name:</p>
-          <p>Email:</p>
+          <p>Name: {isPending ? "..." : data.user.username}</p>
+          <p>Email: {isPending ? "..." : data.user.email}</p>
           <p>Change Password</p>
         </div>
         {/* favorites container */}
@@ -79,7 +93,13 @@ const UserSettings = () => {
               value={Game3}
               onChange={handleGame3Change}
             />
-            <p>{Game3}</p>
+          </div>
+        </div>
+        <div className="settings-socials">
+          <h2>Other Socials</h2>
+          <div className="socials-spacing">
+            <p>Instagram:</p>
+            <p>Twitter:</p>
           </div>
         </div>
       </div>
