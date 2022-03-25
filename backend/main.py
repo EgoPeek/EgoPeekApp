@@ -54,4 +54,4 @@ async def serve_frontend(request: Request, rest_of_path: str):
 
 # run server
 if __name__ == "__main__":
-    uvicorn.run(backend, host='0.0.0.0', port=settings.PORT)
+    uvicorn.run("backend.main:backend", host='0.0.0.0', port=settings.PORT, reload=True)
