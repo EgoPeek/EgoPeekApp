@@ -122,7 +122,7 @@ class UserProfile(BaseModel):
 
 # for FriendListResponse
 class Avatar(BaseModel):
-    avatar_path: str
+    avatar_path: Optional[str]
     class Config():
         orm_mode = True
 
@@ -297,3 +297,8 @@ class ThreadResponse(BaseModel):
     messages: List[Message]
     class Config():
         orm_mode = True
+
+class UserAuth(BaseModel):
+    id: int
+    username: str
+    email: str
