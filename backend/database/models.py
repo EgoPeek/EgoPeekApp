@@ -24,8 +24,6 @@ class DbUser(Base):
     games = relationship('DbGame', back_populates='user')
     profile = relationship('DbProfile', back_populates='user')
     sent_messages = relationship('DbMessage', back_populates='sender')
-    hashtags = relationship('DbHashtag', back_populates='user')
-    #interests = relationship('DbInterests', back_populates='userInterests')
 
 
 class DbPost(Base):
@@ -33,6 +31,7 @@ class DbPost(Base):
     post_id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     profile_id = Column(Integer, ForeignKey('profile.profile_id'))
+    hashtag_group_id = Column(Integer, ForeignKey('hashtag_group.group_id'))
     title = Column(String(100))
     image_url = Column(String(500))
     video_url = Column(String(500))
@@ -44,7 +43,7 @@ class DbPost(Base):
     user = relationship('DbUser', back_populates='posts')
     comments = relationship('DbComment', back_populates='post')
     profile = relationship('DbProfile', back_populates='posts')
-    used_hashtag = relationship('DbHashtag', back_populates='post_used_hashtag') 
+    hashtag_group = relationship('DbHashtagGroup', back_populates='post', foreign_keys=[hashtag_group_id])
 
 
 class DbComment(Base):
@@ -53,6 +52,7 @@ class DbComment(Base):
     post_id = Column(Integer, ForeignKey('post.post_id'))
     user_id = Column(Integer, ForeignKey('user.id'))
     profile_id = Column(Integer, ForeignKey('profile.profile_id'))
+    hashtag_group_id = Column(Integer, ForeignKey('hashtag_group.group_id'))
     message = Column(String(1000))
     timestamp = Column(DateTime)
     like_count = Column(Integer)
@@ -60,35 +60,26 @@ class DbComment(Base):
     liked_by = relationship('DbLike', back_populates='comment_liked_by')
     post = relationship("DbPost", back_populates="comments")
     profile = relationship('DbProfile', back_populates='comments')
-    used_hashtag = relationship('DbHashtag', back_populates='comment_used_hashtag')
+    hashtag_group = relationship('DbHashtagGroup', back_populates='comment', foreign_keys=[hashtag_group_id])
 
 
+# child of post, comment, or profile tables
+class DbHashtagGroup(Base):
+    __tablename__ = 'hashtag_group'
+    group_id = Column(Integer, primary_key=True, index=True)
+    hashtags = relationship('DbHashtag', back_populates='hashtag_group')
+    post = relationship('DbPost', back_populates='hashtag_group')
+    comment = relationship('DbComment', back_populates='hashtag_group')
+    profile = relationship('DbProfile', back_populates='interest_hashtags')
+
+
+# child of hashtag_group table
 class DbHashtag(Base):
     __tablename__ = 'hashtag'
     hashtag_id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey('user.id'))
-    post_id = Column(Integer, ForeignKey('post.post_id'))
-    comment_id = Column(Integer, ForeignKey('comment.comment_id'))
-    profile_id = Column(Integer, ForeignKey('profile.profile_id'))
+    hashtag_group_id = Column(Integer, ForeignKey('hashtag_group.group_id'))
     hashtag_label = Column(String(140))
-    hashtag_counter = Column(Integer)
-    user = relationship('DbUser', back_populates='hashtags')
-    post_used_hashtag = relationship('DbPost', back_populates='used_hashtag')
-    comment_used_hashtag = relationship('DbComment', back_populates='used_hashtag')
-    profile = relationship('DbProfile', back_populates='interest_hashtags')
-    #interests = relationship('DBInterests', back_populates='hashtags')
-
-
-# class DbInterests(Base):
-#     __tablename__ = 'interest'
-#     interest_id = Column(Integer, primary_key=True, index=True)
-#     hashtag_label = Column(String, ForeignKey('hashtag.hashtag_label'))
-#     user_id = Column(Integer, ForeignKey('user.id'))
-#     profile_id = Column(Integer, ForeignKey('profile.profile_id'))
-#     interest_label = Column(String(140))
-#     userInterests = relationship('DbUser', back_populates='interests')
-#     profileInterests = relationship('DbProfile', back_populates='interests')
-#     hashtags = relationship('DBHashtag', back_populates='interests')
+    hashtag_group = relationship(DbHashtagGroup, back_populates='hashtags')
 
 
 class DbFriend(Base):
@@ -148,6 +139,7 @@ class DbProfile(Base):
     __tablename__ = 'profile'
     profile_id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey('user.id'))
+    hashtag_group_id = Column(Integer, ForeignKey('hashtag_group.group_id'))
     avatar_path = Column(String(100))
     bio = Column(String(1000))
     quote = Column(String(250))
@@ -158,8 +150,7 @@ class DbProfile(Base):
     posts = relationship('DbPost', back_populates='profile')
     comments = relationship('DbComment', back_populates='profile')
     likes = relationship('DbLike', back_populates='profile')
-    interest_hashtags = relationship('DbHashtag', back_populates='profile')
-    #interests = relationship('DbInterests', back_populates='profileInterests')
+    interest_hashtags = relationship('DbHashtagGroup', back_populates='profile', foreign_keys=[hashtag_group_id])
 
 
 class DbThread(Base):
