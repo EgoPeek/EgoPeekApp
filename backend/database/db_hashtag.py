@@ -6,8 +6,8 @@ db_hashtag.py
 
 from backend.schemas import schema
 from sqlalchemy.orm.session import Session
-from .models import DbHashtag
-
+from .models import DbHashtag, DbHashtagGroup
+from typing import List
 
 
 def create_hashtag(db: Session, request: schema.HashtagRequest):
@@ -25,6 +25,36 @@ def create_hashtag(db: Session, request: schema.HashtagRequest):
     db.refresh(new_hashtag)
     return new_hashtag
 
+
+def create_hashtag_group(db: Session):
+    new_hashtag_group = DbHashtagGroup()
+    db.add(new_hashtag_group)
+    db.commit()
+    db.refresh(new_hashtag_group)
+    return new_hashtag_group
+
+
+def create_grouped_tag(db: Session, group_id: int, hashtag: str):
+    new_post_tag = DbHashtag(
+        hashtag_group_id = group_id,
+        hashtag_label = hashtag
+    )
+    db.add(new_post_tag)
+    db.commit()
+    db.refresh(new_post_tag)
+    return
+
+
+def update_hashtag_group_tags(db: Session, group_id: int, hashtags: List[str]):
+    result = db.query(DbHashtag).filter(DbHashtag.hashtag_group_id == group_id).all()
+    old_tag_ids = [tag.hashtag_id for tag in result]
+    for tag in old_tag_ids:
+        delete_hashtag(db, tag)
+    for tag in hashtags:
+        create_grouped_tag(db, group_id, tag)
+    return {'success': True, 'message': f'Deleted {len(old_tag_ids)} old tags and replaced with {len(hashtags)} new tags.'}
+
+
 # def increment_hashtag_counter(db: Session, userID: int, commentID: int):
 #     # get all hashtags in the databse and store them in a list
 #     all_tags = List[db.query(DbHashtag).all()]
@@ -34,6 +64,10 @@ def create_hashtag(db: Session, request: schema.HashtagRequest):
 
 def get_hashtag(db: Session, tag_id: int):
     return db.query(DbHashtag).filter(DbHashtag.hashtag_id == tag_id).first()
+
+
+def get_all_hashtag_groups(db: Session):
+    return db.query(DbHashtagGroup).all()
 
 
 def get_db_hashtags(db: Session):

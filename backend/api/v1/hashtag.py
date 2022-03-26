@@ -34,7 +34,17 @@ def create_new_hashtag(response: Response, request: schema.HashtagRequest, datab
     if db_hashtag.check_duplicates(database, request.hashtag_label):
         raise HTTPException(status_code = status.HTTP_409_CONFLICT, detail = "hashtag already exists in the databse and cannot be duplicated.")
     response.status_code = status.HTTP_201_CREATED
-    return db_hashtag.create_hashtag(database, request)
+    return db_hashtag.create_new_hashtag(database, request)
+
+
+@router.get('/all/hashtag_groups', response_model = List[schema.HashtagGroupResponse])
+def retrieve_all_db_hashtag_groups(database: Session = Depends(get_database)):
+    """
+    Retrieves all hashtag groups with their associated hashtags
+    Inputs: None
+    Outputs: List[schema: HashtagGroupResponse]
+    """
+    return db_hashtag.get_all_hashtag_groups(database)
 
 
 @router.get('/{hashtag_id}', response_model = schema.HashtagResponse)
