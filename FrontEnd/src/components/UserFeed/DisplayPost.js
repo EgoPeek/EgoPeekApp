@@ -7,15 +7,30 @@ import './DisplayPost.css'
 import { Button } from '@mui/material';
 import axios from 'axios';
 
+const FILETYPES_IMG = [
+    '.png',
+    '.gif',
+    '.jpg',
+    '.webp',
+]
+const FILETYPES_VIDEO = [
+    '.mp4',
+    '.quicktime'
+]
+
+
 const DisplayPost = ({ post, closeDisplay, ...props }) => {
     const { post_id, comments, like_count, content_path_type, title, message, timestamp, user, video_url, image_url } = post
-    const isVideo = video_url === ""
+    const isVideo = video_url !== ""
 
     const dateObj = new Date(timestamp)
     const [comment, setComment] = useState('')
+    const [isExternalImage, setIsExternalImage] = useState(false)
     const userID = window.localStorage.getItem('userID')
 
     const addComment = async () => {
+        if (comment === '') return;
+
         const body = {
             user_id: userID,
             message: comment,
@@ -44,10 +59,18 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
                     <h1>{title}</h1>
                     <div className='display-top-half'>
                         <div className='display-post-content'>
-                            {isVideo ?
-                                <img src={image_url}></img>
-                                :
-                                <video src={video_url} controls></video>
+
+                            {
+                                content_path_type === 'external' ?
+                                    FILETYPES_IMG.filter(x => image_url.match(x)).length > 0 ?
+                                    
+                                        <img src={image_url}></img>:
+                                        <video src={video_url}></video>
+                                    :
+                                    isVideo ?
+                                        <video src={video_url} controls></video>
+                                        :
+                                        <img src={image_url}></img>
                             }
                         </div>
                         <div className='display-content-info'>

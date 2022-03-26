@@ -14,6 +14,20 @@ from datetime import datetime
 ##################################################################
 
 # for ProfileResponse
+class Hashtag(BaseModel):
+    hashtag_id: int
+    hashtag_label: str
+    class Config():
+        orm_mode = True
+
+# for PostResponse
+class HashtagGroup(BaseModel):
+    group_id: Optional[int]
+    hashtags: Optional[List[Hashtag]]
+    class Config():
+        orm_mode = True
+
+# for ProfileResponse
 class Post(BaseModel):
     post_id: int
     title: str
@@ -30,7 +44,7 @@ class Friend(BaseModel):
         orm_mode = True
 
 # for ProfileResponse
-class Comment(BaseModel):
+class CommentProfile(BaseModel):
     comment_id: int
     message: Optional[str]
     timestamp: datetime
@@ -79,6 +93,13 @@ class CommentLike(BaseModel):
     class Config():
         orm_mode = True
 
+# for CommentResponse
+class commentTag(BaseModel):
+    hashtag_id: int
+    hashtag_label: str
+    class Config():
+        orm_mode = True
+
 # for PostResponse
 class Comment(BaseModel):
     message: str
@@ -86,12 +107,28 @@ class Comment(BaseModel):
     timestamp: datetime
     like_count: Optional[int]
     liked_by: List[CommentLike]
+    hashtag_group: Optional[HashtagGroup]
     class Config():
         orm_mode = True
 
 # for PostResponse
 class PostLike(BaseModel):
     user: User
+    class Config():
+        orm_mode = True
+
+# for PostResponse
+class postTag(BaseModel):
+    hashtag_id: int
+    hashtag_label: str
+    class Config():
+        orm_mode = True
+
+# for ProfileResponse
+class ProfileUser(BaseModel):
+    id: int
+    username: str
+    email: str
     class Config():
         orm_mode = True
 
@@ -122,7 +159,7 @@ class UserProfile(BaseModel):
 
 # for FriendListResponse
 class Avatar(BaseModel):
-    avatar_path: str
+    avatar_path: Optional[str]
     class Config():
         orm_mode = True
 
@@ -154,6 +191,7 @@ class PostRequest(BaseModel):
     video_url: Optional[str]
     content_path_type: Optional[str]   # 'internal' or 'external'
     message: Optional[str]
+    hashtags: Optional[List[str]]
 
 class PostResponse(BaseModel):
     post_id: int
@@ -167,6 +205,7 @@ class PostResponse(BaseModel):
     comments: List[Comment]
     like_count: Optional[int]
     liked_by: List[PostLike]
+    hashtag_group: Optional[HashtagGroup]
     class Config():
         orm_mode = True
 
@@ -174,6 +213,7 @@ class CommentRequest(BaseModel):
     user_id: int
     message: str
     post_id: int
+    hashtags: Optional[List[str]]
 
 class CommentResponse(BaseModel):
     comment_id: int
@@ -183,6 +223,25 @@ class CommentResponse(BaseModel):
     timestamp: datetime
     like_count: Optional[int]
     liked_by: List[CommentLike]
+    hashtag_group: Optional[HashtagGroup]
+    class Config():
+        orm_mode = True
+
+class HashtagRequest(BaseModel):
+    hashtag_label: str
+    post_id: Optional[int]
+    comment_id: Optional[int]
+    user_id: Optional[int]
+    profile_id: Optional[int]
+
+class HashtagResponse(BaseModel):
+    hashtag_id: int
+    hashtag_label: str
+    hashtag_counter: int
+    post_used_hashtag: Optional[List[Post]]
+    comment_used_hashtag: Optional[List[Comment]]
+    user: Optional[User]
+    # profile: Optional[ProfileUser]
     class Config():
         orm_mode = True
 
@@ -261,6 +320,7 @@ class ProfileRequest(BaseModel):
     avatar_path: Optional[str]
     bio: Optional[str]
     quote: Optional[str]
+    interests: Optional[List[str]]
 
 class ProfileResponse(BaseModel):
     user: UserProfile
@@ -268,6 +328,7 @@ class ProfileResponse(BaseModel):
     avatar_path: Optional[str]
     bio: Optional[str]
     quote: Optional[str]
+    interest_hashtags: Optional[HashtagGroup]
     class Config():
         orm_mode = True
 
@@ -295,5 +356,19 @@ class MessageResponse(BaseModel):
 class ThreadResponse(BaseModel):
     thread_id: int
     messages: List[Message]
+    class Config():
+        orm_mode = True
+
+class UserAuth(BaseModel):
+    id: int
+    username: str
+    email: str
+
+class HashtagGroupResponse(BaseModel):
+    group_id: int
+    post_id: Optional[int]
+    comment_id: Optional[int]
+    profile_id: Optional[int]
+    hashtags: List[Hashtag]
     class Config():
         orm_mode = True
