@@ -12,7 +12,6 @@ from fastapi import HTTPException, status
 
 
 def create_user(db: Session, request: schemas.UserRequest):
-    print('creating new user')
     new_user = DbUser(
         username = request.username,
         email = request.email,
