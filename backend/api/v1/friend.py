@@ -49,9 +49,25 @@ def retrieve_all_user_friends(user_id, database: Session = Depends(get_database)
 @router.get('/list/{user_id}', response_model = List[schemas.FriendListResponse])
 def retrieve_friend_list_data(user_id, database: Session = Depends(get_database)):
     """
-    
+    Retrieves the user id, username, and avatar path for all of the user's current friends
+    Inputs: user_id: int
+    Outputs: List[schema: FriendListResponse]
     """
     return db_friend.get_friend_list(database, user_id)
+
+
+@router.get('/search/{username}', response_model = schemas.FriendListResponse)
+def retrieve_user_by_name(username, database: Session = Depends(get_database)):
+    """
+    Retrieves user id, username, and avatar path for searched user
+    Inputs: username: str
+    Outputs: schema: FriendListResponse
+    """
+    result = db_friend.find_user(database, username)
+    if not result:
+        raise HTTPException(status_code = status.HTTP_404_NOT_FOUND,
+                            detail = f'Username {username} does not exist')
+    return result
 
 
 @router.put('/responses')
