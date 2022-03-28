@@ -20,7 +20,7 @@ import {get} from '../../util'
 
 const UserFeed = () => {
     const userID = window.localStorage.getItem('userID')
-    const { data: post, isPending, error } = useFetch(`/api/v1/posts/feed/${userID}`)
+    const { data: post, isPending: postPending, error: postError  } = useFetch(`/api/v1/posts/feed/${userID}`)
     const { data: friends, isPending: friendsPending, error: friendsError } = useFetch(`/api/v1/friends/list/${userID}`)
     const [showPost, setShowPost] = useState(false)
     const [postInfo, setPostInfo] = useState(null)
@@ -48,6 +48,7 @@ const UserFeed = () => {
             console.log('found')
         } else {
             const {res, error} = await get(`/api/v1/friends/search/${searchFriend}`)
+            if(error) return
             const data = res.data;
             console.log(data)
             console.log(friends)
@@ -85,6 +86,7 @@ const UserFeed = () => {
         /**this is kind of nasty but it checks if a user is searching for a user */
         //if user is searching for friend it switches to is searching, one enter is hit
         //friendData gets populated and searching gets switched to the actual friend data 
+        if(friendsError) return(<p>error</p>)
         if (!searchFriend) {
             if (friends.length > 0) return friends.map((item, i) => <Friend friendInfo={item} key={i} />)
             else return <p>There are no friends?</p>
@@ -92,6 +94,13 @@ const UserFeed = () => {
             if (friendData.length === 0) return <p>Searching...</p>
             else return friendData.map((item,i)=><Friend friendInfo={item} key={i}/>)
         }
+    }
+
+    const PostList = () =>{
+        if(postError) return<p>error</p>
+
+        if(post)return post.map((item, i) => <UserPost onClick={() => displayPost(item)} post={item} key={i} />)
+        else return <></>
     }
 
     return (
@@ -102,9 +111,9 @@ const UserFeed = () => {
                 <div className='user-feed'>
                     <CreatePost />
                     {/* while the page is fetching post it'll just display loading sign */}
-                    {isPending && <BorderLinearProgress />}
+                    {postPending && <BorderLinearProgress />}
                     {/* maps each post from API call to a userPost component */}
-                    {post && post.map((item, i) => <UserPost onClick={() => displayPost(item)} post={item} key={i} />)}
+                    <PostList />
                 </div>
 
                 <div className='friends-list'>
