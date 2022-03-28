@@ -66,6 +66,10 @@ def get_friend_list(db: Session, user_id: int):
     return friend_data
 
 
+def find_user(db: Session, username):
+    return db.query(DbUser).filter(DbUser.username == username).first()
+
+
 def delete_friends(db: Session, user_id: int, friend_id: int):
     result1 = db.query(DbFriend).filter(DbFriend.user_id == user_id, DbFriend.friend_id == friend_id).first()
     db.delete(result1)
