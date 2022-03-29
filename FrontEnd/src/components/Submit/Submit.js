@@ -67,7 +67,8 @@ const Submit = () => {
             image_url: urlLink,
             video_url: urlLink,
             content_path_type: 'external',
-            message: ''
+            message: '',
+            hashtags: tagList,
         }
 
         const { res, error } = await post('/api/v1/posts/', body)
@@ -83,7 +84,8 @@ const Submit = () => {
             image_url: '',
             video_url: '',
             content_path_type: 'internal',
-            message: description
+            message: description,
+            hashtags: tagList,
         }
         const { res, error } = await post('/api/v1/posts/', body)
         console.log(res.data)
@@ -145,7 +147,8 @@ const Submit = () => {
             video_url: videoPath,
             content_path_type: 'internal',
             title: title,
-            message: imageDescription
+            message: imageDescription,
+            hashtags: tagList,
         }
 
         const { res, error } = await post('/api/v1/posts/', body)
