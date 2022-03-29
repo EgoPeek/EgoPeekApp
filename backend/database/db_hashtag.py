@@ -8,6 +8,7 @@ from backend.schemas import schema
 from sqlalchemy.orm.session import Session
 from .models import DbHashtag, DbHashtagGroup
 from typing import List
+from collections import Counter
 
 
 def create_hashtag(db: Session, request: schema.HashtagRequest):
@@ -82,6 +83,21 @@ def get_comment_hashtags(db: Session, commentID: int):
     return db.query(DbHashtag).filter(DbHashtag.comment_id == commentID).all()
 
 
+def get_top_hashtags(db: Session, count: int):
+    # build list of all hashtag labels in the database, transformed to lowercase
+    hashtags = [row[0].lower() for row in db.query(DbHashtag.hashtag_label).all()]
+    
+    # iterate over list and count duplicates using Counter object
+    top_counts = Counter()
+    for tag in hashtags:
+        top_counts[tag] += 1
+
+    # order list in descending order by occurrence, return top {count} results
+    top_tags = top_counts.most_common()[:count]
+    top_tag_labels = [tag[0] for tag in top_tags] 
+    return top_tag_labels
+
+
 def update_hashtag(db: Session, tag_id: int, request: schema.HashtagRequest):
     updateTag = db.query(DbHashtag).filter(DbHashtag.hashtag_id == tag_id)
     updateTag.update({
@@ -99,7 +115,6 @@ def delete_hashtag(db: Session, tag_id: int):
 
 
 def check_duplicates(db: Session, tagName: str):
-
     result = db.query(DbHashtag).all()
     tags = [tag.hashtag_label.lower() for tag in result]
     if tagName.lower() in tags:

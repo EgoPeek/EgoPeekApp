@@ -87,6 +87,14 @@ def retrieve_comment_hashtags(comment_id, database: Session = Depends(get_databa
     return db_hashtag.get_comment_hashtags(database, comment_id)
 
 
+@router.get('/top/{count}')
+def retrieve_top_hashtags(count, database: Session = Depends(get_database)):
+    """
+    
+    """
+    return db_hashtag.get_top_hashtags(database, int(count))
+
+
 @router.put('/{hashtag_id}')
 def update_tag(hashtag_id, request: schema.HashtagRequest, database: Session = Depends(get_database)):
     """
