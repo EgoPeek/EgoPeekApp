@@ -21,7 +21,7 @@ const FILETYPES_VIDEO = [
 
 const DisplayPost = ({ post, closeDisplay, ...props }) => {
     const { post_id, comments, like_count, content_path_type, title, message, timestamp, user, video_url, image_url, hashtag_group } = post
-    const hashtags = hashtag_group.hashtags
+    const hashtags = hashtag_group !== null ? hashtag_group.hashtags : []
     const isVideo = video_url !== ""
 
     const dateObj = new Date(timestamp)
