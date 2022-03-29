@@ -5,9 +5,10 @@ db_profile.py
 """
 
 from sqlalchemy.orm import Session
-from .models import DbProfile
+from .models import DbProfile, DbHashtag
 from backend.schemas import schema
 from backend.database import db_hashtag
+import logging
 
 
 def create_profile(db: Session, request: schema.ProfileRequest):
@@ -44,6 +45,11 @@ def get_all_db_profiles(db: Session):
 
 def get_user_profile(db: Session, user_id: int):
     return db.query(DbProfile).filter(DbProfile.user_id == user_id).first()
+
+
+def get_current_interests(db: Session, user_id: int):
+    interest_group_id = db.query(DbProfile.hashtag_group_id).filter(DbProfile.user_id == user_id).first()[0]
+    return [tag[0] for tag in db.query(DbHashtag.hashtag_label).filter(DbHashtag.hashtag_group_id == interest_group_id).all()]
 
 
 def update_profile(db: Session, user_id: int, request: schema.ProfileRequest):
