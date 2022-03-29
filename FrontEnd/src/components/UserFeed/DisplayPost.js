@@ -64,7 +64,6 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
                             {
                                 content_path_type === 'external' ?
                                     FILETYPES_IMG.filter(x => image_url.match(x)).length > 0 ?
-
                                         <img src={image_url}></img> :
                                         <video src={video_url}></video>
                                     :

@@ -7,8 +7,8 @@ export const get = async (url) => {
     try {
         const response = await axios.get(url)
         res = response
-    } catch (e) {
-        error = e.message
+    } catch (err) {
+        error = err
     }
 
     return { res, error }

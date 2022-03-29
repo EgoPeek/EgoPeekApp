@@ -6,14 +6,13 @@ import EGOPEEKIMG from '../../images/EGOPEEK.png'
 const Friend = ({friendInfo, ...props}) => {
     
     const { username, profile } = friendInfo
-    const {avatarUrl} = profile[0]
+    // const {avatarUrl} = profile[0]
 
-    console.log(avatarUrl)
     return (
         <div className='user-friend' {...props}>
         {/* this user-icon should be the user bubble, this is temporary */}
             <div className='user-icon'>
-                <img src={avatarUrl ? avatarUrl : EGOPEEKIMG}></img>
+                <img src={EGOPEEKIMG}></img>
             </div>
             <div className='friend-name'>
                 <p>{username}</p>
