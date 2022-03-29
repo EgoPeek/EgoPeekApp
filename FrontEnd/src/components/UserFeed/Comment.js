@@ -17,7 +17,6 @@ const Comment = ({ commenter, ...props}) => {
                 </div>
                 <div className='comment-content'>
                     <p className='comment-msg'>{message}</p>
-                    <p className='comment-reply'>reply</p>
                 </div>
             </div>
         </div>

@@ -1,22 +1,19 @@
 import './Friend.css'
 import React, { useState, useEffect } from 'react'
-const baseUrl = 'http://localhost:5000'
+import EGOPEEKIMG from '../../images/EGOPEEK.png'
 
 
-const Friend = ({friendInfo, className}) => {
+const Friend = ({friendInfo, ...props}) => {
     
     const { username, profile } = friendInfo
-    const [avatarUrl, setAvatarUrl] = useState('')
-    
-    useEffect(() => {
-        setAvatarUrl(baseUrl + profile[0].avatar_path)
-      }, [])
+    const {avatarUrl} = profile[0]
 
     console.log(avatarUrl)
     return (
-        <div className={`user-friend ${className}`}>
+        <div className='user-friend' {...props}>
+        {/* this user-icon should be the user bubble, this is temporary */}
             <div className='user-icon'>
-                <img src={avatarUrl}></img>
+                <img src={avatarUrl ? avatarUrl : EGOPEEKIMG}></img>
             </div>
             <div className='friend-name'>
                 <p>{username}</p>
