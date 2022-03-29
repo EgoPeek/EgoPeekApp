@@ -20,7 +20,8 @@ const FILETYPES_VIDEO = [
 
 
 const DisplayPost = ({ post, closeDisplay, ...props }) => {
-    const { post_id, comments, like_count, content_path_type, title, message, timestamp, user, video_url, image_url } = post
+    const { post_id, comments, like_count, content_path_type, title, message, timestamp, user, video_url, image_url, hashtag_group } = post
+    const hashtags = hashtag_group.hashtags
     const isVideo = video_url !== ""
 
     const dateObj = new Date(timestamp)
@@ -63,8 +64,8 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
                             {
                                 content_path_type === 'external' ?
                                     FILETYPES_IMG.filter(x => image_url.match(x)).length > 0 ?
-                                    
-                                        <img src={image_url}></img>:
+
+                                        <img src={image_url}></img> :
                                         <video src={video_url}></video>
                                     :
                                     isVideo ?
@@ -107,6 +108,9 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
                                 </div>
                                 <div className='description-tags'>
                                     TAGS:
+                                    <div className='tag-grouping'>
+                                        {hashtags.map((item, i) => <p key={i}>#{item.hashtag_label}</p>)}
+                                    </div>
                                 </div>
                             </div>
                         </div>
