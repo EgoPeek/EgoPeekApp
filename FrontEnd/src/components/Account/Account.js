@@ -10,7 +10,7 @@ import Header from "../Misc/CustomComponents/Header";
 const Account = () => {
   const userID = window.localStorage.getItem("userID");
   const { data: post } = useFetch(`/api/v1/posts/all/${userID}`);
-  const profileA = useFetch(`/api/v1/profiles/${userID}`);
+  const profile = useFetch(`/api/v1/profiles/${userID}`);
 
   return (
     <div className="account-page">
@@ -18,7 +18,7 @@ const Account = () => {
         <Header />
       </div>
       <div className="account-main">
-        <Sidebar data={profileA} />
+        <Sidebar data={profile} />
         <div className="posts-container">
           {post && post.map((item, i) => <UserPost post={item} key={i} />)}
         </div>

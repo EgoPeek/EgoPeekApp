@@ -29,27 +29,21 @@
 .edit-bio {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
+  align-items: center;
   width: 70%;
+  height: fit-content;
   text-align: center;
   margin-top: 5%;
 }
 
 .settings-bio {
-  /*border: 2px solid black;*/
+  border: 2px solid black;
+  padding: 3%;
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
   margin-top: 3%;
-}
-
-.settings-socials {
-  width: 80%;
-  margin-top: 10%;
-}
-
-.socials-spacing {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 }
 
 .settings-main {
@@ -61,8 +55,8 @@
 }
 
 .settings-info {
+  margin-top: 3%;
   font-size: large;
-  margin-top: 5%;
 }
 
 .edit-favorites {
@@ -82,4 +76,44 @@
   width: fit-content;
   text-align: center;
   font-size: larger;
+}
+
+.settings-socials {
+  width: 80%;
+  margin-top: 10%;
+}
+
+.socials-spacing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.editbtn-spacing {
+  display: flex;
+  width: 50%;
+  justify-content: end;
+}
+
+.edit-btn {
+  background-color: rgba(23, 22, 33, 1);
+  border: none;
+  color: white;
+}
+
+.editbtn-spacing {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+}
+
+.savebtn-spacing {
+  margin-top: 5%;
+  display: flex;
+  justify-content: end;
+  width: 80%;
+}
+
+.save-btn {
+  height: 150%;
 }

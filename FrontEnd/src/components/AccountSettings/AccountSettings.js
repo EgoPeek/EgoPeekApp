@@ -3,96 +3,114 @@ import { useState } from "react";
 import "./AccountSettings.css";
 import EditIcon from "@mui/icons-material/Edit";
 import Divider from "@mui/material/Divider";
-import Dropdown from "./Dropdown";
 import useFetch from "../../hooks/useFetch";
+import UpdateGames from "./UpdateGame";
 import { TextInputStandard } from "../Misc/Input/TextFields";
+import axios from "axios";
 
 const UserSettings = () => {
-  const userID = window.localStorage.getItem("userID");
-  const { data, isPending, error } = useFetch(`/api/v1/profiles/${userID}`);
+  const user_id = window.localStorage.getItem("userID");
+  const { data, isPending, error } = useFetch(`/api/v1/profiles/${user_id}`);
+  const [bio, setBio] = useState("");
+  const [isEditing, setisEditing] = useState(false);
 
-  const SetBio = () => {};
-
-  const [Game1, setGame1] = useState("Game1");
-  const [Game2, setGame2] = useState("Game2");
-  const [Game3, setGame3] = useState("Game3");
-
-  const handleGame1Change = (event) => {
-    setGame1(event.target.value);
+  const setEditingTrue = () => {
+    setisEditing(true);
   };
 
-  const handleGame2Change = (event) => {
-    setGame2(event.target.value);
+  const updateProfile = async (newBio) => {
+    setisEditing(false);
+    const payload = {
+      user_id: user_id,
+      bio: newBio,
+    };
+    try {
+      const response = await axios.put(`/api/v1/profiles/${user_id}`, payload);
+      console.log(response);
+      return response.data;
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
   };
 
-  const handleGame3Change = (event) => {
-    setGame3(event.target.value);
+  const saveBio = (event) => {
+    setBio(event.currentTarget.value);
   };
+  console.log(bio);
 
   return (
     <div className="usersettings">
-      {/* where avatar and bio are rendered */}
       <div className="settings-left">
+        <div className="editbtn-spacing">
+          <button onClick={setEditingTrue}>Edit Profile</button>
+        </div>
         <div className="avatar-container">
-          <div className="avatar">{/* img src = x; */}</div>
+          <div className="avatar"></div>
           <div className="editavatar-btn">
-            <EditIcon />
+            <button className="edit-btn">
+              <EditIcon />
+            </button>
           </div>
         </div>
         <div className="edit-bio">
           <h2>Bio</h2>
           <div className="settings-bio">
-            <TextInputStandard
-              onChange={(props) => {
-                SetBio(props.target.value);
-              }}
-              style={{ width: "100%" }}
-              label="Enter Bio"
-              multiline
-              maxRows={8}
-            />
+            <div className="update-bio">
+              {isEditing ? (
+                <TextInputStandard
+                  style={{ width: "100%" }}
+                  label="Enter Bio"
+                  onChange={saveBio}
+                  defaultValue={isPending ? "..." : data.bio}
+                />
+              ) : (
+                <span className="profile-name">
+                  {isPending ? "..." : data.bio}
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </div>
-      {/* Where everything outside of avatar and bio is rendered */}
       <div className="settings-main">
-        {/* top container with user info */}
         <div className="settings-info">
-          <p>Name: {isPending ? "..." : data.user.username}</p>
-          <p>Email: {isPending ? "..." : data.user.email}</p>
+          <div className="settings-name">
+            <p>Name: {isPending ? "..." : data.user.username}</p>
+          </div>
+          <div className="settings-email">
+            <p>Email: {isPending ? "..." : data.user.email}</p>
+            <div className="edit-email"></div>
+          </div>
           <p>Change Password</p>
+          {isEditing ? (
+            ((
+              <TextInputStandard
+                label="Enter New Password"
+                onChange={saveBio}
+              />
+            ),
+            (
+              <TextInputStandard
+                label="Enter New Password"
+                onChange={saveBio}
+              />
+            ),
+            (<TextInputStandard label="Enter New Password" />))
+          ) : (
+            <span></span>
+          )}
         </div>
-        {/* favorites container */}
         <div className="edit-favorites">
           <h2>Edit Favorites</h2>
-          <div className="select-favorites">
-            <Dropdown
-              options={[
-                { id: 1, label: "Rocket League", value: "Rocket League" },
-                { id: 2, label: "Valorant", value: "Valorant" },
-                { id: 3, label: "CS:GO", value: "CS:GO" },
-              ]}
-              value={Game1}
-              onChange={handleGame1Change}
-            />
-            <Dropdown
-              options={[
-                { id: 1, label: "Rocket League", value: "Rocket League" },
-                { id: 2, label: "Valorant", value: "Valorant" },
-                { id: 3, label: "CS:GO", value: "CS:GO" },
-              ]}
-              value={Game2}
-              onChange={handleGame2Change}
-            />
-            <Dropdown
-              options={[
-                { id: 1, label: "Rocket League", value: "Rocket League" },
-                { id: 2, label: "Valorant", value: "Valorant" },
-                { id: 3, label: "CS:GO", value: "CS:GO" },
-              ]}
-              value={Game3}
-              onChange={handleGame3Change}
-            />
+          <div className="game-change">
+            {isEditing ? (
+              <UpdateGames />
+            ) : (
+              <span className="profile-name">
+                <p>Games</p>
+              </span>
+            )}
           </div>
         </div>
         <div className="settings-socials">
@@ -101,6 +119,15 @@ const UserSettings = () => {
             <p>Instagram:</p>
             <p>Twitter:</p>
           </div>
+        </div>
+        <div className="savebtn-spacing">
+          {isEditing ? (
+            <button className="save-btn" onClick={() => updateProfile(bio)}>
+              Save Changes
+            </button>
+          ) : (
+            <span></span>
+          )}
         </div>
       </div>
     </div>

@@ -5,17 +5,21 @@ import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 const Sidebar = ({ data }) => {
-  const { data: Accountdata, isPending, error: AccountError } = data;
-
+  const {
+    data: Accountdata,
+    isPending: AccountisPending,
+    error: Accounterror,
+  } = data;
+  const friends = AccountisPending ? "..." : Accountdata.user.friends;
+  const posts = AccountisPending ? "..." : Accountdata.user.posts;
+  const friendsAmount = friends.length;
+  const postsAmount = posts.length;
   const [showSidebar, setShowSidebar] = useState(true);
 
   const renderSidebar = () => {
     if (showSidebar == false) {
       return null;
     }
-
-    /*const friendArray = [Accountdata.user.friends];
-    const friendAmount = friendArray.length;*/
 
     return (
       <div className="sidebar">
@@ -24,20 +28,20 @@ const Sidebar = ({ data }) => {
             <span>pic</span>
           </div>
           <div className="name-container">
-            <span>{isPending ? "..." : Accountdata.user.username}</span>
+            <span>{AccountisPending ? "..." : Accountdata.user.username}</span>
             <ForwardToInboxIcon />
             <PersonAddIcon />
             <div className="followers">
-              <span>Friends:</span>
+              <span>Friends: {friendsAmount}</span>
             </div>
             <div className="post-amount">
-              <span>Posts: </span>
+              <span>Posts: {postsAmount}</span>
             </div>
           </div>
         </div>
 
         <div className="account-bio">
-          <p>{isPending ? "..." : Accountdata.bio}</p>
+          <p>{AccountisPending ? "..." : Accountdata.bio}</p>
         </div>
 
         <div className="account-favorites">
