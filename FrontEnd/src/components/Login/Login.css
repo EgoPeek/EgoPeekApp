@@ -13,7 +13,7 @@
     border-radius: 12px;
     background-color: #24222f44;
     -webkit-box-shadow: 8px 2px 24px 4px rgba(58, 63, 92, 0.637); 
-    box-shadow: 8px 2px 24px 4px rgba(58, 63, 92, 0.658);
+    box-shadow: 8px 2px 24px 4px #315a39;
 }
 .form-control{
     width: 100%;
