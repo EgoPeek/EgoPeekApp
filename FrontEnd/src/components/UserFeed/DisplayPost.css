@@ -6,6 +6,7 @@
     left:0;
     right:0;
     height: 100%;
+    top: 60px
 
 }
 .display-post-buffer{
@@ -106,7 +107,12 @@
    display: flex;
    flex-direction: column; 
 }
-
+.tag-grouping{
+    display: flex;
+}
+.tag-grouping p{
+    margin-right: 0.8rem;
+}
 
 /* EVERYTHING ELSE UNDER POST/ COMMENTS/ CREATE COMMENT*/
 

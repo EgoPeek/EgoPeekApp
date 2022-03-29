@@ -82,7 +82,7 @@ const InterestPage = () => {
       <TextInputStandard size='small' sx={{ width: '70%' }} label="Search by tag" />
       <div className='tag-container'>
         <div className='chosen-tags interests'>
-          {selectedTags.map((x, i) => <Tag title={x} key={i}/>)}
+          {selectedTags.map((x, i) => <Tag title={x} key={i} />)}
         </div>
         <div className='interests'>
           <Tag title='test' />
@@ -138,19 +138,28 @@ const RegisterForm = ({ accountCreated }) => {
       return
     }
 
-    let body = {
-      username: userName,
-      email: email,
-      password: password
-    }
 
-    //do something to hit the api link
     try {
-      const postRes = await axios.post(`/api/v1/users/`, body)
-      if (postRes.status === 201) {
+      // creates a new user and a new user Profile in the DB
+      const userRes = await axios.post(`/api/v1/users/`, {
+        username: userName,
+        email: email,
+        password: password
+      })
+
+      if (userRes.status === 201) {
+        //if successful creation is made, user profile is made
+        await axios.post('api/v1/profiles/', {
+          user_id: userRes.data.id,
+          avatar_path: '',
+          bio: '',
+          quote:'',
+          interests:[]
+        })
+
         //flags the parent component a success has been made
-        auth.login(body.username,body.password)
-        body = {} 
+        //clears all userInformation for safety purposes
+        auth.login(userName, password)
         setUserName('')
         setEmail('')
         setPassword('')

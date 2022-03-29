@@ -12,6 +12,7 @@ import { TextInputPost, TextInputStandard } from '../Misc/Input/TextFields'
 import { TextareaAutosize } from '@mui/material'
 import { GreenButton } from '../Misc/Input/Buttons'
 import InternalImageOrVideo from './InternalImageOrVideo'
+import { post } from '../../util'
 import axios from 'axios'
 
 import './Submit.css'
@@ -66,16 +67,13 @@ const Submit = () => {
             image_url: urlLink,
             video_url: urlLink,
             content_path_type: 'external',
-            message: ''
+            message: '',
+            hashtags: tagList,
         }
 
-        try {
-            const res = await axios.post('/api/v1/posts/', body)
-            console.log(res.data)
-            return (res.data)
-        } catch (err) {
-            console.log(err)
-        }
+        const { res, error } = await post('/api/v1/posts/', body)
+        console.log(res.data)
+        return res.data
 
     }
 
@@ -86,16 +84,12 @@ const Submit = () => {
             image_url: '',
             video_url: '',
             content_path_type: 'internal',
-            message: description
+            message: description,
+            hashtags: tagList,
         }
-
-        try {
-            const res = await axios.post('/api/v1/posts/', body)
-            console.log(res.data)
-            return res.data
-        } catch (err) {
-            console.log(err)
-        }
+        const { res, error } = await post('/api/v1/posts/', body)
+        console.log(res.data)
+        return res.data
     }
     const postInternalSource = async () => {
         const file = files[0]
@@ -106,19 +100,11 @@ const Submit = () => {
         if (FILETYPES_IMG.includes(file.type)) {
             formData.append('image', file)
             // hit image endpoint
-            try {
 
-                const res = await axios.post('/api/v1/posts/images', formData, {
-                    headers: {
-                        accept: 'application/json',
-                        'Content-Type': 'multipart/form-data'
-                    },
-                })
-                console.log(res)
-                imagePath = res.data.relative_image_path;
-            } catch (err) {
-                console.log(err)
-            }
+            const { res, error } = await postFormData('/api/v1/posts/images', formData)
+            console.log(res)
+            imagePath = res.data.relative_image_path;
+
 
         } else if (FILETYPES_VIDEO.includes(file.type)) {
             //hit video endpoint
@@ -139,33 +125,20 @@ const Submit = () => {
             const blob = await res.blob()
             const imgFile = new File([blob], "video_thumbnail.png", {
                 type: "image/png"
-            }); 
+            });
 
             console.log(imgFile)
             const thumbnail = new FormData()
             thumbnail.append('image', imgFile)
             formData.append('video', file)
-            try {
+            const { res: imageRes, error: imageErr } = await postFormData('/api/v1/posts/images', thumbnail)
+            const { res: videoRes, error: videoErr } = await postFormData('/api/v1/posts/videos', formData)
+            if (imageErr || videoErr) return
 
-                const imageRes = await axios.post('/api/v1/posts/images', thumbnail, {
-                    headers: {
-                        accept: 'application/json',
-                        'Content-Type': 'multipart/form-data'
-                    },
-                })
-                const videoRes = await axios.post('/api/v1/posts/videos', formData, {
-                    headers: {
-                        accept: 'application/json',
-                        'Content-Type': 'multipart/form-data'
-                    },
-                })
-                console.log(imageRes)
-                console.log(videoRes)
-                videoPath = videoRes.data.relative_video_path;
-                imagePath = imageRes.data.relative_image_path
-            } catch (err) {
-                console.log(err)
-            }
+            console.log(imageRes)
+            console.log(videoRes)
+            videoPath = videoRes.data.relative_video_path;
+            imagePath = imageRes.data.relative_image_path
         }
 
         const body = {
@@ -174,16 +147,14 @@ const Submit = () => {
             video_url: videoPath,
             content_path_type: 'internal',
             title: title,
-            message: imageDescription
+            message: imageDescription,
+            hashtags: tagList,
         }
 
-        try {
-            const res = await axios.post('/api/v1/posts/', body)
-            console.log(res.data)
-            return res.data
-        } catch (err) {
-            console.log(err)
-        }
+        const { res, error } = await post('/api/v1/posts/', body)
+        if (error) return
+        console.log(res.data)
+        return res.data
 
     }
 
@@ -308,6 +279,24 @@ const ExternalLink = ({ setUrlLink }) => {
             />
         </div>
     )
+}
+
+const postFormData = async (url, formData) => {
+    let res = null
+    let error = null
+
+    try {
+        const response = await axios.post(url, formData, {
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'multipart/form-data'
+            },
+        })
+        res = response
+    } catch (err) {
+        error = err
+    }
+    return { res, error }
 }
 
 export default Submit

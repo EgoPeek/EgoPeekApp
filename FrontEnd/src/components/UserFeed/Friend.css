@@ -3,13 +3,27 @@
     flex-direction: row;
     align-items: center;
     width: 100%;
+    margin: 1rem 0;
 }
 
 .user-icon{
-    height: 140px;
-    width: 140px;
-    padding: .5rem;
+    height: 64px;
+    width: 64px;
     margin-right: 5px;
-    overflow: hidden;
 }
 
+.user-icon img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
+.friend-name{
+    font-size: 2rem;
+}
+
+.friend-name p{
+    margin: 0;
+}
