@@ -39,6 +39,10 @@ def get_user_by_username(db: Session, username: str):
     return user
 
 
+def get_username_by_id(db: Session, user_id: int):
+    return db.query(DbUser.username).filter(DbUser.id == user_id).first()[0]
+
+
 def update_user_data(db: Session, username: str, request: schemas.UserRequest):
     user = db.query(DbUser).filter(DbUser.username == username)
     user.update({
