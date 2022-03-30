@@ -23,6 +23,9 @@ def create_friend_request(response: Response, request: schemas.FriendRequest, da
     Inputs: class: FriendRequest
     Outputs: class: FriendResponse
     """
+    if request.user_id == request.friend_id:
+        raise HTTPException(status_code = status.HTTP_422_UNPROCESSABLE_ENTITY,
+                            detail = "Uhhhhh, being friends with yourself doesn't count!")
     if db_friend.check_friend_duplicates(database, request.user_id, request.friend_id):
         raise HTTPException(status_code = status.HTTP_422_UNPROCESSABLE_ENTITY,
                             detail = f'User {request.user_id} and User {request.friend_id} are already friends, or there is a request pending.')
