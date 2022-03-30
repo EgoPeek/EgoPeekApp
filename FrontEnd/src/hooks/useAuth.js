@@ -1,3 +1,7 @@
+/**
+ *  File name: useAuth.js
+ *  Description: Custom react hook that allows easy access of logging a user in/ verifying user/ and logging them out
+ */
 // import { useState, useEffect } from 'react'
 import axios from "axios"
 import { useEffect } from "react";

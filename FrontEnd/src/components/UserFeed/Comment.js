@@ -1,3 +1,7 @@
+/**
+ *  FileName: Comment.js
+ *  Description: Comment component that is displayed under a users post 
+ */
 import React from 'react'
 import './Comment.css'
 

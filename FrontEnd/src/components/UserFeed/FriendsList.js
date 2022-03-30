@@ -1,3 +1,8 @@
+/**
+ *  FileName: FriendsList
+ *  Description: All the logic for the users friends list, allows them to add, search, remove, and ignore friend requests
+ */
+
 import React from 'react'
 import './UserFeed.css'
 import CircularProgress from '@mui/material/CircularProgress';

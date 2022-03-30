@@ -1,3 +1,7 @@
+/**
+ *  File name: INterests.js
+ *  Description: Interest page where users can select what types of topics they're interested in viewing on their userFeed
+ */
 import { useState,useEffect } from 'react'
 import { TextInputStandard } from '../Misc/Input/TextFields'
 import { GreenButton } from '../Misc/Input/Buttons'

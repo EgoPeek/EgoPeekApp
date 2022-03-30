@@ -1,6 +1,6 @@
 /**
  *  FileName: UserFeed
- *  Description: Home screen for a logged in user, displays users follows, friends, and post activity
+ *  Description: Home screen for a logged in user, displays users friends, and receieve posts from other users
  */
 
 import { useState, useEffect } from 'react'

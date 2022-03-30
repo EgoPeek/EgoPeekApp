@@ -1,3 +1,7 @@
+/**
+ *  FileName: IconBubble.js
+ *  Description: Modular drop down menu that is used all throughout the site, allows for different implementations
+ */
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './IconBubble.css'

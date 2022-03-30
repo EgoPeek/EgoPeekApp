@@ -1,3 +1,7 @@
+/**
+ *  FileName: InternalImageOrVideo.js
+ *  Description: Component that allows user to upload their own images/ videos to egopeek and sends everything to the backend
+ */
 import React, { useEffect, useRef, useState } from 'react'
 import { GreenButton } from '../Misc/Input/Buttons'
 import './Submit.css'

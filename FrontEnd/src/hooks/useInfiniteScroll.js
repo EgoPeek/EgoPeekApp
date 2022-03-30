@@ -1,3 +1,7 @@
+/**
+ *  FileName: useInfiniteScroll.js
+ *  Description: Just an experimental file, this doesn't really do anything in the app currently
+ */
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 

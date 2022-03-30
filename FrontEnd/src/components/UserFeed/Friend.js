@@ -1,3 +1,7 @@
+/**
+ *  FileName: Friend
+ *  Description: Friend component which are added to the friends list
+ */
 import './Friend.css'
 import React, { useState, useEffect } from 'react'
 import { IconBubble, MenuItem } from '../Misc/CustomComponents/IconBubble'

@@ -1,3 +1,7 @@
+/**
+ *  FileName: DisplayPost.js
+ *  Description: Displays an overlay on the desired post that wants to be viewed
+ */
 import React, { useState } from 'react'
 import { GreenButton } from '../Misc/Input/Buttons'
 import { TextInputStandard } from '../Misc/Input/TextFields'
