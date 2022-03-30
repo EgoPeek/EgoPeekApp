@@ -39,18 +39,21 @@ def create_friend_request(db: Session, request: schema.FriendRequest):
 
 
 def update_friend_request(db: Session, request: schema.FriendRequest):
-    result1 = db.query(DbFriend).filter(DbFriend.user_id == request.user_id, DbFriend.friend_id == request.friend_id)
-    result1.update({
-        DbFriend.message: request.message,
-        DbFriend.friend_status: request.answer
-    })
-    result2 = db.query(DbFriend).filter(DbFriend.user_id == request.friend_id, DbFriend.friend_id == request.user_id)
-    result2.update({
-        DbFriend.message: request.message,
-        DbFriend.friend_status: request.answer
-    })
-    db.commit()
-    return {'success': True, 'message': f'Friend status updated to: {request.answer} for User {request.user_id} and User {request.friend_id}'}
+    if request.answer != 'declined':
+        result1 = db.query(DbFriend).filter(DbFriend.user_id == request.user_id, DbFriend.friend_id == request.friend_id)
+        result1.update({
+            DbFriend.message: request.message,
+            DbFriend.friend_status: request.answer
+        })
+        result2 = db.query(DbFriend).filter(DbFriend.user_id == request.friend_id, DbFriend.friend_id == request.user_id)
+        result2.update({
+            DbFriend.message: request.message,
+            DbFriend.friend_status: request.answer
+        })
+        db.commit()
+        return {'success': True, 'message': f'Friend status updated to: {request.answer} for User {request.user_id} and User {request.friend_id}'}
+    else:
+        return delete_friends(db, request.user_id, request.friend_id)
 
 
 def get_all_db_friends(db: Session):
@@ -91,3 +94,11 @@ def delete_friends(db: Session, user_id: int, friend_id: int):
     db.delete(result2)
     db.commit()
     return {'success': True, 'message': f'User {user_id} and User {friend_id} are no longer friends.'}
+
+
+def check_friend_duplicates(db: Session, user_id: int, friend_id: int):
+    result1 = db.query(DbFriend).filter(DbFriend.user_id == user_id, DbFriend.friend_id == friend_id).first()
+    result2 = db.query(DbFriend).filter(DbFriend.user_id == friend_id, DbFriend.friend_id == user_id).first()
+    if result1 or result2:
+        return True
+    return False

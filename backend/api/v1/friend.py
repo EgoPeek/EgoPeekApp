@@ -4,7 +4,7 @@ friend.py
     - Takes in REST api calls from the front end and returns requested friend data for use in the front end application.
 """
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, Response
 from backend import schemas
 from backend.database import get_database
 from sqlalchemy.orm.session import Session
@@ -17,12 +17,16 @@ router = APIRouter()
 responses = ['friends', 'declined']
 
 @router.post('/requests', response_model = schemas.FriendResponse)
-def create_friend_request(request: schemas.FriendRequest, database: Session = Depends(get_database)):
+def create_friend_request(response: Response, request: schemas.FriendRequest, database: Session = Depends(get_database)):
     """
     Creates a friend request in the EgoPeek database.
     Inputs: class: FriendRequest
     Outputs: class: FriendResponse
     """
+    if db_friend.check_friend_duplicates(database, request.user_id, request.friend_id):
+        raise HTTPException(status_code = status.HTTP_422_UNPROCESSABLE_ENTITY,
+                            detail = f'User {request.user_id} and User {request.friend_id} are already friends, or there is a request pending.')
+    response.status_code = status.HTTP_201_CREATED
     return db_friend.create_friend_request(database, request)
 
 
