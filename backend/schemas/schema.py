@@ -241,7 +241,6 @@ class HashtagResponse(BaseModel):
     post_used_hashtag: Optional[List[Post]]
     comment_used_hashtag: Optional[List[Comment]]
     user: Optional[User]
-    # profile: Optional[ProfileUser]
     class Config():
         orm_mode = True
 
@@ -372,3 +371,15 @@ class HashtagGroupResponse(BaseModel):
     hashtags: List[Hashtag]
     class Config():
         orm_mode = True
+
+class AvatarResponse(BaseModel):
+    user: User
+    avatar_path: Optional[str]
+    class Config():
+        orm_mode = True
+
+class FriendStatusResponse(BaseModel):
+    user_id: int
+    username: str
+    avatar_path: Optional[str]
+    friend_status: str
