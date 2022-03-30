@@ -72,10 +72,11 @@ def get_friend_list_status(db: Session, user_id: int):
     response = []
     find_friends = db.query(DbFriend).filter(DbFriend.user_id == user_id).all()
     for friend in find_friends:
-        response.append({'user_id': friend.friend_id,
-                         'username': get_username_by_id(db, friend.friend_id),
-                         'avatar_path': get_user_avatar(db, friend.friend_id).avatar_path,
-                         'friend_status': friend.friend_status})
+        if friend.friend_status != 'declined':
+            response.append({'user_id': friend.friend_id,
+                            'username': get_username_by_id(db, friend.friend_id),
+                            'avatar_path': get_user_avatar(db, friend.friend_id).avatar_path,
+                            'friend_status': friend.friend_status})
     return response
 
 
