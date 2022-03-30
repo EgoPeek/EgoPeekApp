@@ -1,3 +1,7 @@
+/**
+ *  FileName: useFetch.js
+ *  Description: Custom react hook that allows for an easy way to fetch something from the backend
+ */
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
