@@ -1,6 +1,7 @@
 // import { useState, useEffect } from 'react'
 import axios from "axios"
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 // putting this here for now for Steve's reference, not sure where it should live
 // auth bearer token handling to persist through page refresh/redirect, but drop token on logout/window close
@@ -44,6 +45,7 @@ useEffect(() => {
 
 const useAuth = () => {
     const auth = window.localStorage.getItem('auth')
+    const navigate = useNavigate();
 
     //checks for valid login
     const checkForValidEmail = async (email, password) => {
@@ -84,7 +86,10 @@ const useAuth = () => {
  
         },
         logout() {
-            window.localStorage.setItem('auth', false)
+            window.localStorage.removeItem('auth')
+            window.localStorage.removeItem('userID')
+            window.localStorage.removeItem('userName')
+            navigate('/')
         },
         isAuthenticated() {
             return auth === 'true'

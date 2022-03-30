@@ -1,0 +1,53 @@
+.bubble-icon{
+    position: relative;
+}
+
+.dropdown-list{
+    position: absolute;
+    overflow: hidden;
+    top:0;
+    transform: translateX(-100%);
+    width: max-content;
+    background-color: #1e1b2e;
+    border: 1px solid #353257;
+    border-radius: 5px;
+    z-index: 893201809;
+    display: none;
+}
+.show{
+    display: block;
+}
+.bubble-img-container{
+    display: block;
+}
+.bubble-img{
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+.bubble-img:hover{
+    opacity: 0.8;
+    background-color: black;
+    cursor: pointer;
+}
+
+.item-dropdown{
+    text-decoration: none;
+}
+
+.menu-item{
+    text-decoration: none;
+    color: rgb(160, 160, 160);
+    display: flex;
+    align-items: center;
+    padding: 0.7rem;
+    transition: background 300ms;
+}
+.menu-item:hover{
+    background-color: #28243d;
+    border-radius: 5px;
+}
+.menu-logo{
+    margin-right:10px;
+}
+
