@@ -56,6 +56,16 @@ def retrieve_friend_list_data(user_id, database: Session = Depends(get_database)
     return db_friend.get_friend_list(database, user_id)
 
 
+@router.get('/status/{user_id}', response_model = List[schemas.FriendStatusResponse])
+def retrieve_friend_list_status(user_id, database: Session = Depends(get_database)):
+    """
+    Retrieves all of a user's friends along with status
+    Inputs: user_id: int
+    Outputs: List[schema: FriendStatusResponse]
+    """
+    return db_friend.get_friend_list_status(database, user_id)
+
+
 @router.get('/search/{username}', response_model = schemas.FriendListResponse)
 def retrieve_user_by_name(username, database: Session = Depends(get_database)):
     """
