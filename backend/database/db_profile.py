@@ -8,7 +8,6 @@ from sqlalchemy.orm import Session
 from .models import DbProfile, DbHashtag
 from backend.schemas import schema
 from backend.database import db_hashtag
-import logging
 
 
 def create_profile(db: Session, request: schema.ProfileRequest):

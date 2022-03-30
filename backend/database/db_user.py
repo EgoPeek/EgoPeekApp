@@ -6,12 +6,13 @@ db_user.py
 
 from backend import schemas
 from sqlalchemy.orm.session import Session
-from .models import DbUser
+from .models import DbUser, DbProfile
 from .hash import Hash
 from fastapi import HTTPException, status
 
 
 def create_user(db: Session, request: schemas.UserRequest):
+    # add new user to DB
     new_user = DbUser(
         username = request.username,
         email = request.email,
@@ -20,8 +21,16 @@ def create_user(db: Session, request: schemas.UserRequest):
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
+
+    # create an empty profile for new user and add to DB
+    new_profile = DbProfile(user_id = new_user.id)
+    db.add(new_profile)
+    db.commit()
+    db.refresh(new_profile)
+    
     return new_user
 
+# def create_profile(db: Session, request: schema.ProfileRequest):
 
 def get_all_user_data(db: Session):
     return db.query(DbUser).all()
