@@ -49,7 +49,7 @@ def get_all_posts(db: Session):
 
 def get_user_feed(db: Session, user_id: int):
     # build list of friend ids for requested user
-    users = [row[0] for row in db.query(DbFriend.friend_id).filter(DbFriend.user_id == user_id).all()]
+    users = [row[0] for row in db.query(DbFriend.friend_id).filter(DbFriend.user_id == user_id, DbFriend.friend_status == 'friends').all()]
 
     # add user to list of ids to retrieve
     users.append(user_id)
