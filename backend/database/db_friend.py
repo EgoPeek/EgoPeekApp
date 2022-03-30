@@ -80,7 +80,7 @@ def get_friend_list_status(db: Session, user_id: int):
                             'username': get_username_by_id(db, friend.friend_id),
                             'avatar_path': get_user_avatar(db, friend.friend_id).avatar_path,
                             'friend_status': friend.friend_status})
-    return response
+    return sorted(response, key = lambda i: (i['friend_status']))
 
 
 def find_user(db: Session, username):
