@@ -78,6 +78,16 @@ def retrieve_user_interests(user_id, database: Session = Depends(get_database)):
     return db_profile.get_current_interests(database, user_id)
 
 
+@router.get('/avatar/{user_id}', response_model = schemas.AvatarResponse)
+def retrieve_user_avatar(user_id, database: Session = Depends(get_database)):
+    """
+    Retrieves the relative path to the current user's avatar image
+    Inputs: user_id: int
+    Outputs: {'avatar_path': 'str'}
+    """
+    return db_profile.get_user_avatar(database, user_id)
+
+
 @router.put('/{user_id}')
 def update_profile(user_id, request: schemas.ProfileRequest, database: Session = Depends(get_database)):
     """

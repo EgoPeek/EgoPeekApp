@@ -52,6 +52,10 @@ def get_current_interests(db: Session, user_id: int):
     return [tag[0] for tag in db.query(DbHashtag.hashtag_label).filter(DbHashtag.hashtag_group_id == interest_group_id).all()]
 
 
+def get_user_avatar(db: Session, user_id: int):
+    return db.query(DbProfile).filter(DbProfile.user_id == user_id).first()
+
+
 def update_profile(db: Session, user_id: int, request: schema.ProfileRequest):
     # retrieve profile to update
     result = db.query(DbProfile).filter(DbProfile.user_id == user_id)
