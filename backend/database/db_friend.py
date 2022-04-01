@@ -16,7 +16,6 @@ def create_friend_request(db: Session, request: schema.FriendRequest):
     new_friend_sender = DbFriend(
         user_id = request.user_id,
         friend_id = request.friend_id,
-        message = request.message,
         friend_status = 'invite_sent'
     )
     db.add(new_friend_sender)
@@ -25,7 +24,6 @@ def create_friend_request(db: Session, request: schema.FriendRequest):
     new_friend_receiver = DbFriend(
         user_id = request.friend_id,
         friend_id = request.user_id,
-        message = request.message,
         friend_status = 'invite_rec'
     )
     db.add(new_friend_receiver)
@@ -42,12 +40,10 @@ def update_friend_request(db: Session, request: schema.FriendRequest):
     if request.answer != 'declined':
         result1 = db.query(DbFriend).filter(DbFriend.user_id == request.user_id, DbFriend.friend_id == request.friend_id)
         result1.update({
-            DbFriend.message: request.message,
             DbFriend.friend_status: request.answer
         })
         result2 = db.query(DbFriend).filter(DbFriend.user_id == request.friend_id, DbFriend.friend_id == request.user_id)
         result2.update({
-            DbFriend.message: request.message,
             DbFriend.friend_status: request.answer
         })
         db.commit()
