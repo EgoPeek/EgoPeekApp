@@ -4,60 +4,92 @@ import Dropdown from "./Dropdown";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 
-const UpdateGames = () => {
-  const [Game1, setGame1] = useState("");
-  const [Game2, setGame2] = useState("");
-  const [Game3, setGame3] = useState("");
+const UpdateGames = ({ Game, setGame, Platform, setPlatform }) => {
+  const user_id = window.localStorage.getItem("userID");
+  const [formValues, setFormValues] = useState([
+    { gameTitle: "", gamePlatform: "" },
+  ]);
 
-  const handleGame1Change = (event) => {
-    setGame1(event.target.value);
+  const handleGameChange = (event, setGame) => {
+    setGame(event.target.value);
   };
 
-  const handleGame2Change = (event) => {
-    setGame2(event.target.value);
+  const handlePlatformChange = (event, setPlatform) => {
+    setPlatform(event.target.value);
   };
 
-  const handleGame3Change = (event) => {
-    setGame3(event.target.value);
+  let handleChange = (i, e) => {
+    let newFormValues = [...formValues];
+    newFormValues[i][e.target.name] = e.target.value;
+    setFormValues(newFormValues);
   };
 
-  console.log(Game1, Game2, Game3);
+  let addFormFields = () => {
+    setFormValues([...formValues, { gamePlatform: "", gameTitle: "" }]);
+  };
+
+  let removeFormFields = (i) => {
+    let newFormValues = [...formValues];
+    newFormValues.splice(i, 1);
+    setFormValues(newFormValues);
+  };
+
+  let handleSubmit = (event) => {
+    event.preventDefault();
+    alert(JSON.stringify(formValues));
+  };
 
   return (
     <div className="select-favorites">
-      <Dropdown
-        options={[
-          { id: 1, label: "None", value: "None" },
-          { id: 2, label: "Rocket League", value: "Rocket League" },
-          { id: 3, label: "Valorant", value: "Valorant" },
-          { id: 4, label: "CS:GO", value: "CS:GO" },
-        ]}
-        value={Game1}
-        title={Game1}
-        onChange={handleGame1Change}
-      />
-      <Dropdown
-        options={[
-          { id: 1, label: "None", value: "None" },
-          { id: 2, label: "Rocket League", value: "Rocket League" },
-          { id: 3, label: "Valorant", value: "Valorant" },
-          { id: 4, label: "CS:GO", value: "CS:GO" },
-        ]}
-        value={Game2}
-        title={Game2}
-        onChange={handleGame2Change}
-      />
-      <Dropdown
-        options={[
-          { id: 1, label: "None", value: "None" },
-          { id: 2, label: "Rocket League", value: "Rocket League" },
-          { id: 3, label: "Valorant", value: "Valorant" },
-          { id: 4, label: "CS:GO", value: "CS:GO" },
-        ]}
-        value={Game3}
-        title={Game3}
-        onChange={handleGame3Change}
-      />
+      <form onSubmit={handleSubmit}>
+        {formValues.map((element, index) => (
+          <div className="form-inline" key={index}>
+            <label>Game Platform</label>
+            <Dropdown
+              options={[
+                { id: 1, label: "None", value: null },
+                { id: 2, label: "Rocket League", value: "Rocket League" },
+                { id: 3, label: "Valorant", value: "Valorant" },
+                { id: 4, label: "CS:GO", value: "CS:GO" },
+              ]}
+              value={Game}
+              onChange={(e) => handleGameChange(e, setGame)}
+            />
+            <label>Game Title: </label>
+            <Dropdown
+              options={[
+                { id: 1, label: "None", value: null },
+                { id: 2, label: "PS5", value: "PS5" },
+                { id: 3, label: "XBOX1", value: "XBOX1" },
+                { id: 4, label: "PC", value: "PC" },
+              ]}
+              value={Platform}
+              onChange={(e) => handlePlatformChange(e, setPlatform)}
+            />
+            {index ? (
+              <button
+                type="button"
+                className="button remove"
+                onClick={() => removeFormFields(index)}
+              >
+                Remove
+              </button>
+            ) : null}
+          </div>
+        ))}
+        <div className="button-section">
+          <button
+            className="button add"
+            type="button"
+            onClick={() => addFormFields()}
+          >
+            Add
+          </button>
+          <button className="button submit" type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
