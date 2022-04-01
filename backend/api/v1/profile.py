@@ -68,6 +68,16 @@ def retrieve_user_profile(user_id, database: Session = Depends(get_database)):
     return db_profile.get_user_profile(database, user_id)
 
 
+@router.get('/users/{username}', response_model = schemas.ProfileResponse)
+def retrieve_user_profile_by_username(username, database: Session = Depends(get_database)):
+    """
+    Retrieves all information stored for the given user ID.
+    Inputs: user_id: int
+    Outputs: schema: ProfileResponse
+    """
+    return db_profile.get_user_profile_by_username(database, username)
+
+
 @router.get('/interests/{user_id}')
 def retrieve_user_interests(user_id, database: Session = Depends(get_database)):
     """

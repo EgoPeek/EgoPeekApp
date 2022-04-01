@@ -5,12 +5,12 @@
 
 import React from 'react'
 import './UserFeed.css'
-import CircularProgress from '@mui/material/CircularProgress';
 import { Friend, PendingFriendRequest, ReceivingFriendRequest, Stranger } from './Friend'
 import useFetch from '../../hooks/useFetch'
 import { TextInputStandard } from '../Misc/Input/TextFields'
 import { useEffect, useRef, useState } from 'react'
 import { get } from '../../util'
+import { GreenCircle } from '../Misc/Input/LoadingCircle';
 
 const FriendsList = () => {
     const userID = window.localStorage.getItem('userID')
@@ -23,7 +23,7 @@ const FriendsList = () => {
     useEffect(() => {
         setFriends(!friendsPending ? friendsData : [])
     }, [friendsPending])
-    
+
 
     // handles when a user hits enter to search for another user
     const handleEnter = async (e) => {
@@ -67,7 +67,7 @@ const FriendsList = () => {
 
 
     const DisplayFriends = () => {
-        
+
 
         const updateFriendStatus = (newStatus, index) => {
             const newArr = [...friends]
@@ -77,11 +77,11 @@ const FriendsList = () => {
         const moveUserFromSearchToFriends = (newStatus, index) => {
             const newArr = [...friendData]
             newArr[0].friend_status = newStatus
-            setFriends([...friends,...newArr])
+            setFriends([...friends, ...newArr])
             setSearchFriend('')
             setFriendData([])
         }
-        const typeOfFriend = (list,updateFunction) => {
+        const typeOfFriend = (list, updateFunction) => {
             return list.map((item, i) => {
                 //it'll be something like this when nate adds that stuff
                 // different states a friend can be in
@@ -100,13 +100,13 @@ const FriendsList = () => {
         //friendData gets populated and searching gets switched to the actual friend data 
         if (friendsError) return <p>error</p>
         if (!searchFriend) {
-            if (friends.length > 0) return typeOfFriend(friends,updateFriendStatus)
+            if (friends.length > 0) return typeOfFriend(friends, updateFriendStatus)
             else return <p>There are no friends?</p>
         } else {
             if (searchFriendError) return <p>User does not exists</p>
 
             else if (friendData.length === 0) return <p>Searching...</p>
-            else return typeOfFriend(friendData,moveUserFromSearchToFriends)
+            else return typeOfFriend(friendData, moveUserFromSearchToFriends)
         }
     }
 
@@ -117,7 +117,9 @@ const FriendsList = () => {
                 <TextInputStandard autoComplete='off' value={searchFriend} onKeyPress={handleEnter} onChange={searchingForFriends} label="search or add friends" size='small' />
             </div>
             {/* while the page is fetching friends it'll just display loading sign */}
-            {friendsPending ? <CircularProgress color="success" />
+            {friendsPending || friendsError
+                ?
+                <GreenCircle sx={{marginTop:'15px'}}/>
                 :
                 <DisplayFriends />
             }

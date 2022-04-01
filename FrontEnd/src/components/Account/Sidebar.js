@@ -3,11 +3,12 @@ import { useState } from "react";
 import SidebarIcon from "./SidebarIcon";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import GamePosts from "../AccountSettings/GamePosts";
+import { IconBubble } from "../Misc/CustomComponents/IconBubble";
+import { GreenCircle } from "../Misc/Input/LoadingCircle";
 
-const Sidebar = ({ profile }) => {
-  const friends = profile.user.friends;
-  const posts = profile.user.posts;
+const Sidebar = ({ Accountdata }) => {
+  const friends = Accountdata.user.friends;
+  const posts = Accountdata.user.posts;
   const friendsAmount = friends.filter(
     (x) => x.friend_status === "friends"
   ).length;
@@ -24,11 +25,13 @@ const Sidebar = ({ profile }) => {
     return (
       <div className="sidebar">
         <div className="account-info">
-          <div className="account-avatar">
-            <span>pic</span>
-          </div>
+          <IconBubble
+            userImgSrc={Accountdata.avatar_path}
+            imgStyle={{ width: "140px", height: "140px" }}
+          />
+
           <div className="name-container">
-            <span>{profile.user.username}</span>
+            <span>{Accountdata.user.username}</span>
             <ForwardToInboxIcon />
             <PersonAddIcon />
             <div className="followers">
@@ -41,7 +44,7 @@ const Sidebar = ({ profile }) => {
         </div>
 
         <div className="account-bio">
-          <p>{profile.bio}</p>
+          <p>{Accountdata.bio}</p>
         </div>
 
         <div className="account-favorites">

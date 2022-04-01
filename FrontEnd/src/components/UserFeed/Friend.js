@@ -25,7 +25,7 @@ export const Friend = ({ friendInfo, updateStatus,index, ...props }) => {
             {/* this user-icon should be the user bubble, this is temporary */}
             <IconBubble imgStyle={{ height: '3rem', width: '3rem' }} userImgSrc={userImg}>
                 <MenuItem redirect='#' MenuIcon={<InboxIcon />}>Message</MenuItem>
-                <MenuItem redirect='#' MenuIcon={<AccountBoxIcon />}>Profile</MenuItem>
+                <MenuItem redirect={`/account/${username}`} MenuIcon={<AccountBoxIcon />}>Profile</MenuItem>
                 <MenuItem redirect='#' MenuIcon={<PersonRemoveAlt1Icon />} method={() => { deleteFriend(friendInfo); updateStatus('',index)}}>Remove Friend</MenuItem>
             </IconBubble>
             <div className='friend-name'>
@@ -45,7 +45,7 @@ export const Stranger = ({ friendInfo,updateStatus,index, ...props }) => {
         <div className='user-friend' {...props}>
             {/* this user-icon should be the user bubble, this is temporary */}
             <IconBubble imgStyle={{ height: '3rem', width: '3rem' }} userImgSrc={userImg}>
-                <MenuItem redirect='#' MenuIcon={<AccountBoxIcon />}>Profile</MenuItem>
+                <MenuItem redirect={`/account/${username}`} MenuIcon={<AccountBoxIcon />}>Profile</MenuItem>
                 <MenuItem redirect='#' MenuIcon={<PersonAddIcon />} method={() => { sendRequest(friendInfo); updateStatus('invite_sent',index) }} >Add Friend</MenuItem>
             </IconBubble>
             <div className='friend-name'>
@@ -66,7 +66,7 @@ export const PendingFriendRequest = ({ friendInfo,updateStatus,index, ...props }
         <div className='user-friend' {...props}>
             {/* this user-icon should be the user bubble, this is temporary */}
             <IconBubble imgStyle={{ height: '3rem', width: '3rem' }} userImgSrc={userImg}>
-                <MenuItem redirect='#' MenuIcon={<AccountBoxIcon />}>Profile</MenuItem>
+                <MenuItem redirect={`/account/${username}`} MenuIcon={<AccountBoxIcon />}>Profile</MenuItem>
                 <MenuItem redirect='#' MenuIcon={<PendingIcon />} method={() => { updateFriendStatus(friendInfo, 'declined'); updateStatus('',index) }}>Cancel Request</MenuItem>
             </IconBubble>
             <div className='friend-name'>
@@ -86,7 +86,7 @@ export const ReceivingFriendRequest = ({ friendInfo,updateStatus,index, ...props
         <div className='user-friend' {...props}>
             {/* this user-icon should be the user bubble, this is temporary */}
             <IconBubble imgStyle={{ height: '3rem', width: '3rem' }} userImgSrc={userImg}>
-                <MenuItem redirect='#' MenuIcon={<AccountBoxIcon />}>Profile</MenuItem>
+                <MenuItem redirect={`/account/${username}`} MenuIcon={<AccountBoxIcon />}>Profile</MenuItem>
                 <MenuItem redirect='#' MenuIcon={<PersonAddIcon />} method={() => { updateFriendStatus(friendInfo, 'friends'); updateStatus('friends',index) }}>Accept Friend</MenuItem>
                 <MenuItem redirect='#' MenuIcon={<PersonRemoveAlt1Icon />} method={() => { updateFriendStatus(friendInfo, 'declined'); updateStatus('',index) }}>Decline Friend</MenuItem>
             </IconBubble>

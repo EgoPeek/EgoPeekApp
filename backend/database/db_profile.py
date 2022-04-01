@@ -5,7 +5,7 @@ db_profile.py
 """
 
 from sqlalchemy.orm import Session
-from .models import DbProfile, DbHashtag
+from .models import DbProfile, DbHashtag, DbUser
 from backend.schemas import schema
 from backend.database import db_hashtag
 
@@ -44,6 +44,11 @@ def get_all_db_profiles(db: Session):
 
 def get_user_profile(db: Session, user_id: int):
     return db.query(DbProfile).filter(DbProfile.user_id == user_id).first()
+
+
+def get_user_profile_by_username(db: Session, username: str):
+    id = db.query(DbUser.id).filter(DbUser.username == username).first()[0]
+    return db.query(DbProfile).filter(DbProfile.user_id == id).first()
 
 
 def get_current_interests(db: Session, user_id: int):

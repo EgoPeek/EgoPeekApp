@@ -247,14 +247,12 @@ class HashtagResponse(BaseModel):
 class FriendRequest(BaseModel):
     user_id: int
     friend_id: int
-    message: Optional[str]  
     answer: Optional[str]   # only for responding to a request 'friends' or 'declined'
 
 class FriendResponse(BaseModel):
     request_id: int
     user_id: int
     friend_id: int
-    message: Optional[str]
     friend_status: str
     class Config():
         orm_mode = True

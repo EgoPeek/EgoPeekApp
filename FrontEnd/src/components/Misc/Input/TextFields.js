@@ -3,64 +3,61 @@
     description: custom textfield for log in screen
 */
 
-import { TextField } from '@mui/material'
-import { styled } from '@mui/material/styles'
-import { green } from '@mui/material/colors'
+import { TextField } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { green } from "@mui/material/colors";
 
 //updated version of using mui styles
 export const TextInputStandard = styled(TextField)(() => ({
-    color: 'white',
-    'fieldset': 'white',
-    'label': {
-        color: 'grey'
-    },
-    '& label.Mui-focused': {
-        color: 'white',
-    },
+  color: "white",
+  fieldset: "white",
+  label: {
+    color: "grey",
+  },
+  "& label.Mui-focused": {
+    color: "white",
+  },
 
-    '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-            borderColor: 'grey',
-        },
-        '&:hover fieldset': {
-            borderColor: green[400],
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: green[400],
-        },
-        'input': {
-            color: 'white',
-            backgroundColor: '#171621',
-        }
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "grey",
     },
-
-}))
+    "&:hover fieldset": {
+      borderColor: green[400],
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: green[400],
+    },
+    input: {
+      color: "white",
+      backgroundColor: "#171621",
+    },
+  },
+}));
 
 export const TextInputPost = styled(TextField)(() => ({
-    color: 'white',
-    'fieldset': 'white',
-    'label': {
-        color: 'grey',
+  color: "white",
+  fieldset: "white",
+  label: {
+    color: "grey",
+  },
+  "& label.Mui-focused": {
+    color: "white",
+  },
 
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "grey",
     },
-    '& label.Mui-focused': {
-        color: 'white',
+    "&:hover fieldset": {
+      borderColor: "white",
     },
-
-    '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-            borderColor: 'grey',
-        },
-        '&:hover fieldset': {
-            borderColor: 'white',
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: 'white',
-        },
-        'input': {
-            color: 'white',
-            background: '#171621',
-        }
+    "&.Mui-focused fieldset": {
+      borderColor: "white",
     },
-
-}))
+    input: {
+      color: "white",
+      background: "#171621",
+    },
+  },
+}));

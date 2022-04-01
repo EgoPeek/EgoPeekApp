@@ -10,6 +10,10 @@ import Comment from './Comment'
 import './DisplayPost.css'
 import { Button } from '@mui/material';
 import axios from 'axios';
+import { IconBubble } from '../Misc/CustomComponents/IconBubble';
+import useFetch from '../../hooks/useFetch';
+import { useNavigate } from 'react-router';
+import { GreenCircle } from '../Misc/Input/LoadingCircle';
 
 const FILETYPES_IMG = [
     '.png',
@@ -25,8 +29,11 @@ const FILETYPES_VIDEO = [
 
 const DisplayPost = ({ post, closeDisplay, ...props }) => {
     const { post_id, comments, like_count, content_path_type, title, message, timestamp, user, video_url, image_url, hashtag_group } = post
+    const { data: avatarData, isPending: avatarIsPending, error: avatarError } = useFetch(`/api/v1/profiles/${user.id}`)
+    const author = user.username
     const hashtags = hashtag_group !== null ? hashtag_group.hashtags : []
     const isVideo = video_url !== ""
+    const navigate = useNavigate()
 
     const dateObj = new Date(timestamp)
     const [comment, setComment] = useState('')
@@ -79,12 +86,20 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
                         </div>
                         <div className='display-content-info'>
                             <div className='display-content-user-info'>
-                                <div className='display-user'>
-                                    {/* this div is gonna be a user component that kevin makes */}
-                                    user
-                                </div>
+                                {avatarIsPending
+                                    ?
+                                    <GreenCircle sx={{ marginRight: '15px' }} />
+                                    :
+                                    <IconBubble onClick={() => navigate(`/account/${author}`)} imgStyle={{ height: '4rem', width: '4rem', marginRight: '1rem' }} userImgSrc={avatarData.avatar_path}>
+                                    </IconBubble>
+                                }
 
                                 <div className='post-info'>
+                                    <div className='post-info-details'>
+                                        <p>
+                                            Author: {author}
+                                        </p>
+                                    </div>
                                     <div className='post-info-details'>
                                         <p>
                                             Like Count: {like_count}0
@@ -119,7 +134,7 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
                         </div>
                     </div>
                     <div className='post-create-comment'>
-                        <TextInputStandard onChange={(e) => { setComment(e.target.value) }} autoComplete='off' fullWidth size='small' variant='outlined' placeholder='Type a comment'></TextInputStandard>
+                        <TextInputStandard value={comment} onChange={(e) => { setComment(e.target.value) }} autoComplete='off' fullWidth size='small' variant='outlined' placeholder='Type a comment'></TextInputStandard>
                         <GreenButton onClick={addComment} variant='outlined'>Submit</GreenButton>
                     </div>
                     <div className='display-comments-container'>

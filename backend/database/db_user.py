@@ -30,7 +30,6 @@ def create_user(db: Session, request: schemas.UserRequest):
     
     return new_user
 
-# def create_profile(db: Session, request: schema.ProfileRequest):
 
 def get_all_user_data(db: Session):
     return db.query(DbUser).all()

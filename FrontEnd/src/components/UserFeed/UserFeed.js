@@ -3,7 +3,7 @@
  *  Description: Home screen for a logged in user, displays users friends, and receieve posts from other users
  */
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Header from '../Misc/CustomComponents/Header'
 import '../Misc/CustomComponents/UserPost'
 import './UserFeed.css'
@@ -11,7 +11,7 @@ import UserPost from '../Misc/CustomComponents/UserPost'
 import useFetch from '../../hooks/useFetch'
 import CreatePost from './CreatePost'
 import DisplayPost from './DisplayPost'
-import BorderLinearProgress from '../Misc/Input/LoadingBar';
+import { GreenLoadingBar } from '../Misc/Input/LoadingBar';
 import FriendsList from './FriendsList'
 
 const UserFeed = () => {
@@ -38,7 +38,7 @@ const UserFeed = () => {
 
 
     const PostList = () => {
-        if (postError) return <p>error</p>
+        if (postError) return <></>
 
         if (post) return post.map((item, i) => <UserPost onClick={() => displayPost(item)} post={item} key={i} />)
         else return <></>
@@ -52,7 +52,7 @@ const UserFeed = () => {
                 <div className='user-feed'>
                     <CreatePost />
                     {/* while the page is fetching post it'll just display loading sign */}
-                    {postPending && <BorderLinearProgress />}
+                    {(postPending || postError)  && <GreenLoadingBar />}
                     {/* maps each post from API call to a userPost component */}
                     <PostList />
                 </div>

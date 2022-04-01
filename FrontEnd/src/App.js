@@ -38,18 +38,10 @@ function App() {
           </Route>
 
           {/* if a user IS logged in protected routes are shown */}
-<<<<<<< Updated upstream
           <Route path='/' element={<ProtectedRoute />}>
-            <Route path="/account" element={<Account />} /> {/* move to protected */}
+            <Route path="/account/:username" element={<Account />} />
             <Route path='/home' element={<UserFeed />} />
             <Route path='/submit' element={<Submit />}/>
-=======
-          <Route path="/" element={<ProtectedRoute />}>
-            <Route path="/account" element={<Account />} />{" "}
-            {/* move to protected */}
-            <Route path="/home" element={<UserFeed />} />
-            <Route path="/submit" element={<Submit />} />
->>>>>>> Stashed changes
             <Route path="/settings" element={<UserSettings />} />
           </Route>
 
