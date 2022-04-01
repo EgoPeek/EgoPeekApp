@@ -39,7 +39,7 @@
 
 .settings-bio {
   border: 2px solid black;
-  padding: 3%;
+  padding: 2%;
   width: 100%;
   height: 100%;
   border-radius: 10px;
@@ -105,6 +105,32 @@
   display: flex;
   justify-content: left;
   width: 100%;
+}
+
+.update-socials {
+  margin-top: 5%;
+}
+
+.socials-header {
+  margin-bottom: 1%;
+  display: flex;
+  flex-direction: row;
+}
+
+.socialform-inline {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1%;
+}
+
+.button-add {
+  color: white;
+  background-color: rgba(23, 22, 33, 1);
+  border: none;
+}
+
+.socialform-platform {
+  margin-right: 2%;
 }
 
 .savebtn-spacing {
