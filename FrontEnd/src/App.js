@@ -43,6 +43,7 @@ function App() {
             <Route path="/account" element={<Account />} /> {/* move to protected */}
             <Route path='/home' element={<UserFeed />} />
             <Route path='/submit' element={<Submit />}/>
+            <Route path="/settings" element={<UserSettings />} />
           </Route>
 
           <Route path='*' element={
