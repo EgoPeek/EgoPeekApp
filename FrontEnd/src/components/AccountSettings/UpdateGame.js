@@ -1,10 +1,19 @@
 import React from "react";
 import { useState } from "react";
 import Dropdown from "./Dropdown";
+import AddIcon from "@mui/icons-material/Add";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
+import GamePosts from "../AccountSettings/GamePosts";
 
-const UpdateGames = ({ Game, setGame, Platform, setPlatform }) => {
+const UpdateGames = ({
+  Game,
+  setGame,
+  Platform,
+  setPlatform,
+  data,
+  isPending,
+}) => {
   const user_id = window.localStorage.getItem("userID");
   const [formValues, setFormValues] = useState([
     { gameTitle: "", gamePlatform: "" },
@@ -18,12 +27,6 @@ const UpdateGames = ({ Game, setGame, Platform, setPlatform }) => {
     setPlatform(event.target.value);
   };
 
-  let handleChange = (i, e) => {
-    let newFormValues = [...formValues];
-    newFormValues[i][e.target.name] = e.target.value;
-    setFormValues(newFormValues);
-  };
-
   let addFormFields = () => {
     setFormValues([...formValues, { gamePlatform: "", gameTitle: "" }]);
   };
@@ -34,17 +37,27 @@ const UpdateGames = ({ Game, setGame, Platform, setPlatform }) => {
     setFormValues(newFormValues);
   };
 
-  let handleSubmit = (event) => {
-    event.preventDefault();
-    alert(JSON.stringify(formValues));
-  };
+  console.log(data.user.games);
+  const games = isPending ? "..." : data.user.games;
 
   return (
     <div className="select-favorites">
-      <form onSubmit={handleSubmit}>
+      <div className="socials-header">
+        <h2>Edit Favorites</h2>
+        <button className="button-add" onClick={() => addFormFields()}>
+          <AddIcon />
+        </button>
+      </div>
+      <span>
+        {isPending
+          ? "..."
+          : games.map((item, i) => <GamePosts gameInfo={item} key={i} />)}
+      </span>
+
+      <form>
         {formValues.map((element, index) => (
           <div className="form-inline" key={index}>
-            <label>Game Platform</label>
+            <label>Game Title: </label>
             <Dropdown
               options={[
                 { id: 1, label: "None", value: null },
@@ -55,7 +68,7 @@ const UpdateGames = ({ Game, setGame, Platform, setPlatform }) => {
               value={Game}
               onChange={(e) => handleGameChange(e, setGame)}
             />
-            <label>Game Title: </label>
+            <label>Game Platform: </label>
             <Dropdown
               options={[
                 { id: 1, label: "None", value: null },
@@ -77,18 +90,6 @@ const UpdateGames = ({ Game, setGame, Platform, setPlatform }) => {
             ) : null}
           </div>
         ))}
-        <div className="button-section">
-          <button
-            className="button add"
-            type="button"
-            onClick={() => addFormFields()}
-          >
-            Add
-          </button>
-          <button className="button submit" type="submit">
-            Submit
-          </button>
-        </div>
       </form>
     </div>
   );

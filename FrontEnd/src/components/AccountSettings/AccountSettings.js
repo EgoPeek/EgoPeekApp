@@ -11,6 +11,8 @@ import UpdateGames from "./UpdateGame";
 import { TextInputStandard } from "../Misc/Input/TextFields";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
+import GamePosts from "../AccountSettings/GamePosts";
+import Socials from "../AccountSettings/Socials";
 
 const UserSettings = () => {
   const user_id = window.localStorage.getItem("userID");
@@ -23,6 +25,10 @@ const UserSettings = () => {
     { platform: "", name: "", url: "" },
   ]);
 
+  const games = isPending ? "..." : data.user.games;
+  const socials = isPending ? "..." : data.user.social_links;
+  console.log("hi" + socials);
+
   /*logic to check if user is editing profile */
   const setEditingTrue = () => {
     setisEditing(true);
@@ -33,7 +39,7 @@ const UserSettings = () => {
   const updateProfile = async () => {
     setisEditing(false);
     updateSocials();
-    updateGame(Game);
+    newGame(Game, Platform);
     const payload = {
       user_id: user_id,
       bio: bio,
@@ -48,12 +54,12 @@ const UserSettings = () => {
     }
   };
 
-  /* updates game */
-  const updateGame = async (Game) => {
+  /* Sets game in database */
+  const newGame = async (Game, Platform) => {
     const payload = {
       user_id: user_id,
       game_title: Game,
-      game_platform: "",
+      game_platform: Platform,
       game_username: "",
       main_character: "",
       current_rank: "",
@@ -70,7 +76,47 @@ const UserSettings = () => {
     }
   };
 
-  /*updates socials */
+  /* updates Games in DB */
+  const updateGame = async (Game, Platform) => {
+    const payload = {
+      game_id: user_id,
+      game_title: Game,
+      game_platform: Platform,
+      game_username: "",
+      main_character: "",
+      current_rank: "",
+      highest_rank: "",
+      hours_played: 0,
+    };
+    try {
+      const response = await axios.put(`/api/v1/games/`, payload);
+      console.log(response);
+      return response.data;
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
+  };
+
+  /*sets socials in DB */
+  const newSocials = async () => {
+    const payload = {
+      user_id: user_id,
+      link_platform: formValues.platform,
+      link_username: formValues.name,
+      link_url: formValues.url,
+    };
+    try {
+      const response = await axios.post(`/api/v1/links/`, payload);
+      console.log(response);
+      return response.data;
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
+  };
+
+  /*updates socials in DB */
   const updateSocials = async () => {
     const payload = {
       user_id: user_id,
@@ -79,7 +125,7 @@ const UserSettings = () => {
       link_url: formValues.url,
     };
     try {
-      const response = await axios.put(`/api/v1/profiles/${user_id}`, payload);
+      const response = await axios.post(`/api/v1/links/`, payload);
       console.log(response);
       return response.data;
     } catch (e) {
@@ -163,18 +209,26 @@ const UserSettings = () => {
         </div>
 
         <div className="edit-favorites">
-          <h2>Edit Favorites</h2>
           <div className="game-change">
             {isEditing ? (
-              <UpdateGames
-                setGame={setGame}
-                Game={Game}
-                setPlatform={setPlatform}
-                Platform={Platform}
-              />
+              <>
+                <UpdateGames
+                  setGame={setGame}
+                  Game={Game}
+                  setPlatform={setPlatform}
+                  Platform={Platform}
+                  data={data}
+                  isEditing={isEditing}
+                />
+              </>
             ) : (
               <span className="profile-name">
-                <p>Games</p>
+                <h2>Edit Favorites</h2>
+                {isPending
+                  ? "..."
+                  : games.map((item, i) => (
+                      <GamePosts gameInfo={item} key={i} />
+                    ))}
               </span>
             )}
           </div>
@@ -192,7 +246,13 @@ const UserSettings = () => {
           </div>
           {isEditing ? (
             <>
-              <span>Current Socials</span>
+              <span>
+                {/*{isPending
+                  ? "..."
+                  : socials.map((item, i) => (
+                      <Socials socialsInfo={item} key={i} />
+                  ))}*/}
+              </span>
               <form onSubmit={handleSubmit}>
                 {formValues.map((element, index) => (
                   <div className="socialform-inline" key={index}>

@@ -3,18 +3,18 @@ import { useState } from "react";
 import SidebarIcon from "./SidebarIcon";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import GamePosts from "../AccountSettings/GamePosts";
 
-const Sidebar = ({ data }) => {
-  const {
-    data: Accountdata,
-    isPending: AccountisPending,
-    error: Accounterror,
-  } = data;
-  const friends = AccountisPending ? []: Accountdata.user.friends;
-  const posts = AccountisPending ? "..." : Accountdata.user.posts;
-  const friendsAmount = friends.filter(x=>x.friend_status === 'friends').length;
+const Sidebar = ({ profile }) => {
+  const friends = profile.user.friends;
+  const posts = profile.user.posts;
+  const friendsAmount = friends.filter(
+    (x) => x.friend_status === "friends"
+  ).length;
   const postsAmount = posts.length;
   const [showSidebar, setShowSidebar] = useState(true);
+
+  const games = profile.user.games;
 
   const renderSidebar = () => {
     if (showSidebar == false) {
@@ -28,7 +28,7 @@ const Sidebar = ({ data }) => {
             <span>pic</span>
           </div>
           <div className="name-container">
-            <span>{AccountisPending ? "..." : Accountdata.user.username}</span>
+            <span>{profile.user.username}</span>
             <ForwardToInboxIcon />
             <PersonAddIcon />
             <div className="followers">
@@ -41,16 +41,16 @@ const Sidebar = ({ data }) => {
         </div>
 
         <div className="account-bio">
-          <p>{AccountisPending ? "..." : Accountdata.bio}</p>
+          <p>{profile.bio}</p>
         </div>
 
         <div className="account-favorites">
           <h1>Favorite Games</h1>
           <div className="favorite-spacing">
             <span>
-              <p>game1</p>
-              <p>game2</p>
-              <p>game3</p>
+              {games.map((item, i) => (
+                <GamePosts gameInfo={item} key={i} />
+              ))}
             </span>
           </div>
         </div>

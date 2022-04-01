@@ -4,6 +4,12 @@
   flex-wrap: wrap;
 }
 
+.editbtn-spacing {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+}
+
 .settings-left {
   padding: 2rem;
   display: flex;
@@ -24,6 +30,12 @@
   border-radius: 50%;
   width: 150px;
   height: 150px;
+}
+
+.edit-btn {
+  background-color: rgba(23, 22, 33, 1);
+  border: none;
+  color: white;
 }
 
 .edit-bio {
@@ -65,7 +77,8 @@
 
 .gametitle-dropdown {
   margin-top: 1%;
-  min-width: 20%;
+  margin-right: 5%;
+  min-width: 15%;
   width: fit-content;
   text-align: center;
   font-size: larger;
@@ -80,24 +93,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
-
-.editbtn-spacing {
-  display: flex;
-  width: 50%;
-  justify-content: end;
-}
-
-.edit-btn {
-  background-color: rgba(23, 22, 33, 1);
-  border: none;
-  color: white;
-}
-
-.editbtn-spacing {
-  display: flex;
-  justify-content: left;
-  width: 100%;
 }
 
 .update-socials {
