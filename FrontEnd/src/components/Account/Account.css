@@ -38,13 +38,6 @@
   margin-bottom: 20%;
 }
 
-.account-avatar {
-  background-color: aqua;
-  width: 140px;
-  height: 100px;
-  border-radius: 50%;
-}
-
 .name-container {
   display: flex;
   flex-wrap: wrap;

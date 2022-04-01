@@ -5,15 +5,16 @@
 
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { TextInputStandard } from '../Misc/Input/TextFields'
-import { GreenButton } from '../Misc/Input/Buttons'
-import { FormControl } from '@mui/material'
-import { Alert } from '@mui/material'
-import axios from 'axios'
 import "../Misc/CustomComponents/TitleAndLogo"
 import "./Register.css"
 import TitleAndLogo from '../Misc/CustomComponents/TitleAndLogo'
+import InterestPage from './Interests'
+import { FormControl } from '@mui/material'
+import axios from 'axios'
 import useAuth from '../../hooks/useAuth'
+import { Alert } from '@mui/material'
+import { TextInputStandard } from '../Misc/Input/TextFields'
+import { GreenButton } from '../Misc/Input/Buttons'
 
 const Register = () => {
   const [accountCreated, setAccountCreated] = useState(false)
@@ -48,60 +49,6 @@ const Register = () => {
   )
 }
 
-//interest page in component Form
-const InterestPage = () => {
-
-  //Tag component that takes a title
-  const [selectedTags, setSelectedTags] = useState([]);
-  useEffect(() => {
-  }, [selectedTags])
-
-
-  const updateTag = (tagName) => {
-    //if the tag exists in the array remove it
-    if (selectedTags.find(x => x === tagName)) {
-      setSelectedTags(selectedTags.filter(x => x !== tagName))
-      return
-    }
-    //if its brand new just add it
-    setSelectedTags([...selectedTags, tagName])
-  }
-
-  const Tag = ({ title }) => {
-    return (
-      <div className='tag' onClick={() => updateTag(title)}>
-        <p>{title}</p>
-      </div>
-    )
-  }
-
-  return (
-    <div className='form-container'>
-      <h2>Interests</h2>
-      <p>Pick games that interest you the most to receieve a more personalized feed</p>
-      <TextInputStandard size='small' sx={{ width: '70%' }} label="Search by tag" />
-      <div className='tag-container'>
-        <div className='chosen-tags interests'>
-          {selectedTags.map((x, i) => <Tag title={x} key={i} />)}
-        </div>
-        <div className='interests'>
-          <Tag title='test' />
-          <Tag title='fdsyfdsfsadfads' />
-          <Tag title='fdsas' />
-          <Tag title='hjfdsakl' />
-          <Tag title='vhuiau87s' />
-          <Tag title='vho874wesy78s' />
-          <Tag title='vho874wesy78s' />
-          <Tag title='gh87vf4ew8gv4ewgo4tg7' />
-
-        </div>
-      </div>
-      <GreenButton variant='outlined' >Submit</GreenButton>
-    </div>
-  )
-}
-
-
 //register Form in compononent Form
 const RegisterForm = ({ accountCreated }) => {
   //hooks to keep track of form data
@@ -115,84 +62,85 @@ const RegisterForm = ({ accountCreated }) => {
 
   //verifys and creates account with EgoPeek
   const onRegisterSubmit = async () => {
-    //checks for valid email, username, and matching passwords
-    if (password !== secondPassword || password === '') {
-      setError(true)
-      setErrorMessage('Password do not match')
-      console.log('password do not match')
-      return
-    } else if (password.length < 6) {
-      setError(true)
-      setErrorMessage('Password not long enough')
-      console.log('password not long enough')
-      return
-    } else if (userName === '') {
-      setError(true)
-      setErrorMessage('No username')
-      console.log('no username')
-      return
-    } else if (email === '') {
-      setError(true)
-      setErrorMessage('No email')
-      console.log('no email')
-      return
-    }
-
-
-    try {
-      // creates a new user and a new user Profile in the DB
-      const userRes = await axios.post(`/api/v1/users/`, {
-        username: userName,
-        email: email,
-        password: password
-      })
-
-      if (userRes.status === 201) {
-        //if successful creation is made, user profile is made
-        await axios.post('api/v1/profiles/', {
-          user_id: userRes.data.id,
-          avatar_path: '',
-          bio: '',
-          quote:'',
-          interests:[]
-        })
-
-        //flags the parent component a success has been made
-        //clears all userInformation for safety purposes
-        auth.login(userName, password)
-        setUserName('')
-        setEmail('')
-        setPassword('')
-        accountCreated(true)
+      //checks for valid email, username, and matching passwords
+      if (password !== secondPassword || password === '') {
+          setError(true)
+          setErrorMessage('Password do not match')
+          console.log('password do not match')
+          return
+      } else if (password.length < 6) {
+          setError(true)
+          setErrorMessage('Password not long enough')
+          console.log('password not long enough')
+          return
+      } else if (userName === '') {
+          setError(true)
+          setErrorMessage('No username')
+          console.log('no username')
+          return
+      } else if (email === '') {
+          setError(true)
+          setErrorMessage('No email')
+          console.log('no email')
+          return
       }
-    } catch (error) {
-      console.log(error)
-      setError(true)
-      setErrorMessage("UserName or Email already exists.")
-    }
+
+
+      try {
+          // creates a new user and a new user Profile in the DB
+          const userRes = await axios.post(`/api/v1/users/`, {
+              username: userName,
+              email: email,
+              password: password
+          })
+
+          if (userRes.status === 201) {
+              //if successful creation is made, user profile is made
+              await axios.post('api/v1/profiles/', {
+                  user_id: userRes.data.id,
+                  avatar_path: '',
+                  bio: '',
+                  quote: '',
+                  interests: []
+              })
+
+              //flags the parent component a success has been made
+              //clears all userInformation for safety purposes
+              auth.login(userName, password)
+              setUserName('')
+              setEmail('')
+              setPassword('')
+              accountCreated(true)
+          }
+      } catch (error) {
+          console.log(error)
+          setError(true)
+          setErrorMessage("UserName or Email already exists.")
+      }
 
   }
 
   return (
-    <form className='form-container'>
-      {/* inserts an error message as to what text field is missing if any */}
-      <h2> Register </h2>
-      <div>
-        {error && <Alert className='alert-banner' onClose={() => { setError(false) }} severity='error'>{errorMessage}</Alert>}
-      </div>
-      <FormControl className='button-grouping'>
-        <div className='button-spacing'>
-          <TextInputStandard margin='dense' label='User Name' variant='outlined' size="small" onChange={(e) => { setUserName(e.target.value) }} />
-          <TextInputStandard margin='dense' label='Email' variant='outlined' size="small" onChange={(e) => { setEmail(e.target.value) }} />
-        </div>
-        <div className='button-spacing'>
-          <TextInputStandard margin='dense' type='password' label='Password' variant='outlined' size="small" onChange={(e) => { setPassword(e.target.value) }} />
-          <TextInputStandard margin='dense' type='password' label='Re-Enter Password' variant='outlined' size="small" onChange={(e) => { setSecondPassword(e.target.value) }} />
-        </div>
-      </FormControl>
-      <GreenButton onClick={onRegisterSubmit} className='submit-button' variant='outlined'>Submit</GreenButton>
-    </form>
+      <form className='form-container'>
+          {/* inserts an error message as to what text field is missing if any */}
+          <h2> Register </h2>
+          <div>
+              {error && <Alert className='alert-banner' onClose={() => { setError(false) }} severity='error'>{errorMessage}</Alert>}
+          </div>
+          <FormControl className='button-grouping'>
+              <div className='button-spacing'>
+                  <TextInputStandard margin='dense' label='User Name' variant='outlined' size="small" onChange={(e) => { setUserName(e.target.value) }} />
+                  <TextInputStandard margin='dense' label='Email' variant='outlined' size="small" onChange={(e) => { setEmail(e.target.value) }} />
+              </div>
+              <div className='button-spacing'>
+                  <TextInputStandard margin='dense' type='password' label='Password' variant='outlined' size="small" onChange={(e) => { setPassword(e.target.value) }} />
+                  <TextInputStandard margin='dense' type='password' label='Re-Enter Password' variant='outlined' size="small" onChange={(e) => { setSecondPassword(e.target.value) }} />
+              </div>
+          </FormControl>
+          <GreenButton onClick={onRegisterSubmit} className='submit-button' variant='outlined'>Submit</GreenButton>
+      </form>
   )
 }
+
 
 export default Register 

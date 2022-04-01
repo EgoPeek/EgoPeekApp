@@ -1,3 +1,7 @@
+/**
+ * Filename: Account.js
+ * Description: Allows user to view their own profile and friend profiles
+ */
 import "./Account.css";
 import "./Sidebar.js";
 import React from "react";

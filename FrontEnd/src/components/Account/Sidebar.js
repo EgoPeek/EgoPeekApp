@@ -3,6 +3,8 @@ import { useState } from "react";
 import SidebarIcon from "./SidebarIcon";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { IconBubble } from "../Misc/CustomComponents/IconBubble";
+import { GreenCircle } from "../Misc/Input/LoadingCircle";
 
 const Sidebar = ({ data }) => {
   const {
@@ -10,9 +12,9 @@ const Sidebar = ({ data }) => {
     isPending: AccountisPending,
     error: Accounterror,
   } = data;
-  const friends = AccountisPending ? "..." : Accountdata.user.friends;
+  const friends = AccountisPending ? [] : Accountdata.user.friends;
   const posts = AccountisPending ? "..." : Accountdata.user.posts;
-  const friendsAmount = friends.length;
+  const friendsAmount = friends.filter(x => x.friend_status === 'friends').length;
   const postsAmount = posts.length;
   const [showSidebar, setShowSidebar] = useState(true);
 
@@ -24,9 +26,13 @@ const Sidebar = ({ data }) => {
     return (
       <div className="sidebar">
         <div className="account-info">
-          <div className="account-avatar">
-            <span>pic</span>
-          </div>
+          {AccountisPending
+            ?
+            <GreenCircle />
+            :
+            <IconBubble userImgSrc={Accountdata.avatar_path} imgStyle={{ width: '140px', height: '140px' }} />
+          }
+
           <div className="name-container">
             <span>{AccountisPending ? "..." : Accountdata.user.username}</span>
             <ForwardToInboxIcon />

@@ -27,8 +27,6 @@
     height: fit-content;
     position: sticky;
     top: 35px;
-    overflow: hidden;
-
     display: flex;
     flex-direction: column;
     align-items: center;
