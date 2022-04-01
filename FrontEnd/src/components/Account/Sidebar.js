@@ -10,9 +10,9 @@ const Sidebar = ({ data }) => {
     isPending: AccountisPending,
     error: Accounterror,
   } = data;
-  const friends = AccountisPending ? "..." : Accountdata.user.friends;
+  const friends = AccountisPending ? []: Accountdata.user.friends;
   const posts = AccountisPending ? "..." : Accountdata.user.posts;
-  const friendsAmount = friends.length;
+  const friendsAmount = friends.filter(x=>x.friend_status === 'friends').length;
   const postsAmount = posts.length;
   const [showSidebar, setShowSidebar] = useState(true);
 
