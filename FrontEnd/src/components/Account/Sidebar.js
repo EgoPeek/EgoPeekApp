@@ -4,7 +4,7 @@ import SidebarIcon from "./SidebarIcon";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
-import { CircularProgress } from "@mui/material";
+import { GreenCircle } from "../Misc/Input/LoadingCircle";
 
 const Sidebar = ({ data }) => {
   const {
@@ -28,7 +28,7 @@ const Sidebar = ({ data }) => {
         <div className="account-info">
           {AccountisPending
             ?
-            <CircularProgress />
+            <GreenCircle />
             :
             <IconBubble userImgSrc={Accountdata.avatar_path} imgStyle={{ width: '140px', height: '140px' }} />
           }

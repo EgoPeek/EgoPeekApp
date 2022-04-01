@@ -14,6 +14,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import useAuth from '../../../hooks/useAuth';
 import useFetch from '../../../hooks/useFetch';
 import { CircularProgress } from '@mui/material';
+import { GreenCircle } from '../Input/LoadingCircle';
 
 const Header = () => {
     const userName = window.localStorage.getItem('userName')
@@ -37,10 +38,10 @@ const Header = () => {
             {/* custom user profile thing will go here */}
             {
                 isPending || error
-                    ? <CircularProgress />
+                    ? <GreenCircle />
                     :
                     <IconBubble imgStyle={{ height: '6rem', width: '6rem' }} userImgSrc={data.avatar_path}>
-                        <MenuItem MenuIcon={<AccountBoxIcon />} redirect={`/${userName}`}>Account</MenuItem>
+                        <MenuItem MenuIcon={<AccountBoxIcon />} redirect={`/${userName}`}>Profile</MenuItem>
                         <MenuItem MenuIcon={<SettingsIcon />} redirect='/settings'>Settings</MenuItem>
                         <MenuItem MenuIcon={<InboxIcon />} redirect='#'>Messages</MenuItem>
                         <MenuItem MenuIcon={<LogoutIcon />} onMouseDown={() => {

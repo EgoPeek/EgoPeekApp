@@ -8,12 +8,12 @@ import { TextInputStandard } from '../Misc/Input/TextFields'
 import CloseIcon from '@mui/icons-material/Close';
 import Comment from './Comment'
 import './DisplayPost.css'
-import { Button, CircularProgress } from '@mui/material';
+import { Button} from '@mui/material';
 import axios from 'axios';
-import { IconBubble, MenuItem } from '../Misc/CustomComponents/IconBubble';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import { IconBubble} from '../Misc/CustomComponents/IconBubble';
 import useFetch from '../../hooks/useFetch';
 import { useNavigate } from 'react-router';
+import { GreenCircle } from '../Misc/Input/LoadingCircle';
 
 const FILETYPES_IMG = [
     '.png',
@@ -88,7 +88,7 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
                             <div className='display-content-user-info'>
                                 {avatarIsPending
                                     ?
-                                    <CircularProgress sx={{marginRight:'15px'}}/>
+                                    <GreenCircle sx={{marginRight:'15px'}}/>
                                     :
                                     <IconBubble onClick={() => navigate(`/${author}`)} imgStyle={{ height: '4rem', width: '4rem', marginRight: '1rem' }} userImgSrc={avatarData.avatar_path}>
                                     </IconBubble>

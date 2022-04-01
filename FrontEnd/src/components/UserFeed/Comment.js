@@ -2,11 +2,11 @@
  *  FileName: Comment.js
  *  Description: Comment component that is displayed under a users post 
  */
-import { CircularProgress } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router'
 import useFetch from '../../hooks/useFetch'
 import { IconBubble } from '../Misc/CustomComponents/IconBubble'
+import { GreenCircle } from '../Misc/Input/LoadingCircle'
 import './Comment.css'
 
 const Comment = ({ commenter, ...props }) => {
@@ -19,7 +19,7 @@ const Comment = ({ commenter, ...props }) => {
         <div className='display-comment' {...props}>
             {isPending
                 ?
-                <CircularProgress />
+                <GreenCircle />
                 :
                 <IconBubble onClick={() => navigate('/' + user.username)}
                     imgStyle={{ height: '3.8rem', width: '3.8rem', marginRight: '15px' }}

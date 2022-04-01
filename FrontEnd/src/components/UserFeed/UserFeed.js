@@ -38,7 +38,7 @@ const UserFeed = () => {
 
 
     const PostList = () => {
-        if (postError) return <p>error</p>
+        if (postError) return <></>
 
         if (post) return post.map((item, i) => <UserPost onClick={() => displayPost(item)} post={item} key={i} />)
         else return <></>
@@ -52,7 +52,7 @@ const UserFeed = () => {
                 <div className='user-feed'>
                     <CreatePost />
                     {/* while the page is fetching post it'll just display loading sign */}
-                    {postPending && <BorderLinearProgress />}
+                    {postPending || postError && <BorderLinearProgress />}
                     {/* maps each post from API call to a userPost component */}
                     <PostList />
                 </div>
