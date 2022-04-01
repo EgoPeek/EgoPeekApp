@@ -7,16 +7,16 @@ import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import { GreenCircle } from "../Misc/Input/LoadingCircle";
 import GamePosts from "../AccountSettings/GamePosts";
 
-const Sidebar = ({ profile }) => {
-  const friends = profile.user.friends;
-  const posts = profile.user.posts;
+const Sidebar = ({ Accountdata }) => {
+  const friends = Accountdata.user.friends;
+  const posts = Accountdata.user.posts;
   const friendsAmount = friends.filter(
     (x) => x.friend_status === "friends"
   ).length;
   const postsAmount = posts.length;
   const [showSidebar, setShowSidebar] = useState(true);
 
-  const games = profile.user.games;
+  const games = Accountdata.user.games;
 
   const renderSidebar = () => {
     if (showSidebar == false) {
@@ -27,12 +27,12 @@ const Sidebar = ({ profile }) => {
       <div className="sidebar">
         <div className="account-info">
           <IconBubble
-            userImgSrc={profile.avatar_path}
+            userImgSrc={Accountdata.avatar_path}
             imgStyle={{ width: "140px", height: "140px" }}
           />
 
           <div className="name-container">
-            <span>{profile.user.username}</span>
+            <span>{Accountdata.user.username}</span>
             <ForwardToInboxIcon />
             <PersonAddIcon />
             <div className="followers">
@@ -45,7 +45,7 @@ const Sidebar = ({ profile }) => {
         </div>
 
         <div className="account-bio">
-          <p>{profile.bio}</p>
+          <p>{Accountdata.bio}</p>
         </div>
 
         <div className="account-favorites">
