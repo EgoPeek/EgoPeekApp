@@ -2,18 +2,31 @@
  *  FileName: Comment.js
  *  Description: Comment component that is displayed under a users post 
  */
+import { CircularProgress } from '@mui/material'
 import React from 'react'
+import { useNavigate } from 'react-router'
+import useFetch from '../../hooks/useFetch'
+import { IconBubble } from '../Misc/CustomComponents/IconBubble'
 import './Comment.css'
 
-const Comment = ({ commenter, ...props}) => {
-    const {message, timestamp, user} = commenter
+const Comment = ({ commenter, ...props }) => {
+    const { message, timestamp, user } = commenter
     const dateObj = new Date(timestamp)
-    
+    const { data, isPending, error } = useFetch('/api/v1/profiles/avatar/' + user.id)
+    const navigate = useNavigate()
+
     return (
         <div className='display-comment' {...props}>
-            <div className='user-img'>
-                user
-            </div>
+            {isPending
+                ?
+                <CircularProgress />
+                :
+                <IconBubble onClick={() => navigate('/' + user.username)}
+                    imgStyle={{ height: '3.8rem', width: '3.8rem', marginRight: '15px' }}
+                    userImgSrc={data.avatar_path}>
+                </IconBubble>
+
+            }
             <div className='comment-info'>
                 <div className='comment-user'>
                     <p>{user.username}</p>

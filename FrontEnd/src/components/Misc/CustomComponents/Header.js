@@ -12,9 +12,13 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import InboxIcon from '@mui/icons-material/Inbox';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useAuth from '../../../hooks/useAuth';
+import useFetch from '../../../hooks/useFetch';
 
 const Header = () => {
     const userName = window.localStorage.getItem('userName')
+    const userID = window.localStorage.getItem('userID')
+
+    const {data,isPending,error} = useFetch(`/api/v1/profiles/avatar/${userID}`)
     const {logout} = useAuth();
 
     return (
@@ -30,11 +34,13 @@ const Header = () => {
                 <Link to='/#' className='header-item'><p> Contact </p></Link>
             </div>
             {/* custom user profile thing will go here */}
-            <IconBubble imgStyle={{height:'6rem',width:'6rem'}} userImgSrc={''}>
+            <IconBubble imgStyle={{height:'6rem',width:'6rem'}} userImgSrc={!isPending ? data.avatar_path : '/'}>
                 <MenuItem MenuIcon={<AccountBoxIcon/>} redirect={`/${userName}`}>Account</MenuItem>
                 <MenuItem MenuIcon={<SettingsIcon/>} redirect='/settings'>Settings</MenuItem>
                 <MenuItem MenuIcon={<InboxIcon/>} redirect='#'>Messages</MenuItem>
-                <MenuItem MenuIcon={<LogoutIcon/>} method={()=> logout()} redirect="#">Log Out</MenuItem>
+                <MenuItem MenuIcon={<LogoutIcon/>} onMouseDown={()=>{
+                    logout();
+                }} redirect="#">Log Out</MenuItem>
             </IconBubble>
         </div>
     )

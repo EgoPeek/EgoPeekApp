@@ -2,6 +2,7 @@
     position: relative;
 }
 
+
 .dropdown-list{
     position: absolute;
     overflow: hidden;
@@ -12,11 +13,14 @@
     border: 1px solid #353257;
     border-radius: 5px;
     z-index: 893201809;
-    display: none;
 }
-.show{
+.dropdown-list:hover{
     display: block;
 }
+.show{
+    display: none;
+}
+
 .bubble-img-container{
     display: block;
 }
