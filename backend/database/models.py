@@ -88,7 +88,6 @@ class DbFriend(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     profile_id = Column(Integer, ForeignKey('profile.profile_id'))
     friend_id = Column(Integer)
-    message = Column(String(500))
     friend_status = Column(String(15))  # 'pending', 'declined', 'accepted'
     user = relationship('DbUser', back_populates='friends')
     profile = relationship('DbProfile', back_populates='friends')
