@@ -69,7 +69,7 @@ def get_user_feed(db: Session, user_id: int):
 
 
 def get_all_user_posts(db: Session, user_id: int):
-    return db.query(DbPost).filter(DbPost.user_id == user_id).all()
+    return db.query(DbPost).filter(DbPost.user_id == user_id).order_by(DbPost.timestamp.desc()).all()
 
 
 def get_post(db: Session, post_id: int):
