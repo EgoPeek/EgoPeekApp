@@ -5,10 +5,11 @@ import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import { GreenCircle } from "../Misc/Input/LoadingCircle";
+import GamePosts from "../AccountSettings/GamePosts";
 
-const Sidebar = ({ Accountdata }) => {
-  const friends = Accountdata.user.friends;
-  const posts = Accountdata.user.posts;
+const Sidebar = ({ profile }) => {
+  const friends = profile.user.friends;
+  const posts = profile.user.posts;
   const friendsAmount = friends.filter(
     (x) => x.friend_status === "friends"
   ).length;
@@ -26,12 +27,12 @@ const Sidebar = ({ Accountdata }) => {
       <div className="sidebar">
         <div className="account-info">
           <IconBubble
-            userImgSrc={Accountdata.avatar_path}
+            userImgSrc={profile.avatar_path}
             imgStyle={{ width: "140px", height: "140px" }}
           />
 
           <div className="name-container">
-            <span>{Accountdata.user.username}</span>
+            <span>{profile.user.username}</span>
             <ForwardToInboxIcon />
             <PersonAddIcon />
             <div className="followers">
@@ -44,7 +45,7 @@ const Sidebar = ({ Accountdata }) => {
         </div>
 
         <div className="account-bio">
-          <p>{Accountdata.bio}</p>
+          <p>{profile.bio}</p>
         </div>
 
         <div className="account-favorites">

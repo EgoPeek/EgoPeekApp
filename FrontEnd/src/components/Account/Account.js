@@ -43,7 +43,7 @@ const Account = ({ match, location }) => {
   return (
     <div className="account-page">
       <div className="header-container">
-        {profileIsPending ? "..." : <Header />}
+        {profilePending ? "..." : <Header />}
       </div>
       <div className="account-main">
         {!profilePending && <Sidebar Accountdata={profile} />}
