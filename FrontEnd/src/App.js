@@ -39,7 +39,7 @@ function App() {
 
           {/* if a user IS logged in protected routes are shown */}
           <Route path='/' element={<ProtectedRoute />}>
-            <Route path="/account" element={<Account />} />
+            <Route path="/account/:username" element={<Account />} />
             <Route path='/home' element={<UserFeed />} />
             <Route path='/submit' element={<Submit />}/>
             <Route path="/settings" element={<UserSettings />} />

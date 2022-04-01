@@ -21,7 +21,7 @@ const Comment = ({ commenter, ...props }) => {
                 ?
                 <GreenCircle />
                 :
-                <IconBubble onClick={() => navigate('/' + user.username)}
+                <IconBubble onClick={() => navigate('/account/' + user.username)}
                     imgStyle={{ height: '3.8rem', width: '3.8rem', marginRight: '15px' }}
                     userImgSrc={data.avatar_path}>
                 </IconBubble>

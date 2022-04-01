@@ -6,14 +6,9 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import { GreenCircle } from "../Misc/Input/LoadingCircle";
 
-const Sidebar = ({ data }) => {
-  const {
-    data: Accountdata,
-    isPending: AccountisPending,
-    error: Accounterror,
-  } = data;
-  const friends = AccountisPending ? [] : Accountdata.user.friends;
-  const posts = AccountisPending ? "..." : Accountdata.user.posts;
+const Sidebar = ({ Accountdata }) => {
+  const friends = Accountdata.user.friends;
+  const posts = Accountdata.user.posts;
   const friendsAmount = friends.filter(x => x.friend_status === 'friends').length;
   const postsAmount = posts.length;
   const [showSidebar, setShowSidebar] = useState(true);
@@ -26,15 +21,13 @@ const Sidebar = ({ data }) => {
     return (
       <div className="sidebar">
         <div className="account-info">
-          {AccountisPending
-            ?
-            <GreenCircle />
-            :
-            <IconBubble userImgSrc={Accountdata.avatar_path} imgStyle={{ width: '140px', height: '140px' }} />
-          }
+
+
+          <IconBubble userImgSrc={Accountdata.avatar_path} imgStyle={{ width: '140px', height: '140px' }} />
+
 
           <div className="name-container">
-            <span>{AccountisPending ? "..." : Accountdata.user.username}</span>
+            <span>{Accountdata.user.username}</span>
             <ForwardToInboxIcon />
             <PersonAddIcon />
             <div className="followers">
@@ -47,7 +40,7 @@ const Sidebar = ({ data }) => {
         </div>
 
         <div className="account-bio">
-          <p>{AccountisPending ? "..." : Accountdata.bio}</p>
+          <p>{Accountdata.bio}</p>
         </div>
 
         <div className="account-favorites">

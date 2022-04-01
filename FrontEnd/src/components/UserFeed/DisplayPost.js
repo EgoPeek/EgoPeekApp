@@ -8,9 +8,9 @@ import { TextInputStandard } from '../Misc/Input/TextFields'
 import CloseIcon from '@mui/icons-material/Close';
 import Comment from './Comment'
 import './DisplayPost.css'
-import { Button} from '@mui/material';
+import { Button } from '@mui/material';
 import axios from 'axios';
-import { IconBubble} from '../Misc/CustomComponents/IconBubble';
+import { IconBubble } from '../Misc/CustomComponents/IconBubble';
 import useFetch from '../../hooks/useFetch';
 import { useNavigate } from 'react-router';
 import { GreenCircle } from '../Misc/Input/LoadingCircle';
@@ -88,9 +88,9 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
                             <div className='display-content-user-info'>
                                 {avatarIsPending
                                     ?
-                                    <GreenCircle sx={{marginRight:'15px'}}/>
+                                    <GreenCircle sx={{ marginRight: '15px' }} />
                                     :
-                                    <IconBubble onClick={() => navigate(`/${author}`)} imgStyle={{ height: '4rem', width: '4rem', marginRight: '1rem' }} userImgSrc={avatarData.avatar_path}>
+                                    <IconBubble onClick={() => navigate(`/account/${author}`)} imgStyle={{ height: '4rem', width: '4rem', marginRight: '1rem' }} userImgSrc={avatarData.avatar_path}>
                                     </IconBubble>
                                 }
 

@@ -4,17 +4,39 @@
  */
 import "./Account.css";
 import "./Sidebar.js";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import UserPost from "../Misc/CustomComponents/UserPost";
 import "../Misc/CustomComponents/UserPost";
 import useFetch from "../../hooks/useFetch";
 import Header from "../Misc/CustomComponents/Header";
+import { get } from "../../util";
+import { GreenLoadingBar } from "../Misc/Input/LoadingBar";
+import { useParams } from "react-router";
+import axios from "axios";
 
-const Account = () => {
-  const userID = window.localStorage.getItem("userID");
-  const { data: post } = useFetch(`/api/v1/posts/all/${userID}`);
-  const profile = useFetch(`/api/v1/profiles/${userID}`);
+const Account = ({ match, location }) => {
+  const { username } = useParams()
+  const { data: profile, isPending: profilePending, error: profileError } = useFetch(`/api/v1/profiles/users/${username}`);
+  const [posts, setPosts] = useState([])
+  const [postsErr, setPostsErr] = useState(false)
+  const [postPending, setPostPending] = useState(true)
+
+  const makeCall = async () => {
+    try{
+      const res = await axios.get('/api/v1/posts/all/' + profile.user.id)
+      setPosts(res.data)
+      setPostPending(false)
+    }catch(err){
+      setPostsErr(true)
+    }
+
+  }
+
+  useEffect(() => {
+    makeCall()
+  }, [profilePending])
+
 
   return (
     <div className="account-page">
@@ -22,9 +44,14 @@ const Account = () => {
         <Header />
       </div>
       <div className="account-main">
-        <Sidebar data={profile} />
+        {!profilePending && <Sidebar Accountdata={profile} />}
         <div className="posts-container">
-          {post && post.map((item, i) => <UserPost post={item} key={i} />)}
+          {postPending
+            ?
+            <GreenLoadingBar />
+            :
+            posts.map((item, i) => <UserPost post={item} key={i} />)
+          }
         </div>
       </div>
     </div>
