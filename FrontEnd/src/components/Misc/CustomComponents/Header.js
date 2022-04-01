@@ -41,12 +41,12 @@ const Header = () => {
                     ? <GreenCircle />
                     :
                     <IconBubble imgStyle={{ height: '6rem', width: '6rem' }} userImgSrc={data.avatar_path}>
-                        <MenuItem MenuIcon={<AccountBoxIcon />} redirect={`/${userName}`}>Profile</MenuItem>
+                        <MenuItem MenuIcon={<AccountBoxIcon />} redirect={`/account/${userName}`}>Profile</MenuItem>
                         <MenuItem MenuIcon={<SettingsIcon />} redirect='/settings'>Settings</MenuItem>
                         <MenuItem MenuIcon={<InboxIcon />} redirect='#'>Messages</MenuItem>
-                        <MenuItem MenuIcon={<LogoutIcon />} onMouseDown={() => {
+                        <MenuItem MenuIcon={<LogoutIcon />} method={() => {
                             logout();
-                        }} redirect="#">Log Out</MenuItem>
+                        }} redirect="/home">Log Out</MenuItem>
                     </IconBubble>
             }
         </div>
