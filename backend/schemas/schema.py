@@ -148,7 +148,7 @@ class UserProfile(BaseModel):
     id: int
     username: str
     email: str
-    social_links: Optional[List[Link]]
+    links: Optional[List[Link]]
     games: Optional[List[Game]]
     friends: Optional[List[Friend]]
     posts: Optional[List[Post]]
