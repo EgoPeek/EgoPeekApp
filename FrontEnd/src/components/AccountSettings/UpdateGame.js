@@ -4,7 +4,7 @@ import Dropdown from "./Dropdown";
 import AddIcon from "@mui/icons-material/Add";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
-import GamePosts from "../AccountSettings/GamePosts";
+import GamePostsEditing from "../AccountSettings/GamePostsEditing";
 
 const UpdateGames = ({
   Game,
@@ -37,7 +37,6 @@ const UpdateGames = ({
     setFormValues(newFormValues);
   };
 
-  console.log(data.user.games);
   const games = isPending ? "..." : data.user.games;
 
   return (
@@ -51,7 +50,9 @@ const UpdateGames = ({
       <span>
         {isPending
           ? "..."
-          : games.map((item, i) => <GamePosts gameInfo={item} key={i} />)}
+          : games.map((item, i) => (
+              <GamePostsEditing gameInfo={item} key={i} />
+            ))}
       </span>
 
       <form>
@@ -79,15 +80,14 @@ const UpdateGames = ({
               value={Platform}
               onChange={(e) => handlePlatformChange(e, setPlatform)}
             />
-            {index ? (
-              <button
-                type="button"
-                className="button remove"
-                onClick={() => removeFormFields(index)}
-              >
-                Remove
-              </button>
-            ) : null}
+
+            <button
+              type="button"
+              className="button remove"
+              onClick={() => removeFormFields(index)}
+            >
+              Remove
+            </button>
           </div>
         ))}
       </form>

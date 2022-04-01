@@ -13,6 +13,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import GamePosts from "../AccountSettings/GamePosts";
 import Socials from "../AccountSettings/Socials";
+import SocialsEditing from "../AccountSettings/SocialsEditing";
 
 const UserSettings = () => {
   const user_id = window.localStorage.getItem("userID");
@@ -24,10 +25,8 @@ const UserSettings = () => {
   const [formValues, setFormValues] = useState([
     { platform: "", name: "", url: "" },
   ]);
-
   const games = isPending ? "..." : data.user.games;
-  const socials = isPending ? "..." : data.user.social_links;
-  console.log("hi" + socials);
+  const socials = isPending ? "..." : data.user.links;
 
   /*logic to check if user is editing profile */
   const setEditingTrue = () => {
@@ -38,7 +37,7 @@ const UserSettings = () => {
   /* Updates profile in database */
   const updateProfile = async () => {
     setisEditing(false);
-    updateSocials();
+    newSocials(formValues);
     newGame(Game, Platform);
     const payload = {
       user_id: user_id,
@@ -99,7 +98,7 @@ const UserSettings = () => {
   };
 
   /*sets socials in DB */
-  const newSocials = async () => {
+  const newSocials = async (formValues) => {
     const payload = {
       user_id: user_id,
       link_platform: formValues.platform,
@@ -125,7 +124,7 @@ const UserSettings = () => {
       link_url: formValues.url,
     };
     try {
-      const response = await axios.post(`/api/v1/links/`, payload);
+      const response = await axios.put(`/api/v1/links/`, payload);
       console.log(response);
       return response.data;
     } catch (e) {
@@ -152,6 +151,7 @@ const UserSettings = () => {
   };
 
   let handleSubmit = (event) => {
+    console.log("this" + JSON.stringify(formValues));
     alert(JSON.stringify(formValues));
   };
 
@@ -218,7 +218,6 @@ const UserSettings = () => {
                   setPlatform={setPlatform}
                   Platform={Platform}
                   data={data}
-                  isEditing={isEditing}
                 />
               </>
             ) : (
@@ -247,11 +246,11 @@ const UserSettings = () => {
           {isEditing ? (
             <>
               <span>
-                {/*{isPending
+                {isPending
                   ? "..."
                   : socials.map((item, i) => (
-                      <Socials socialsInfo={item} key={i} />
-                  ))}*/}
+                      <SocialsEditing socialsInfo={item} key={i} />
+                    ))}
               </span>
               <form onSubmit={handleSubmit}>
                 {formValues.map((element, index) => (
@@ -294,9 +293,16 @@ const UserSettings = () => {
                   </div>
                 ))}
               </form>
+              <button onClick={handleSubmit}>submit</button>
             </>
           ) : (
-            <span>Current Socials</span>
+            <span>
+              {isPending
+                ? "..."
+                : socials.map((item, i) => (
+                    <Socials socialsInfo={item} key={i} />
+                  ))}
+            </span>
           )}
         </div>
 

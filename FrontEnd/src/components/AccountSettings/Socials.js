@@ -1,13 +1,10 @@
 import React from "react";
 
-const Socials = ({ gameInfo, isEditing }) => {
-  const Editing = isEditing;
-
+const Socials = ({ socialsInfo }) => {
   return (
     <div className="curgames-edit">
-      <span className="curgames-title">{gameInfo.game_title}</span>
-      <span className="curgames-platform">{gameInfo.game_platform}</span>
-      {isEditing ? <button>delete</button> : null}
+      <span className="curgames-title">{socialsInfo.link_platform}</span>
+      <span className="curgames-platform">{socialsInfo.link_username}</span>
     </div>
   );
 };

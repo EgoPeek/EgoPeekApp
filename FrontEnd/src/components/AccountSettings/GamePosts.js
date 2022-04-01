@@ -1,14 +1,12 @@
 import React from "react";
 import "./GamePosts.css";
+import axios from "axios";
 
-const GamePosts = ({ gameInfo, isEditing }) => {
-  const Editing = isEditing;
-
+const GamePosts = ({ gameInfo }) => {
   return (
     <div className="curgames-edit">
-      <span className="curgames-title">{gameInfo.game_title}</span>
-      <span className="curgames-platform">{gameInfo.game_platform} </span>
-      {/*{Editing ? <button>delete</button> : null}*/}
+      <div className="curgames-title">{gameInfo.game_title}</div>
+      <div className="curgames-platform">{gameInfo.game_platform} </div>
     </div>
   );
 };
