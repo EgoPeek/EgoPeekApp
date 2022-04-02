@@ -14,12 +14,6 @@ from collections import Counter
 def create_hashtag(db: Session, request: schema.HashtagRequest):
     new_hashtag = DbHashtag(
         hashtag_label = request.hashtag_label,
-        post_id = request.post_id,
-        comment_id = request.comment_id,
-        #profile_id = request.profile_id,
-        user_id = request.user_id,
-        hashtag_counter = 1
-        #hashtag_group = request.hashtag_group,
     )
     db.add(new_hashtag)
     db.commit()
@@ -56,13 +50,6 @@ def update_hashtag_group_tags(db: Session, group_id: int, hashtags: List[str]):
     return {'success': True, 'message': f'Deleted {len(old_tag_ids)} old tags and replaced with {len(hashtags)} new tags.'}
 
 
-# def increment_hashtag_counter(db: Session, userID: int, commentID: int):
-#     # get all hashtags in the databse and store them in a list
-#     all_tags = List[db.query(DbHashtag).all()]
-#     #stores in a list all posts 
-#     all_posts_captions = List[db.query(DbPost).all()]
-#     if all_tags in all_posts_captions 
-
 def get_hashtag(db: Session, tag_id: int):
     return db.query(DbHashtag).filter(DbHashtag.hashtag_id == tag_id).first()
 
@@ -73,14 +60,6 @@ def get_all_hashtag_groups(db: Session):
 
 def get_db_hashtags(db: Session):
     return db.query(DbHashtag).all()
-
-
-def get_post_hashtags(db: Session, postID: int):
-    return db.query(DbHashtag).filter(DbHashtag.post_id == postID).all()
-
-
-def get_comment_hashtags(db: Session, commentID: int):
-    return db.query(DbHashtag).filter(DbHashtag.comment_id == commentID).all()
 
 
 def get_top_hashtags(db: Session, count: int):

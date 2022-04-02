@@ -27,14 +27,13 @@ router = APIRouter()
 def create_new_hashtag(response: Response, request: schema.HashtagRequest, database: Session = Depends(get_database)):
     '''
     Creates a hashtag entry (if it does not already exist) and adds it to the hashtag database.
-    post_id and comment_id are optional as hashtag can come from either or both. Counter of hashtag is optional as well
-    Inputs: {'hashtag_label' : str, 'post_id' : int, 'comment_id' : int, 'user_id' : int, 'hashtag_counter' : int}
-    Outputs: {'hashtag_id' : int, 'hashtag_label' : str, 'hashtag_counter' : int, 'post_used_hashtag' : [List[Post]], 'comment_used_hashtag' : [List[Comment]], 'user' : User 
+    Inputs: {'hashtag_label' : str}
+    Outputs: {'hashtag_id' : int, 'hashtag_label' : str} 
     '''
     if db_hashtag.check_duplicates(database, request.hashtag_label):
         raise HTTPException(status_code = status.HTTP_409_CONFLICT, detail = "hashtag already exists in the databse and cannot be duplicated.")
     response.status_code = status.HTTP_201_CREATED
-    return db_hashtag.create_new_hashtag(database, request)
+    return db_hashtag.create_hashtag(database, request)
 
 
 @router.get('/all/hashtag_groups', response_model = List[schema.HashtagGroupResponse])
@@ -57,40 +56,23 @@ def retrieve_hashtag(hashtag_id, database: Session = Depends(get_database)):
     return db_hashtag.get_hashtag(database, hashtag_id)
 
 
-@router.get('/all', response_model = List[schema.HashtagResponse])
+# @router.get('/all/hashtags', response_model = List[schema.HashtagResponse])
+@router.get('/all/hashtags', response_model = List[schema.HashtagResponse])
 def retrieve_all_db_hashtags(database: Session = Depends(get_database)):
     """
     Retrieves all tags in the EgoPeek database.
     Inputs: {None}
-    Outputs: {'hashtag_id' : int, 'hashtag_label' : str, 'hashtag_counter' : int}
+    Outputs: {'hashtag_id' : int, 'hashtag_label' : str}
     """
     return db_hashtag.get_db_hashtags(database)
-
-
-@router.get('/all/{post_id}', response_model = List[schema.HashtagResponse])
-def retrieve_post_hashtags(post_id, database: Session = Depends(get_database)):
-    """
-    Retrieves all tags used in a specific post from the EgoPeek database.
-    Inputs: 'post_id' : int
-    Outputs: {'post_id' : int, 'hashtag_id' : int, 'hashtag_label' : str}
-    """
-    return db_hashtag.get_post_hashtags(database, post_id)
-
-
-@router.get('/all/{comment_id}', response_model = List[schema.HashtagResponse])
-def retrieve_comment_hashtags(comment_id, database: Session = Depends(get_database)):
-    """
-    Retrieves all tags used in a specific comment from the EgoPeek database.
-    Inputs: 'comment_id' : int
-    Outputs: {'comment_id' : int, 'hashtag_id' : int, 'hashtag_label' : str}
-    """
-    return db_hashtag.get_comment_hashtags(database, comment_id)
 
 
 @router.get('/top/{count}')
 def retrieve_top_hashtags(count, database: Session = Depends(get_database)):
     """
-    
+    Retrieves most used tags in the EgoPeek database.
+    Inputs: number of desired top tags to show
+    Outputs: {'hashtag_label' : str}
     """
     return db_hashtag.get_top_hashtags(database, int(count))
 

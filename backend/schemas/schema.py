@@ -229,18 +229,10 @@ class CommentResponse(BaseModel):
 
 class HashtagRequest(BaseModel):
     hashtag_label: str
-    post_id: Optional[int]
-    comment_id: Optional[int]
-    user_id: Optional[int]
-    profile_id: Optional[int]
 
 class HashtagResponse(BaseModel):
     hashtag_id: int
     hashtag_label: str
-    hashtag_counter: int
-    post_used_hashtag: Optional[List[Post]]
-    comment_used_hashtag: Optional[List[Comment]]
-    user: Optional[User]
     class Config():
         orm_mode = True
 
