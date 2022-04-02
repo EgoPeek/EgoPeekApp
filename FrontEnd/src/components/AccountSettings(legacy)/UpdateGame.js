@@ -4,7 +4,7 @@ import Dropdown from "./Dropdown";
 import AddIcon from "@mui/icons-material/Add";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
-import GamePostsEditing from "../AccountSettings/GamePostsEditing";
+import GamePostsEditing from "./GamePostsEditing";
 
 const UpdateGames = ({
   Game,
