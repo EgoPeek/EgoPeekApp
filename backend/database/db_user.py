@@ -4,6 +4,7 @@ db_user.py
     - functions from here are called by user-related CRUD endpoints
 """
 
+from pymysql import NULL
 from backend import schemas
 from sqlalchemy.orm.session import Session
 from .models import DbUser, DbProfile
@@ -16,7 +17,8 @@ def create_user(db: Session, request: schemas.UserRequest):
     new_user = DbUser(
         username = request.username,
         email = request.email,
-        password = Hash.encrypt(request.password)
+        password = Hash.encrypt(request.password),
+        reset = NULL
      )
     db.add(new_user)
     db.commit()
@@ -30,11 +32,22 @@ def create_user(db: Session, request: schemas.UserRequest):
     
     return new_user
 
+
 def get_email_by_userID(db:Session, user_id: str):
     return db.query(DbUser.email).filter(DbUser.id == user_id).first()[0]
 
+
 def get_all_user_data(db: Session):
     return db.query(DbUser).all()
+
+
+def update_user_reset_token(db: Session, username: str, token: str):
+    user = db.query(DbUser).filter(DbUser.username == username)
+    user.update({
+        DbUser.reset: token
+    })
+    db.commit()
+    return {'success': True, 'message': f'Updated reset token for {username}'}
 
 
 def get_user_data(db: Session, username: str):
