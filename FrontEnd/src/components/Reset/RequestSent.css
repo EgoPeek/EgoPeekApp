@@ -1,0 +1,38 @@
+
+.RequestSent{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 10rem;
+    width: 100%;
+}
+
+.form{
+    padding: 3em 7rem 7rem 7rem;
+    margin-top:25px;
+    border-radius: 12px;
+    background-color: #24222f44;
+    -webkit-box-shadow: 8px 2px 24px 4px rgba(58, 63, 92, 0.637); 
+    box-shadow: 8px 2px 24px 4px #315a39;
+}
+
+.text-box{
+    
+}
+
+.form-control{
+    width: 100%;
+}
+
+.company-title{
+    text-decoration: none;
+    color:white;
+    font-size: 1.5rem;
+}
+
+.test{
+    margin-top:25px
+}
+
