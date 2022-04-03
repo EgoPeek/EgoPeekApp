@@ -16,6 +16,9 @@ import UserFeed from "./components/UserFeed/UserFeed";
 import Account from "./components/Account/Account";
 import Submit from "./components/Submit/Submit";
 import UserSettings from "./components/AccountSettings/AccountSettings";
+import ResetRequest from "./components/Reset/ResetRequest";
+import RequestSent from "./components/Reset/RequestSent";
+import ResetPassword from "./components/Reset/ResetPassword"
 
 function App() {
   //session token will be stored in the brother and will be replaced later
@@ -35,6 +38,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path = '/reset/email' element={<ResetRequest />} />
+            <Route path = '/reset/sent' element={<RequestSent />} />
+            <Route path = '/reset/password' element={<ResetPassword />} />
           </Route>
 
           {/* if a user IS logged in protected routes are shown */}
