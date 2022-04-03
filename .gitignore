@@ -12,3 +12,4 @@ build
 user_avatars/
 user_images/
 user_videos/
+.vscode
