@@ -1,15 +1,15 @@
-import React from 'react'
+/* Renders Name and Email on settings page */
+import React from "react";
 
 const Credentials = ({ userCredentials, isEditting }) => {
-    return (
-        <div>
-            <div>
-                <p>{userCredentials.username}</p>
-                <p>{userCredentials.email}</p>
-            </div>
+  return (
+    <div>
+      <div>
+        <h3>Name: {userCredentials.username}</h3>
+        <h3>Email: {userCredentials.email}</h3>
+      </div>
+    </div>
+  );
+};
 
-        </div>
-    )
-}
-
-export default Credentials
+export default Credentials;

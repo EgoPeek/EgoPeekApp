@@ -1,0 +1,46 @@
+.usersettings {
+  display: flex;
+}
+
+.left-side-profile {
+  margin-top: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 35%;
+}
+
+.user-bio {
+  margin-top: 8%;
+  text-align: center;
+  width: 55%;
+}
+
+.right-side-settings {
+  display: flex;
+  flex-direction: column;
+  width: 65%;
+}
+
+.user-credentials {
+  margin-top: 5%;
+}
+
+.user-games {
+  margin-top: 5%;
+}
+
+.user-socials {
+  margin-top: 5%;
+}
+
+.account-submit-btn {
+  width: 20%;
+}
+
+.submit-btn-spacing {
+  display: flex;
+  justify-content: end;
+  width: 52%;
+  margin-top: 8%;
+}

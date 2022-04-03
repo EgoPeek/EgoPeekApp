@@ -39,9 +39,9 @@ const UserSettings = () => {
     setisEditing(false);
     newGame(Game, Platform);
     newSocials();
-    updateBio()
-
+    updateBio();
   };
+
   const updateBio = async () => {
     const payload = {
       user_id: user_id,
@@ -55,7 +55,7 @@ const UserSettings = () => {
       console.log(e);
       return e;
     }
-  }
+  };
 
   /* Sets game in database */
   const newGame = async (Game, Platform) => {
@@ -103,7 +103,7 @@ const UserSettings = () => {
 
   /*sets socials in DB */
   const newSocials = async () => {
-    formValues.forEach(async item => {
+    formValues.forEach(async (item) => {
       const payload = {
         user_id: user_id,
         link_platform: item.platform,
@@ -118,7 +118,7 @@ const UserSettings = () => {
         console.log(e);
         return e;
       }
-    })
+    });
   };
 
   /*updates socials in DB */
@@ -232,8 +232,8 @@ const UserSettings = () => {
                 {isPending
                   ? "..."
                   : games.map((item, i) => (
-                    <GamePosts gameInfo={item} key={i} />
-                  ))}
+                      <GamePosts gameInfo={item} key={i} />
+                    ))}
               </span>
             )}
           </div>
@@ -255,8 +255,8 @@ const UserSettings = () => {
                 {isPending
                   ? "..."
                   : socials.map((item, i) => (
-                    <SocialsEditing socialsInfo={item} key={i} />
-                  ))}
+                      <SocialsEditing socialsInfo={item} key={i} />
+                    ))}
               </span>
               <form onSubmit={handleSubmit}>
                 {formValues.map((element, index) => (
@@ -306,8 +306,8 @@ const UserSettings = () => {
               {isPending
                 ? "..."
                 : socials.map((item, i) => (
-                  <Socials socialsInfo={item} key={i} />
-                ))}
+                    <Socials socialsInfo={item} key={i} />
+                  ))}
             </span>
           )}
         </div>

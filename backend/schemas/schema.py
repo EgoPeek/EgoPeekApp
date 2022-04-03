@@ -71,7 +71,7 @@ class Link(BaseModel):
 class Game(BaseModel):
     game_id: int
     game_title: str
-    game_platform: str
+    game_platform: Optional[str]
     game_username: Optional[str]
     main_character: Optional[str]
     current_rank: Optional[str]
@@ -293,7 +293,7 @@ class LinkResponse(BaseModel):
 class GameRequest(BaseModel):
     user_id: int
     game_title: str
-    game_platform: str
+    game_platform: Optional[str]
     game_username: Optional[str]
     main_character: Optional[str]
     current_rank: Optional[str]
@@ -304,7 +304,7 @@ class GameResponse(BaseModel):
     user: User
     game_id: int
     game_title: str
-    game_platform: str
+    game_platform: Optional[str]
     game_username: Optional[str]
     current_rank: Optional[str]
     highest_rank: Optional[str]

@@ -1,0 +1,29 @@
+.account-games {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.games-header {
+  width: 18%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.gametitle-spacing {
+  width: 15%;
+  margin-top: 1%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.settings-dropdown {
+  margin-right: 2%;
+  text-align: center;
+  font-size: larger;
+  width: 15%;
+}
+
+.game-btns-spacing {
+  margin-top: 1%;
+}

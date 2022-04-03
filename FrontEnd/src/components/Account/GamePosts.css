@@ -6,9 +6,5 @@
 
 .curgames-title {
   display: flex;
-  margin-right: 1%;
-}
-
-.curgames-platform {
-  margin-right: 1%;
+  flex-direction: column;
 }

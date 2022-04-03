@@ -1,0 +1,25 @@
+.display-socials {
+  display: flex;
+}
+
+.links-header {
+  display: flex;
+  justify-content: space-between;
+  width: 18%;
+}
+
+.platform-spacing {
+  margin-right: 5%;
+}
+
+.username-spacing {
+  margin-right: 5%;
+}
+
+.links-spacing-edit {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2%;
+  width: 35%;
+  max-width: 100%;
+}
