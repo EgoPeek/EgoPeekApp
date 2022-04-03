@@ -13,9 +13,10 @@ from backend.database.hash import Hash
 from backend import schemas
 from fastapi.exceptions import HTTPException
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
-#from send_email import send_email_background
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from backend.core.config import email_config
+import random
+import string
 
 router = APIRouter()
 
@@ -36,34 +37,41 @@ def login(request: schemas.LoginRequest, database: Session = Depends(get_databas
                             detail = 'Invalid password.')
     return {'user_id': user.id, 'username': user.username}
 
-@router.post('/emails/reset-password/{user_id}')
-async def send_in_background(user_id, background_tasks: BackgroundTasks, database: Session = Depends(get_database)):
-    email = db_user.get_email_by_userID(database, user_id)
-    bosdy = {'name': 'sam', 'title': 'shreck'}
+
+@router.post('/emails/reset-password', response_model = schemas.ResetEmailResponse)
+async def create_password_email(request: schemas.ResetEmailRequest, background_tasks: BackgroundTasks, database: Session = Depends(get_database)):
+    """
+    Sends an email to the user with a reset password code, updates user table to reflect new code
+    """
+    random_token = ''.join(random.choice(string.ascii_lowercase) for x in range(50))
+    db_user.update_user_reset_token(database, request.username, random_token)
+    body = {'name': request.username, 'title': 'EgoPeek Password Reset', 'token': random_token}
     message = MessageSchema(
-        subject = "Password Reset Request",
-        recipients = [email],
-        template_body = bosdy,)
-    fm = FastMail(email_config)
-    background_tasks.add_task(fm.send_message, message, template_name = 'emails.html')
+        subject = "EgoPeek Password Reset Request",
+        recipients = [request.email],
+        template_body = body,)
+    success = True
+    status = f'Password reset request email sent.'
 
-    return {"success": True, "message": "email has been sent"}
+    try:
+        user_id = db_user.get_user_by_username(database, request.username).id
+    except Exception as e:
+        success = False
+        status = f'User ID retrieval failure: {str(e)}'
 
+    try:
+        fm = FastMail(email_config)
+        background_tasks.add_task(fm.send_message, message, template_name = 'emails.html')
+    except Exception as e:
+        success = False
+        status = f'Email send failure: {str(e)}'
 
-
-def send_email_background(background_tasks: BackgroundTasks, subject: str, email_to: str, body: str):
-    message = MessageSchema(
-        subject = subject,
-        recipients = [email_to],
-        body = body,
-        subtype = 'html',
-    )
-    fm = FastMail(email_config)
-    background_tasks.add_task(
-       fm.send_message, message, template_name = 'emails.html')
-
-    
-
+    return {'user_id': user_id,
+            'username': request.username,
+            'email': request.email,
+            'reset_token': random_token,
+            'success': success,
+            'status': status}
 
 
 # @router.post('/login')
