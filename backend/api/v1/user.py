@@ -59,6 +59,19 @@ def update_user(username: str, request: schemas.UserRequest, database: Session =
     return db_user.update_user_data(database, username, request)
 
 
+@router.put('/passwords/{username}')
+def update_password(username: str, request: schemas.UpdatePasswordRequest, database: Session = Depends(get_database)):
+    """
+    Updates user password stored in the EgoPeek database after checking validity of reset token.
+    Input: {username: str, schema: UpdatePasswordRequest}
+    Outputs: {'success': bool, 'message': str}
+    """
+    if not db_user.check_reset_token(database, username, request.reset_token):
+        raise HTTPException(status_code = status.HTTP_422_UNPROCESSABLE_ENTITY,
+                            detail = 'Invalid reset token provided')
+    return db_user.update_user_password(database, username, request.new_password)
+
+
 @router.delete('/{username}')
 def delete_user(username, database: Session = Depends(get_database)):
     """
