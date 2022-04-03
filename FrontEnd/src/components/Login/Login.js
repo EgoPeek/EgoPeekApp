@@ -12,6 +12,7 @@ import { TextInputStandard } from '../Misc/Input/TextFields'
 import TitleAndLogo from '../Misc/CustomComponents/TitleAndLogo'
 import { useNavigate } from 'react-router'
 import useAuth from '../../hooks/useAuth'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles({
     fields: {
@@ -88,6 +89,7 @@ const Login = () => {
                             required
                         />
                         <GreenButton className={classes.fields} variant="outlined" onClick={handleLogin}>Submit</GreenButton>
+                        <p className = 'reset-password'><Link to={'/reset/email'}>Forgot password?</Link></p>
                     </FormControl>
                 </form>
             </div>
