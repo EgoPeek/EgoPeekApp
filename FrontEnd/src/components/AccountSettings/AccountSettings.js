@@ -1,315 +1,80 @@
-/**
- * Filename: AccountSettings.js
- * Description: Allows user to update their profile
- */
-import React, { useEffect } from "react";
-import { useState } from "react";
-import "./AccountSettings.css";
-import axios from "axios";
-import useFetch from "../../hooks/useFetch";
-import UpdateGames from "./UpdateGame";
-import { TextInputStandard } from "../Misc/Input/TextFields";
+/* Main component rendering the account page */
+import React, { useEffect, useState } from "react";
+import { IconBubble } from "../Misc/CustomComponents/IconBubble";
+import Credentials from "./Credentials";
 import EditIcon from "@mui/icons-material/Edit";
-import AddIcon from "@mui/icons-material/Add";
-import GamePosts from "../AccountSettings/GamePosts";
-import Socials from "../AccountSettings/Socials";
+import useFetch from "../../hooks/useFetch";
+import Games from "./Games";
+import Socials from "./Socials";
+import Bio from "./Bio";
+import { GreenButton } from "../Misc/Input/Buttons";
+import { TextInputStandard } from "../Misc/Input/TextFields";
+import "./AccountSettings.css";
 
-const UserSettings = () => {
+const AccountSettings = () => {
   const user_id = window.localStorage.getItem("userID");
   const { data, isPending, error } = useFetch(`/api/v1/profiles/${user_id}`);
-  const [isEditing, setisEditing] = useState(false);
-  const [bio, setBio] = useState(isPending ? "..." : data.bio);
-  const [Game, setGame] = useState("");
-  const [Platform, setPlatform] = useState("");
-  const [formValues, setFormValues] = useState([
-    { platform: "", name: "", url: "" },
-  ]);
+  const [user, setUser] = useState([]);
+  const [games, setGames] = useState([]);
+  const [socials, setSocials] = useState([]);
+  const [bio, setBio] = useState([]);
+  const [isEditting, setIsEditting] = useState(false);
+  const [avatar, setAvatar] = useState([]);
 
-  const games = isPending ? "..." : data.user.games;
-  const socials = isPending ? "..." : data.user.social_links;
-  console.log("hi" + socials);
-
-  /*logic to check if user is editing profile */
-  const setEditingTrue = () => {
-    setisEditing(true);
-    setBio(isPending ? "..." : data.bio);
-  };
-
-  /* Updates profile in database */
-  const updateProfile = async () => {
-    setisEditing(false);
-    updateSocials();
-    newGame(Game, Platform);
-    const payload = {
-      user_id: user_id,
-      bio: bio,
-    };
-    try {
-      const response = await axios.put(`/api/v1/profiles/${user_id}`, payload);
-      console.log(response);
-      return response.data;
-    } catch (e) {
-      console.log(e);
-      return e;
-    }
-  };
-
-  /* Sets game in database */
-  const newGame = async (Game, Platform) => {
-    const payload = {
-      user_id: user_id,
-      game_title: Game,
-      game_platform: Platform,
-      game_username: "",
-      main_character: "",
-      current_rank: "",
-      highest_rank: "",
-      hours_played: 0,
-    };
-    try {
-      const response = await axios.post(`/api/v1/games/`, payload);
-      console.log(response);
-      return response.data;
-    } catch (e) {
-      console.log(e);
-      return e;
-    }
-  };
-
-  /* updates Games in DB */
-  const updateGame = async (Game, Platform) => {
-    const payload = {
-      game_id: user_id,
-      game_title: Game,
-      game_platform: Platform,
-      game_username: "",
-      main_character: "",
-      current_rank: "",
-      highest_rank: "",
-      hours_played: 0,
-    };
-    try {
-      const response = await axios.put(`/api/v1/games/`, payload);
-      console.log(response);
-      return response.data;
-    } catch (e) {
-      console.log(e);
-      return e;
-    }
-  };
-
-  /*sets socials in DB */
-  const newSocials = async () => {
-    const payload = {
-      user_id: user_id,
-      link_platform: formValues.platform,
-      link_username: formValues.name,
-      link_url: formValues.url,
-    };
-    try {
-      const response = await axios.post(`/api/v1/links/`, payload);
-      console.log(response);
-      return response.data;
-    } catch (e) {
-      console.log(e);
-      return e;
-    }
-  };
-
-  /*updates socials in DB */
-  const updateSocials = async () => {
-    const payload = {
-      user_id: user_id,
-      link_platform: formValues.platform,
-      link_username: formValues.name,
-      link_url: formValues.url,
-    };
-    try {
-      const response = await axios.post(`/api/v1/links/`, payload);
-      console.log(response);
-      return response.data;
-    } catch (e) {
-      console.log(e);
-      return e;
-    }
-  };
-
-  /* logic for updating socials */
-  const socialsChange = (i, e) => {
-    let newFormValues = [...formValues];
-    newFormValues[i][e.target.name] = e.target.value;
-    setFormValues(newFormValues);
-  };
-
-  let addFormFields = () => {
-    setFormValues([...formValues, { platform: "", name: "", url: "" }]);
-  };
-
-  let removeFormFields = (i) => {
-    let newFormValues = [...formValues];
-    newFormValues.splice(i, 1);
-    setFormValues(newFormValues);
-  };
-
-  let handleSubmit = (event) => {
-    alert(JSON.stringify(formValues));
-  };
-
-  /* handles logic to update Bio */
   useEffect(() => {
-    setBio(isPending ? "..." : data.bio);
-  }, [isPending]);
+    const user = !isPending
+      ? { username: data.user.username, email: data.user.email }
+      : {};
+    const games = !isPending ? data.user.games : [];
+    const social = !isPending ? data.user.links : [];
+    const bio = !isPending ? data.bio : "...";
+    const avatar = !isPending ? data.avatar_path : "...";
 
-  const saveBio = (event) => {
-    setBio(event.currentTarget.value);
-  };
+    setSocials(social);
+    setGames(games);
+    setBio(bio);
+    setUser(user);
+    setAvatar(avatar);
+  }, [isPending]);
 
   return (
     <div className="usersettings">
-      {/* renders editbtn, avatar, and bio */}
-      <div className="settings-left">
-        <div className="editbtn-spacing">
-          <button onClick={setEditingTrue}>Edit Profile</button>
+      <div className="left-side-profile">
+        <div className="settings-edit-icon">
+          <EditIcon />
         </div>
-        {/* avatar and edit avatar btn */}
-        <div className="avatar-container">
-          <div className="avatar"></div>
-          <div className="editavatar-btn">
-            <button className="edit-btn">
-              <EditIcon />
-            </button>
-          </div>
-        </div>
-        {/* Bio and edit bio */}
-        <div className="edit-bio">
-          <h2>Bio</h2>
-          <div className="settings-bio">
-            <div className="update-bio">
-              {isEditing ? (
-                <TextInputStandard
-                  fullWidth
-                  label="Enter Bio"
-                  onChange={saveBio}
-                  defaultValue={isPending ? "..." : bio}
-                />
-              ) : (
-                <span className="update-bio">{isPending ? "..." : bio}</span>
-              )}
-            </div>
-          </div>
+        <IconBubble
+          onClick={() => setIsEditting(!isEditting)}
+          userImgSrc={avatar}
+          imgStyle={{ height: "150px", width: "150px" }}
+        />
+        <div className="user-bio">
+          <Bio
+            avatar={avatar}
+            userBio={bio}
+            userID={user_id}
+            isEditting={isEditting}
+          />
         </div>
       </div>
 
-      {/* renders Name, Email, Favorite games, and Socials */}
-      <div className="settings-main">
-        <div className="settings-info">
-          <p>Name: {isPending ? "..." : data.user.username}</p>
-          <p>Email: {isPending ? "..." : data.user.email}</p>
-          {isEditing ? <button>Change Password</button> : null}
+      <div className="right-side-settings">
+        <div className="user-credentials">
+          <Credentials userCredentials={user} isEditting={isEditting} />
         </div>
-
-        <div className="edit-favorites">
-          <div className="game-change">
-            {isEditing ? (
-              <>
-                <UpdateGames
-                  setGame={setGame}
-                  Game={Game}
-                  setPlatform={setPlatform}
-                  Platform={Platform}
-                  data={data}
-                  isEditing={isEditing}
-                />
-              </>
-            ) : (
-              <span className="profile-name">
-                <h2>Edit Favorites</h2>
-                {isPending
-                  ? "..."
-                  : games.map((item, i) => (
-                      <GamePosts gameInfo={item} key={i} />
-                    ))}
-              </span>
-            )}
-          </div>
+        <div className="user-games">
+          <Games userGames={games} isEditting={isEditting} user_id={user_id} />
         </div>
-
-        {/* renders Socials */}
-        <div className="update-socials">
-          <div className="socials-header">
-            <h2>Other Socials</h2>
-            {isEditing ? (
-              <button className="button-add" onClick={() => addFormFields()}>
-                <AddIcon />
-              </button>
-            ) : null}
-          </div>
-          {isEditing ? (
-            <>
-              <span>
-                {/*{isPending
-                  ? "..."
-                  : socials.map((item, i) => (
-                      <Socials socialsInfo={item} key={i} />
-                  ))}*/}
-              </span>
-              <form onSubmit={handleSubmit}>
-                {formValues.map((element, index) => (
-                  <div className="socialform-inline" key={index}>
-                    <div className="socialform-platform">
-                      <label>platform: </label>
-                      <input
-                        type="text"
-                        name="platform"
-                        value={element.platform || ""}
-                        onChange={(e) => socialsChange(index, e)}
-                      />
-                    </div>
-                    <div className="socialform-name">
-                      <label>Username: </label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={element.name || ""}
-                        onChange={(e) => socialsChange(index, e)}
-                      />
-                    </div>
-                    <div className="socialform-url">
-                      <label>url(optional): </label>
-                      <input
-                        type="text"
-                        name="url"
-                        value={element.url || ""}
-                        onChange={(e) => socialsChange(index, e)}
-                      />
-                    </div>
-                    {index ? (
-                      <button
-                        className="button remove"
-                        onClick={() => removeFormFields(index)}
-                      >
-                        Remove
-                      </button>
-                    ) : null}
-                  </div>
-                ))}
-              </form>
-            </>
-          ) : (
-            <span>Current Socials</span>
-          )}
-        </div>
-
-        {/* renders save changes btn */}
-        <div className="savebtn-spacing">
-          {isEditing ? (
-            <button className="save-btn" onClick={() => updateProfile()}>
-              Save Changes
-            </button>
-          ) : null}
+        <div className="user-socials">
+          <Socials
+            userSocials={socials}
+            isEditting={isEditting}
+            user_id={user_id}
+          />
         </div>
       </div>
     </div>
   );
 };
-export default UserSettings;
+
+export default AccountSettings;

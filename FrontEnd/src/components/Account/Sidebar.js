@@ -5,7 +5,7 @@ import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import { GreenCircle } from "../Misc/Input/LoadingCircle";
-import GamePosts from "../AccountSettings/GamePosts";
+import GamePosts from "./GamePosts";
 
 const Sidebar = ({ Accountdata }) => {
   const friends = Accountdata.user.friends;
