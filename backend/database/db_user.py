@@ -30,6 +30,8 @@ def create_user(db: Session, request: schemas.UserRequest):
     
     return new_user
 
+def get_email_by_userID(db:Session, user_id: str):
+    return db.query(DbUser.email).filter(DbUser.id == user_id).first()[0]
 
 def get_all_user_data(db: Session):
     return db.query(DbUser).all()
