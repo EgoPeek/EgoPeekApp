@@ -17,24 +17,6 @@ import FriendsList from './FriendsList'
 const UserFeed = () => {
     const userID = window.localStorage.getItem('userID')
     const { data: post, isPending: postPending, error: postError } = useFetch(`/api/v1/posts/feed/${userID}`)
-    const [showPost, setShowPost] = useState(false)
-    const [postInfo, setPostInfo] = useState(null)
-
-    // adds overlay with post description 
-    const displayPost = (topic, e) => {
-        setPostInfo(topic)
-        setShowPost(true)
-        console.log(topic)
-        // THIS IS REALLY BAD DO NOT DO THIS EVER, NATE YOU DOG I SWEAR AXEL DON'T DO THIS
-        document.getElementById('root').style.overflowY = 'hidden'
-    }
-
-    // closes overlay
-    const closeDisplay = () => {
-        setShowPost(false)
-        // ACTUAL NIGHTMARE FUEL, I HATE EVERYONE
-        document.getElementById('root').style.overflowY = 'scroll'
-    }
 
 
     const PostList = () => {
@@ -47,7 +29,6 @@ const UserFeed = () => {
     return (
         <div>
             <Header />
-            {showPost && <DisplayPost post={postInfo} closeDisplay={closeDisplay} />}
             <div className='user-feed-container'>
                 <div className='user-feed'>
                     <CreatePost />
