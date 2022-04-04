@@ -53,6 +53,7 @@ const Socials = ({ userSocials, isEditting, user_id }) => {
         return e;
       }
     });
+    alert("Socials saved, refresh page to see your changes");
   };
 
   const AddSocials = () => {
@@ -64,10 +65,10 @@ const Socials = ({ userSocials, isEditting, user_id }) => {
       const val = event.target.value;
       newSocials[i].link_username = val;
     };
-    const changeUrl = (event, i) => {
-      const val = event.target.value;
-      newSocials[i].link_url = val;
-    };
+    // const changeUrl = (event, i) => {
+    //   const val = event.target.value;
+    //   newSocials[i].link_url = val;
+    // };
 
     if (!isEditting) return <></>;
 
@@ -91,13 +92,13 @@ const Socials = ({ userSocials, isEditting, user_id }) => {
                   label="username"
                   size="small"
                 />
-                <TextInputStandard
+                {/* <TextInputStandard
                   onChange={(e) => changeUrl(e, i)}
                   defaultValue={item.link_url}
                   autoComplete="off"
                   label="url"
                   size="small"
-                />
+                /> */}
                 <GreenButton
                   onClick={() => {
                     removeSocials(i);

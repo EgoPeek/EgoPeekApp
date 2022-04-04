@@ -1,6 +1,5 @@
 /* Main component rendering the account page */
 import React, { useEffect, useState } from "react";
-import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import Credentials from "./Credentials";
 import EditIcon from "@mui/icons-material/Edit";
 import useFetch from "../../hooks/useFetch";
@@ -47,19 +46,21 @@ const AccountSettings = () => {
       <div className="usersettings">
         <div className="left-side-profile">
           <div className="settings-edit-icon">
-            {/* <AvatarUpload /> */}
-            {/* <button
-              className="settings-edit-icon"
+            <AvatarUpload
+              avatar={avatar}
+              user_id={user_id}
+              userBio={bio}
+              isEditting={isEditting}
+            />
+            <GreenButton
+              sx={{ marginTop: "1rem" }}
+              variant="outlined"
               onClick={() => setIsEditting(!isEditting)}
             >
-              <EditIcon />
-            </button> */}
+              Edit Profile
+            </GreenButton>
           </div>
-          <IconBubble
-            onClick={() => setIsEditting(!isEditting)}
-            userImgSrc={avatar}
-            imgStyle={{ height: "150px", width: "150px" }}
-          />
+
           <div className="user-bio">
             <Bio
               avatar={avatar}

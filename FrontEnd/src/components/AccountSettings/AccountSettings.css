@@ -50,14 +50,8 @@
   margin-top: 8%;
 }
 
-.settings-edit-icon{
-  position: absolute;
-  top: 15%;
-  left: 20%;
-}
-
-.settings-edit-icon{
-  background-color: rgba(23, 22, 33, 1);
-  border: none;
-  color: white;
+.settings-edit-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
