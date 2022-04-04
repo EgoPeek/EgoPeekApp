@@ -1,9 +1,9 @@
 /*
-FileName: Login.js
-Description: Login screen for user to input username and password
+FileName: ResetRequest.js
+Description: Reset password email request screen
 */
 
-import './Login.css'
+import './ResetRequest.css'
 import { useEffect, useState } from 'react'
 import { FormControl, Alert } from '@mui/material'
 import { GreenButton } from '../Misc/Input/Buttons'
@@ -11,8 +11,8 @@ import { makeStyles } from '@mui/styles'
 import { TextInputStandard } from '../Misc/Input/TextFields'
 import TitleAndLogo from '../Misc/CustomComponents/TitleAndLogo'
 import { useNavigate } from 'react-router'
-import useAuth from '../../hooks/useAuth'
-import { Link } from 'react-router-dom'
+import axios from "axios";
+// import useAuth from '../../hooks/useAuth'
 
 const useStyles = makeStyles({
     fields: {
@@ -20,9 +20,9 @@ const useStyles = makeStyles({
     }
 })
 
-//main Login Component
-const Login = () => {
-    //this is kind of hacky but oh well, it literally just changes the background color
+// main password reset email request component
+const ResetRequest = () => {
+    // continuing the hacky color stuff bc I don't know any better
     useEffect(() => {
         document.body.style.backgroundColor = 'rgb(2,0,36)'
         document.body.style.background = 'linear-gradient(42deg, rgba(2,0,36,1) 0%, rgba(19,16,39,1) 51%, rgba(33,28,65,1) 100%)'
@@ -32,46 +32,58 @@ const Login = () => {
     }, [])
     const classes = useStyles()
 
-    //hooks to keep track of userName and password
-    const [email, setEmail] = useState('UserName or Email')
-    const [password, setPassword] = useState('Password')
+    //hooks to keep track of reset data
+    const [email, setEmail] = useState('Email')
+    const [username, setUsername] = useState('Username')
     const [error, setError] = useState(false)
-    const [errorMessage, seterrorMessage] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
 
     //custom hooks
     const navigate = useNavigate()
-    const auth = useAuth()
+    // const auth = useAuth()
 
-    const handleLogin = async () => {
-        //if a sucess is read it stores users credentials within local storage and redirects them
-        const jsonRes = await auth.login(email,password);
-        if (jsonRes.success) {
-            navigate('/home', { replace: true })
+    const handleRequest = async() => {
+        const emailResponse = await sendEmail();
+        if (emailResponse.success) {
+            window.localStorage.setItem('username', username)
+            window.localStorage.setItem('email', email)
+            navigate('/reset/sent')
         } else {
-            console.log(jsonRes.reason)
-            seterrorMessage('Invalid username or password')
+            setErrorMessage('Invalid username or email')
             setError(true)
         }
     }
 
+    const sendEmail = async () => {
+        const payload = {
+          username: username,
+          email: email
+        };
+        try {
+          const response = await axios.post(`/api/v1/emails/reset-password`, payload);
+          return response.data;
+        } catch (e) {
+          console.log(e);
+          return e;
+        }
+      };
 
     return (
-        <div className='Login'>
+        <div className='ResetRequest'>
             <div>
                 <TitleAndLogo />
 
                 <form className='form'>
                     <FormControl className='form-control'>
-                        <h2 style={{ textAlign: 'center', 'marginBottom': '40px' }}>Log In</h2>
+                        <h2 style={{ textAlign: 'center', 'marginBottom': '40px' }}>Reset Password</h2>
                         {error && <Alert className='alert-banner' onClose={() => { setError(false) }} severity='error'>{errorMessage}</Alert>}
 
-                        {/* pulls in custom LogInTextInput component cause react is stupid
-                        and I had to to a bunch of nonsense to customize the css */}
+                        {/* pulls in custom LogInTextInput component for consistency with Login page */}
                         <TextInputStandard
                             onChange={(props) => {
-                                setEmail(props.target.value)
+                                setUsername(props.target.value)
                             }}
-                            label="Username or Email"
+                            label="Username"
                             variant="outlined"
                             size='small'
                             autoComplete='off'
@@ -79,17 +91,16 @@ const Login = () => {
                         />
                         <TextInputStandard className={classes.TextField}
                             onChange={(props) => {
-                                setPassword(props.target.value)
+                                setEmail(props.target.value)
                             }}
                             margin="normal"
-                            label="Password"
+                            label="Email"
                             variant="outlined"
                             size='small'
-                            type='password'
+                            autoComplete='off'
                             required
                         />
-                        <GreenButton className={classes.fields} variant="outlined" onClick={handleLogin}>Submit</GreenButton>
-                        <p><Link className = 'reset-password' to={'/reset/email'}>Forgot password?</Link></p>
+                        <GreenButton className={classes.fields} variant="outlined" onClick={handleRequest}>Submit</GreenButton>
                     </FormControl>
                 </form>
             </div>
@@ -97,4 +108,4 @@ const Login = () => {
     );
 }
 
-export default Login;
+export default ResetRequest;

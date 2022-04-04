@@ -1,10 +1,12 @@
 
-.Login{
+.RequestSent{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     padding-top: 10rem;
+    width: 100%;
 }
 
 .form{
@@ -15,6 +17,11 @@
     -webkit-box-shadow: 8px 2px 24px 4px rgba(58, 63, 92, 0.637); 
     box-shadow: 8px 2px 24px 4px #315a39;
 }
+
+.text-box{
+    
+}
+
 .form-control{
     width: 100%;
 }
@@ -29,8 +36,3 @@
     margin-top:25px
 }
 
-.reset-password{
-    display: flex;
-    justify-content: end;
-    color: #315a39
-}

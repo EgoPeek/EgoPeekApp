@@ -373,3 +373,19 @@ class FriendStatusResponse(BaseModel):
     username: str
     avatar_path: Optional[str]
     friend_status: str
+
+class ResetEmailRequest(BaseModel):
+    username: str
+    email: str
+
+class ResetEmailResponse(BaseModel):
+    user_id: int
+    username: str
+    email: str
+    reset_token: str
+    status: str
+    success: bool
+
+class UpdatePasswordRequest(BaseModel):
+    new_password: str
+    reset_token: str
