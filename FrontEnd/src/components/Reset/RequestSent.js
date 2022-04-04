@@ -1,6 +1,6 @@
 /*
-FileName: ResetPassword.js
-Description: Reset password request screen
+FileName: RequestSent.js
+Description: Informational page after email sent for password reset. Buttons for navigation.
 */
 
 import './RequestSent.css'
@@ -8,10 +8,8 @@ import { useEffect, useState } from 'react'
 import { FormControl, Alert } from '@mui/material'
 import { GreenButton } from '../Misc/Input/Buttons'
 import { makeStyles } from '@mui/styles'
-import { TextInputStandard } from '../Misc/Input/TextFields'
 import TitleAndLogo from '../Misc/CustomComponents/TitleAndLogo'
 import { useNavigate } from 'react-router'
-// import useAuth from '../../hooks/useAuth'
 
 const useStyles = makeStyles({
     fields: {
@@ -19,7 +17,7 @@ const useStyles = makeStyles({
     }
 })
 
-// main password reset request component
+// main request sent component
 const RequestSent = () => {
     // continuing the hacky color stuff bc I don't know any better
     useEffect(() => {
@@ -31,25 +29,26 @@ const RequestSent = () => {
     }, [])
     const classes = useStyles()
 
-    //hooks to keep track of reset data
+    // hooks to keep track of request sent data
     const [username, setUsername] = useState('Username')
     const [email, setEmail] = useState('Email')
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
 
-    //custom hooks
+    // custom nav hook
     const navigate = useNavigate()
-    // const auth = useAuth()
 
     useEffect(() => {
         setUsername(window.localStorage.getItem('username'))
         setEmail(window.localStorage.getItem('email'))
     }, [])
 
+    // send user back to password reset email request page
     const handleRetryRequest = async() => {
         navigate("/reset/email")
     }
 
+    // user verifies they have reset code, send to update password page
     const handleProceedRequest = async() => {
         navigate("/reset/password")
     }
@@ -64,7 +63,7 @@ const RequestSent = () => {
                         <h2 style={{ textAlign: 'center' }}>Reset Email Sent</h2>
                         {error && <Alert className='alert-banner' onClose={() => { setError(false) }} severity='error'>{errorMessage}</Alert>}
 
-                        {/* pulls in custom LogInTextInput component for consistency with Login page */}
+                        {/* I can't wait for Steve to see this div */}
                         <div className = 'text-box'>
                             <p style={{ textAlign: 'center', 'marginBottom': '40px' }}>
                                 A password reset email for {username} has been sent to {email}.<br />
