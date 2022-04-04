@@ -12,7 +12,6 @@ import { TextInputStandard } from '../Misc/Input/TextFields'
 import TitleAndLogo from '../Misc/CustomComponents/TitleAndLogo'
 import { useNavigate } from 'react-router'
 import axios from "axios";
-// import useAuth from '../../hooks/useAuth'
 
 const useStyles = makeStyles({
     fields: {
@@ -32,15 +31,14 @@ const ResetRequest = () => {
     }, [])
     const classes = useStyles()
 
-    //hooks to keep track of reset data
+    // hooks to keep track of email and username
     const [email, setEmail] = useState('Email')
     const [username, setUsername] = useState('Username')
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
 
-    //custom hooks
+    // custom nav hook
     const navigate = useNavigate()
-    // const auth = useAuth()
 
     const handleRequest = async() => {
         const emailResponse = await sendEmail();
