@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
-import { GreenButton } from "../Misc/Input/Buttons";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
+import './AvatarUpload.css'
 
 const AvatarUpload = ({
   avatar_path,
@@ -41,14 +41,20 @@ const AvatarUpload = ({
         onChange={fileChangedHandler}
         ref={fileSomethingidk}
       />
-      <IconBubble
-        userImgSrc={avatar}
-        imgStyle={{ height: "150px", width: "150px" }}
-        onClick={() => {
-          const idk = fileSomethingidk.current;
-          idk.click();
-        }}
-      />
+      <div className="avatar-container">
+
+        <IconBubble 
+          userImgSrc={avatar}
+          imgStyle={{ height: "150px", width: "150px" }}
+          onClick={() => {
+            const idk = fileSomethingidk.current;
+            idk.click();
+          }}
+        >
+          
+        </IconBubble>
+        <EditIcon className="avatar-edit-icon"/>
+      </div>
     </div>
   );
 };
