@@ -19,6 +19,7 @@ const Games = ({ userGames, isEditting, user_id }) => {
   };
 
   const createGame = async (game_title, user_id) => {
+    alert('Games Saved, refresh your page to see changes')
     game_title.forEach(async (item) => {
       const payload = {
         user_id: user_id,
@@ -44,7 +45,6 @@ const Games = ({ userGames, isEditting, user_id }) => {
 
   const addGame = () => {
     setNewGame([...newGame, createNewBody()]);
-    
   };
 
   const changeGame = (event, i) => {
