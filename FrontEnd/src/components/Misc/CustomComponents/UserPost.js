@@ -26,6 +26,9 @@ const UserPost = ({ post, ...props }) => {
     } else {
       setImageUrl(imgReference + image_url)
     }
+    return () => {
+      document.getElementById('root').style.overflowY = 'scroll'
+    }
   }, [])
 
   const displayPost = (topic, e) => {
