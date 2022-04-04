@@ -44,7 +44,7 @@ const Games = ({ userGames, isEditting, user_id }) => {
 
   const addGame = () => {
     setNewGame([...newGame, createNewBody()]);
-    alert('Games Saved')
+    
   };
 
   const changeGame = (event, i) => {
