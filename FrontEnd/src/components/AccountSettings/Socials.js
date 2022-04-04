@@ -132,7 +132,7 @@ const Socials = ({ userSocials, isEditting, user_id }) => {
         <div className="add-btn-spacing">
           {!isEditting ? null : (
             <GreenButton onClick={addSocialLink} variant="outlined">
-              Add Socials
+              Add Social
             </GreenButton>
           )}
         </div>
@@ -144,13 +144,13 @@ const Socials = ({ userSocials, isEditting, user_id }) => {
             <div className="display-socials" key={i}>
               <p className="platform-spacing">Platform: {item.link_platform}</p>
               <p className="username-spacing">Username: {item.link_username}</p>
-              <p className="url-spacing">Url: {item.link_url}</p>
+              {/* <p className="url-spacing">Url: {item.link_url}</p> */}
             </div>
           ) : (
             <div className="links-spacing-edit" key={i}>
               <p className="platform-spacing">Platform: {item.link_platform}</p>
               <p className="username-spacing">Username: {item.link_username}</p>
-              <p className="url-spacing">Url: {item.link_url}</p>
+              {/* <p className="url-spacing">Url: {item.link_url}</p> */}
               <GreenButton
                 onClick={() => {
                   deleteSocials(item.link_id);

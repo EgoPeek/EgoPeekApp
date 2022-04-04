@@ -20,8 +20,5 @@
 
 .links-spacing-edit {
   display: flex;
-  justify-content: space-between;
   margin-top: 2%;
-  width: 35%;
-  max-width: 100%;
 }
