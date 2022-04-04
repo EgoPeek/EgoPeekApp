@@ -16,7 +16,6 @@ import axios from 'axios';
 
 
 export const Friend = ({ friendInfo, updateStatus,index, ...props }) => {
-
     const { username, avatar_path: userImg, friend_status } = friendInfo
     // const {avatarUrl} = profile[0]
 
@@ -35,9 +34,9 @@ export const Friend = ({ friendInfo, updateStatus,index, ...props }) => {
     )
 }
 export const Stranger = ({ friendInfo,updateStatus,index, ...props }) => {
+    console.log('STRANGER',friendInfo)
 
-    const { username, profile } = friendInfo
-    const userImg = profile === null ? profile[0].avatar_path : '/'
+    const { username, avatar_path: userImg, friend_status } = friendInfo
 
     // const {avatarUrl} = profile[0]
 
@@ -57,8 +56,8 @@ export const Stranger = ({ friendInfo,updateStatus,index, ...props }) => {
 
 export const PendingFriendRequest = ({ friendInfo,updateStatus,index, ...props }) => {
 
-    const { username, profile } = friendInfo
-    const userImg = profile === null ? profile[0].avatar_path : '/'
+    const { username, avatar_path: userImg, friend_status } = friendInfo
+    console.log('PENDING',friendInfo)
 
     // const {avatarUrl} = profile[0]
 
@@ -76,9 +75,8 @@ export const PendingFriendRequest = ({ friendInfo,updateStatus,index, ...props }
     )
 }
 export const ReceivingFriendRequest = ({ friendInfo,updateStatus,index, ...props }) => {
-
-    const { username, profile } = friendInfo
-    const userImg = profile === null ? profile[0].avatar_path : '/'
+    console.log('RECEIVING',friendInfo)
+    const { username, avatar_path: userImg, friend_status } = friendInfo
 
     // const {avatarUrl} = profile[0]
 

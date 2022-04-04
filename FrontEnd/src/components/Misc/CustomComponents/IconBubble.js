@@ -5,10 +5,12 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './IconBubble.css'
+import EGOPEEKIMG from '../../../images/EGOPEEK.png'
+
 
 export const IconBubble = ({ imgStyle, userImgSrc, listStyles, ...props }) => {
     const [open, setOpen] = useState(false)
-
+    const userImg = userImgSrc ? userImgSrc : EGOPEEKIMG
 
 
     return (
@@ -17,7 +19,7 @@ export const IconBubble = ({ imgStyle, userImgSrc, listStyles, ...props }) => {
                 <img
                     tabIndex={0}
                     style={imgStyle}
-                    src={userImgSrc}
+                    src={userImg}
                     className='bubble-img'
                     onFocus={() => { setOpen(true) }}
                     onBlur={() => setOpen(false)}
