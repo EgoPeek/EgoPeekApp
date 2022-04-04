@@ -3,6 +3,7 @@ import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import './AvatarUpload.css'
+import { GreenButton } from "../Misc/Input/Buttons";
 
 const AvatarUpload = ({
   avatar_path,
@@ -50,10 +51,10 @@ const AvatarUpload = ({
             const idk = fileSomethingidk.current;
             idk.click();
           }}
-        >
-          
+        > 
         </IconBubble>
         <EditIcon className="avatar-edit-icon"/>
+        {!isEditting ? null : <GreenButton onClick={uploadHandler}>Upload</GreenButton>}
       </div>
     </div>
   );
