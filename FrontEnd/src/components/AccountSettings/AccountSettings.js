@@ -11,7 +11,7 @@ import { GreenButton } from "../Misc/Input/Buttons";
 import { TextInputStandard } from "../Misc/Input/TextFields";
 import "./AccountSettings.css";
 import Header from "../Misc/CustomComponents/Header";
-import AvatarUpload from "./AvatarUpload";
+// import AvatarUpload from "./AvatarUpload";
 
 const AccountSettings = () => {
   const user_id = window.localStorage.getItem("userID");
