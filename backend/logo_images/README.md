@@ -1,1 +1,0 @@
-## Storage Folder for Game Logos

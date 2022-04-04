@@ -35,7 +35,6 @@ const Sidebar = ({ Accountdata }) => {
           <div className="name-container">
             <span>{Accountdata.user.username}</span>
             <ForwardToInboxIcon />
-            <PersonAddIcon />
             <div className="followers">
               <span>Friends: {friendsAmount}</span>
             </div>

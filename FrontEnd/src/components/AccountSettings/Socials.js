@@ -53,6 +53,7 @@ const Socials = ({ userSocials, isEditting, user_id }) => {
         return e;
       }
     });
+    alert("Socials saved, refresh page to see your changes");
   };
 
   const AddSocials = () => {
@@ -144,13 +145,13 @@ const Socials = ({ userSocials, isEditting, user_id }) => {
             <div className="display-socials" key={i}>
               <p className="platform-spacing">Platform: {item.link_platform}</p>
               <p className="username-spacing">Username: {item.link_username}</p>
-              {/* <p className="url-spacing">Url: {item.link_url}</p> */}
+              {/* <a className="url-spacing">Url: {item.link_url}</a> */}
             </div>
           ) : (
             <div className="links-spacing-edit" key={i}>
               <p className="platform-spacing">Platform: {item.link_platform}</p>
               <p className="username-spacing">Username: {item.link_username}</p>
-              {/* <p className="url-spacing">Url: {item.link_url}</p> */}
+              {/* <a href="" className="url-spacing">Url: {item.link_url}</a> */}
               <GreenButton
                 onClick={() => {
                   deleteSocials(item.link_id);
