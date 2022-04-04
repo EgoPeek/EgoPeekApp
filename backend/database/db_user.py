@@ -77,6 +77,24 @@ def update_user_data(db: Session, username: str, request: schemas.UserRequest):
     return{'success': True, 'message': f'Updated user: {username}'}
 
 
+def update_user_reset_token(db: Session, username: str, token: str):
+    user = db.query(DbUser).filter(DbUser.username == username)
+    user.update({
+        DbUser.reset: token
+    })
+    db.commit()
+    return {'success': True, 'message': f'Updated reset token for {username}'}
+
+
+def update_user_password(db: Session, username: str, new_password: str):
+    user = db.query(DbUser).filter(DbUser.username == username)
+    user.update({
+        DbUser.password: Hash.encrypt(new_password)
+    })
+    db.commit()
+    return{'success': True, 'message': f'Updated password for user: {username}'}
+
+
 def delete_user_data(db: Session, username: str):
     user = db.query(DbUser).filter(DbUser.username == username).first()
     db.delete(user)
@@ -88,3 +106,7 @@ def check_duplicates(db: Session, username: str, email: str):
     if db.query(DbUser).filter(DbUser.username == username).first() or db.query(DbUser).filter(DbUser.email == email).first():
         return True
     return False
+
+
+def check_reset_token(db: Session, username: str, reset_string: str):
+    return db.query(DbUser.reset).filter(DbUser.username == username).first()[0] == reset_string

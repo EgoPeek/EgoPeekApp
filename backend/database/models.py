@@ -16,6 +16,7 @@ class DbUser(Base):
     username = Column(String(15))
     email = Column(String(254))
     password = Column(String(256))
+    reset = Column(String(50))
     posts = relationship('DbPost', back_populates='user')
     likes = relationship('DbLike', back_populates='user')
     comments = relationship('DbComment', back_populates='user')
