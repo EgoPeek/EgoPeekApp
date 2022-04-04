@@ -81,3 +81,7 @@
 ::-webkit-scrollbar {
   display: none;
 }
+
+.favorite-spacing{
+    overflow-y: scroll;
+}

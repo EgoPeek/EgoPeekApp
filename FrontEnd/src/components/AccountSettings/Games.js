@@ -69,8 +69,14 @@ const Games = ({ userGames, isEditting, user_id }) => {
                 >
                   <option value="Current">{item.game_title}</option>
                   <option value="Rocket League">Rocket League</option>
-                  <option value="CGSO">CS:GO</option>
+                  <option value="CS:GO">CS:GO</option>
                   <option value="Valorant">Valorant</option>
+                  <option value="Rust">Rust</option>
+                  <option value="League of Legends">League of Legends</option>
+                  <option value="Terraria">Terraria</option>
+                  <option value="Rainbow Six Seige">Rainbow Six Seige</option>
+                  <option value="Gang Beasts">Gang Beasts</option>
+                  <option value="Final Fantasy XIV">Final Fantasy XIV</option>
                 </select>
                 <GreenButton
                   onClick={() => {
@@ -104,16 +110,14 @@ const Games = ({ userGames, isEditting, user_id }) => {
   return (
     <div>
       <div className="games-header">
-        {!isEditting ? (
-          <h2>Favorites</h2>
-        ) : (
-          <>
-            <h2>Favorites</h2>
+        <h2>Favorite Games</h2>
+        <div className="add-btn-spacing">
+          {!isEditting ? null : (
             <GreenButton onClick={addGame} variant="outlined">
-              Add New Game
+              Add Games
             </GreenButton>
-          </>
-        )}
+          )}
+        </div>
       </div>
       <div className="account-games">
         {userGames.map((item, i) => {

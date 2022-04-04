@@ -6,6 +6,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import { GreenCircle } from "../Misc/Input/LoadingCircle";
 import GamePosts from "./GamePosts";
+import "./Account.css";
 
 const Sidebar = ({ Accountdata }) => {
   const friends = Accountdata.user.friends;

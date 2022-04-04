@@ -1,10 +1,11 @@
-.curgames-edit {
-  display: flex;
-  margin-bottom: 1%;
-  margin-top: 1%;
+.curgames {
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
-.curgames-title {
-  display: flex;
-  flex-direction: column;
+::-webkit-scrollbar {
+  display: none;
 }
+
+

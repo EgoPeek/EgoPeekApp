@@ -5,9 +5,7 @@
 }
 
 .games-header {
-  width: 18%;
   display: flex;
-  justify-content: space-between;
 }
 
 .gametitle-spacing {

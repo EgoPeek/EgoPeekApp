@@ -4,8 +4,10 @@
 
 .links-header {
   display: flex;
-  justify-content: space-between;
-  width: 18%;
+}
+
+.add-btn-spacing {
+  margin-left: 2%;
 }
 
 .platform-spacing {

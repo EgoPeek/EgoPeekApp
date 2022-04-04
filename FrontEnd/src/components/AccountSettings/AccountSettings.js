@@ -10,6 +10,8 @@ import Bio from "./Bio";
 import { GreenButton } from "../Misc/Input/Buttons";
 import { TextInputStandard } from "../Misc/Input/TextFields";
 import "./AccountSettings.css";
+import Header from "../Misc/CustomComponents/Header";
+import AvatarUpload from "./AvatarUpload";
 
 const AccountSettings = () => {
   const user_id = window.localStorage.getItem("userID");
@@ -37,40 +39,55 @@ const AccountSettings = () => {
     setAvatar(avatar);
   }, [isPending]);
 
-  return (
-    <div className="usersettings">
-      <div className="left-side-profile">
-        <div className="settings-edit-icon">
-          <EditIcon />
-        </div>
-        <IconBubble
-          onClick={() => setIsEditting(!isEditting)}
-          userImgSrc={avatar}
-          imgStyle={{ height: "150px", width: "150px" }}
-        />
-        <div className="user-bio">
-          <Bio
-            avatar={avatar}
-            userBio={bio}
-            userID={user_id}
-            isEditting={isEditting}
-          />
-        </div>
-      </div>
+  const uploadAvatar = () => {};
 
-      <div className="right-side-settings">
-        <div className="user-credentials">
-          <Credentials userCredentials={user} isEditting={isEditting} />
-        </div>
-        <div className="user-games">
-          <Games userGames={games} isEditting={isEditting} user_id={user_id} />
-        </div>
-        <div className="user-socials">
-          <Socials
-            userSocials={socials}
-            isEditting={isEditting}
-            user_id={user_id}
+  return (
+    <div className="idk">
+      <Header />
+      <div className="usersettings">
+        <div className="left-side-profile">
+          <div className="settings-edit-icon">
+            {/* <AvatarUpload /> */}
+            {/* <button
+              className="settings-edit-icon"
+              onClick={() => setIsEditting(!isEditting)}
+            >
+              <EditIcon />
+            </button> */}
+          </div>
+          <IconBubble
+            onClick={() => setIsEditting(!isEditting)}
+            userImgSrc={avatar}
+            imgStyle={{ height: "150px", width: "150px" }}
           />
+          <div className="user-bio">
+            <Bio
+              avatar={avatar}
+              userBio={bio}
+              userID={user_id}
+              isEditting={isEditting}
+            />
+          </div>
+        </div>
+
+        <div className="right-side-settings">
+          <div className="user-credentials">
+            <Credentials userCredentials={user} isEditting={isEditting} />
+          </div>
+          <div className="user-games">
+            <Games
+              userGames={games}
+              isEditting={isEditting}
+              user_id={user_id}
+            />
+          </div>
+          <div className="user-socials">
+            <Socials
+              userSocials={socials}
+              isEditting={isEditting}
+              user_id={user_id}
+            />
+          </div>
         </div>
       </div>
     </div>

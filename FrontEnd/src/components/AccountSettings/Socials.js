@@ -129,11 +129,13 @@ const Socials = ({ userSocials, isEditting, user_id }) => {
     <div>
       <div className="links-header">
         <h2>External Links</h2>
-        {!isEditting ? null : (
-          <GreenButton onClick={addSocialLink} variant="outlined">
-            Add Socials
-          </GreenButton>
-        )}
+        <div className="add-btn-spacing">
+          {!isEditting ? null : (
+            <GreenButton onClick={addSocialLink} variant="outlined">
+              Add Socials
+            </GreenButton>
+          )}
+        </div>
       </div>
 
       <div className="socials-spacing">
