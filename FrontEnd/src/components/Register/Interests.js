@@ -43,7 +43,7 @@ const InterestPage = () => {
     const updateCustomTag = (tagName) => {
         //if the tag exists in the array remove it
         if (customTag.find(x => x === tagName)) {
-            setCustomTag(selectedTags.filter(x => x !== tagName))
+            setCustomTag(customTag.filter(x => x !== tagName))
             return
         }
 
