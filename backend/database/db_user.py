@@ -97,7 +97,10 @@ def update_user_password(db: Session, username: str, new_password: str):
 
 def delete_user_data(db: Session, username: str):
     user = db.query(DbUser).filter(DbUser.username == username).first()
+    profile = db.query(DbProfile).filter(DbProfile.user_id == user.id).first()
     db.delete(user)
+    db.commit()
+    db.delete(profile)
     db.commit()
     return{'success': True, 'message': f'Deleted user: {username}'}
 

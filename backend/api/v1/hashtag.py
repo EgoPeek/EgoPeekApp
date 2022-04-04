@@ -30,9 +30,6 @@ def create_new_hashtag(response: Response, request: schema.HashtagRequest, datab
     Inputs: {'hashtag_label' : str}
     Outputs: {'hashtag_id' : int, 'hashtag_label' : str} 
     '''
-    if db_hashtag.check_duplicates(database, request.hashtag_label):
-        raise HTTPException(status_code = status.HTTP_409_CONFLICT, detail = "hashtag already exists in the databse and cannot be duplicated.")
-    response.status_code = status.HTTP_201_CREATED
     return db_hashtag.create_hashtag(database, request)
 
 
