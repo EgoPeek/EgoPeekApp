@@ -1,10 +1,10 @@
 /* Component that handles updating user bio */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TextInputStandard } from "../Misc/Input/TextFields";
 import axios from "axios";
 import { GreenButton } from "../Misc/Input/Buttons";
 
-const AccountBio = ({ userBio, avatar, isEditting, userID }) => {
+const AccountBio = ({setBio, userBio, avatar, isEditting, userID }) => {
   const [newBio, setNewBio] = useState("");
 
   const saveBio = (event) => {
@@ -12,6 +12,7 @@ const AccountBio = ({ userBio, avatar, isEditting, userID }) => {
   };
 
   const updateBio = async () => {
+    setBio(newBio)
     const payload = {
       user_id: userID,
       bio: newBio,

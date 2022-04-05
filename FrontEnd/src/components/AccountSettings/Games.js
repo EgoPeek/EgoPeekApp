@@ -1,16 +1,21 @@
 /* Allows user to add or delete games from profile */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { GreenButton } from "../Misc/Input/Buttons";
 import "./Games.css";
 
-const Games = ({ userGames, isEditting, user_id }) => {
+const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
   const [newGame, setNewGame] = useState([]);
+
+  useEffect(() => {
+    setNewGame([])
+  }, [isEditting])
 
   const DeleteGame = async (game_id) => {
     try {
       const response = await axios.delete(`/api/v1/games/${game_id}`);
       console.log(response);
+      setUserGames(userGames.filter(x => x.game_id !== game_id))
       return response.data;
     } catch (e) {
       console.log(e);
@@ -19,8 +24,9 @@ const Games = ({ userGames, isEditting, user_id }) => {
   };
 
   const createGame = async (game_title, user_id) => {
-    alert('Games Saved, refresh your page to see changes')
     game_title.forEach(async (item) => {
+      if(item.game_title === 'Select') return
+
       const payload = {
         user_id: user_id,
         game_title: item.game_title,
@@ -28,23 +34,24 @@ const Games = ({ userGames, isEditting, user_id }) => {
       try {
         const response = await axios.post(`/api/v1/games/`, payload);
         console.log(response);
-        return response.data;
+        setUserGames((prevState) => [...prevState, response.data])
       } catch (e) {
         console.log(e);
-        return e;
       }
     });
+    setNewGame([])
   };
 
   const createNewBody = () => {
     const body = {
-      game_title: "",
+      game_title: "Select",
     };
     return body;
   };
 
   const addGame = () => {
     setNewGame([...newGame, createNewBody()]);
+
   };
 
   const changeGame = (event, i) => {
@@ -67,6 +74,7 @@ const Games = ({ userGames, isEditting, user_id }) => {
                   onChange={(e) => changeGame(e, i)}
                   key={i}
                   className="settings-dropdown"
+                  defaultValue="Select"
                 >
                   <option value="Current">{item.game_title}</option>
                   <option value="Rocket League">Rocket League</option>
@@ -113,11 +121,11 @@ const Games = ({ userGames, isEditting, user_id }) => {
       <div className="games-header">
         <h2>Favorite Games</h2>
         <div className="add-btn-spacing">
-          {!isEditting ? null : (
+          {isEditting &&
             <GreenButton onClick={addGame} variant="outlined">
               Add Games
             </GreenButton>
-          )}
+          }
         </div>
       </div>
       <div className="account-games">

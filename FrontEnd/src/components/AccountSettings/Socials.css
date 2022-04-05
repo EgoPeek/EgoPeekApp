@@ -22,3 +22,9 @@
   display: flex;
   margin-top: 2%;
 }
+.socials-new-input{
+  margin-top: 15px;
+}
+.socials-new-input:last-child{
+  margin-bottom: 15px;
+}

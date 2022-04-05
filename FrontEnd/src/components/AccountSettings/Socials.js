@@ -1,12 +1,17 @@
 /* allows user to add and remove external social links */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GreenButton } from "../Misc/Input/Buttons";
 import { TextInputStandard } from "../Misc/Input/TextFields";
 import axios from "axios";
 import "./Socials.css";
 
-const Socials = ({ userSocials, isEditting, user_id }) => {
+const Socials = ({ userSocials,setUserSocials, isEditting, user_id }) => {
   const [newSocials, setNewSocials] = useState([]);
+  useEffect(() => {
+    setNewSocials([])    
+  }, [isEditting])
+  
+
 
   const createNewBody = () => {
     const body = {
@@ -28,6 +33,7 @@ const Socials = ({ userSocials, isEditting, user_id }) => {
   const deleteSocials = async (link_id) => {
     try {
       const response = await axios.delete(`/api/v1/links/${link_id}`);
+      setUserSocials(userSocials.filter(x=>x.link_id !== link_id))
       console.log(response);
       return response.data;
     } catch (e) {
@@ -38,6 +44,8 @@ const Socials = ({ userSocials, isEditting, user_id }) => {
 
   const createSocial = async (newSocials, user_id) => {
     newSocials.forEach(async (item) => {
+      if(item.link_platform === '' || item.link_username === '' || item.link_url === '') return
+
       const payload = {
         user_id: user_id,
         link_platform: item.link_platform,
@@ -47,13 +55,14 @@ const Socials = ({ userSocials, isEditting, user_id }) => {
       try {
         const response = await axios.post(`/api/v1/links/`, payload);
         console.log(response);
+        setUserSocials(prevState => [...prevState, response.data])
         return response.data;
       } catch (e) {
         console.log(e);
         return e;
       }
     });
-    alert("Socials saved, refresh page to see your changes");
+    setNewSocials([])
   };
 
   const AddSocials = () => {
@@ -77,7 +86,7 @@ const Socials = ({ userSocials, isEditting, user_id }) => {
         <div>
           {newSocials.map((item, i) => {
             return (
-              <div key={i}>
+              <div key={i} className="socials-new-input">
                 <TextInputStandard
                   onChange={(e) => changePlatform(e, i)}
                   defaultValue={item.link_platform}
