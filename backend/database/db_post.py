@@ -50,6 +50,7 @@ def get_all_posts(db: Session):
 
 def get_user_feed(db: Session, user_id: int):
     interests = []
+    post_ids = []
     # build list of friend ids for requested user
     users = [row[0] for row in db.query(DbFriend.friend_id).filter(DbFriend.user_id == user_id, DbFriend.friend_status == 'friends').all()]
 
@@ -61,11 +62,11 @@ def get_user_feed(db: Session, user_id: int):
     if interest_group:
         interests = [row[0].lower() for row in db.query(DbHashtag.hashtag_label).filter(DbHashtag.hashtag_group_id == interest_group).all()]
     
-    # build a set (uniques only) of hashtag group ids that have matching tags to user interests
-    group_ids = set([row[0] for row in db.query(DbHashtag.hashtag_group_id).filter(func.lower(DbHashtag.hashtag_label).in_(interests)).all()])
+        # build a set (uniques only) of hashtag group ids that have matching tags to user interests
+        group_ids = set([row[0] for row in db.query(DbHashtag.hashtag_group_id).filter(func.lower(DbHashtag.hashtag_label).in_(interests)).all()])
     
-    # build list of posts that are associated with given hashtag ids
-    post_ids = [row[0] for row in db.query(DbPost.post_id).filter(DbPost.hashtag_group_id.in_(group_ids)).all()]
+        # build list of posts that are associated with given hashtag ids
+        post_ids = [row[0] for row in db.query(DbPost.post_id).filter(DbPost.hashtag_group_id.in_(group_ids)).all()]
     
     # return all posts in the users list and all posts in the posts list
     return db.query(DbPost).filter(or_(DbPost.user_id.in_(users), DbPost.post_id.in_(post_ids))).order_by(DbPost.timestamp.desc()).all()
