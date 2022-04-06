@@ -14,7 +14,7 @@ const InterestPage = () => {
 
     //Tag component that takes a title
     const [selectedTags, setSelectedTags] = useState([]);
-    const { data: tags, isPending: tagPending, error: tagError } = useFetch('/api/v1/hashtags/top/15')
+    const { data: tags, isPending: tagPending} = useFetch('/api/v1/hashtags/top/15')
     const [searchTag, setSearchTag] = useState('')
     const userID = window.localStorage.getItem('userID')
     const navigate = useNavigate();
@@ -63,7 +63,6 @@ const InterestPage = () => {
         if (e.key !== 'Enter' || searchTag === '') return
         const tag = formatString(searchTag)
 
-        let test = []
         if (!selectedTags.find(x => x === tag)) setCustomTag([...customTag, tag])
         setSearchTag('')
 
@@ -73,8 +72,7 @@ const InterestPage = () => {
         e.preventDefault()
         console.log('submit')
         try {
-
-            const res = await axios.put(`/api/v1/profiles/${userID}`, {
+            await axios.put(`/api/v1/profiles/${userID}`, {
                 user_id: userID,
                 interests: selectedTags
             })

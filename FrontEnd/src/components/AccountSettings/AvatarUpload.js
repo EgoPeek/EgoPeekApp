@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
@@ -6,7 +6,7 @@ import './AvatarUpload.css'
 import { GreenButton } from "../Misc/Input/Buttons";
 
 const AvatarUpload = ({
-  avatar_path,
+  setAvatar,
   user_id,
   userBio,
   isEditting,
@@ -20,15 +20,16 @@ const AvatarUpload = ({
   };
 
   const uploadHandler = async () => {
-    let imagePath = "";
     const fd = new FormData();
     console.log(fd);
     console.log(file);
     fd.append("avatar", file);
     console.log(fd);
     const { res, error } = await postFormData("/api/v1/profiles/avatars", fd);
+    if(error) return
     console.log(res);
-    imagePath = res.data.relative_avatar_path;
+    const imagePath = res.data.relative_avatar_path;
+    setAvatar(imagePath)
     avatarrandom(imagePath, user_id, userBio);
   };
 

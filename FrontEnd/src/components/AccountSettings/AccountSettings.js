@@ -1,13 +1,11 @@
 /* Main component rendering the account page */
 import React, { useEffect, useState } from "react";
 import Credentials from "./Credentials";
-import EditIcon from "@mui/icons-material/Edit";
 import useFetch from "../../hooks/useFetch";
 import Games from "./Games";
 import Socials from "./Socials";
 import Bio from "./Bio";
 import { GreenButton } from "../Misc/Input/Buttons";
-import { TextInputStandard } from "../Misc/Input/TextFields";
 import "./AccountSettings.css";
 import Header from "../Misc/CustomComponents/Header";
 import AvatarUpload from "./AvatarUpload";
@@ -38,7 +36,8 @@ const AccountSettings = () => {
     setAvatar(avatar);
   }, [isPending]);
 
-  const uploadAvatar = () => {};
+
+  if(error) return <></>
 
   return (
     <div className="idk">
@@ -50,6 +49,7 @@ const AccountSettings = () => {
               avatar={avatar}
               user_id={user_id}
               userBio={bio}
+              setAvatar={setAvatar}
               isEditting={isEditting}
             />
             <GreenButton
@@ -57,7 +57,7 @@ const AccountSettings = () => {
               variant="outlined"
               onClick={() => setIsEditting(!isEditting)}
             >
-              Edit Profile
+              {!isEditting ? 'Edit profile' : 'Save profile'}
             </GreenButton>
           </div>
 
@@ -65,6 +65,7 @@ const AccountSettings = () => {
             <Bio
               avatar={avatar}
               userBio={bio}
+              setBio={setBio}
               userID={user_id}
               isEditting={isEditting}
             />
@@ -77,6 +78,7 @@ const AccountSettings = () => {
           </div>
           <div className="user-games">
             <Games
+              setUserGames={setGames}
               userGames={games}
               isEditting={isEditting}
               user_id={user_id}
@@ -84,6 +86,7 @@ const AccountSettings = () => {
           </div>
           <div className="user-socials">
             <Socials
+              setUserSocials={setSocials}
               userSocials={socials}
               isEditting={isEditting}
               user_id={user_id}
