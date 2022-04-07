@@ -3,7 +3,6 @@
     flex-direction: row;
     width: 100%;
     margin: 1rem 0;
-    overflow: hidden;
 }
 
 .user-icon{
@@ -15,6 +14,8 @@
 .friend-name{
     margin-left: 15px;
     font-size: 2rem;
+    overflow: hidden;
+
 }
 
 .friend-name p{

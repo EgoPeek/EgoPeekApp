@@ -25,7 +25,7 @@ const Account = ({ match, location }) => {
   const [postsErr, setPostsErr] = useState(false);
   const [postPending, setPostPending] = useState(true);
 
-  const makeCall = async () => {
+  const makeCall = async (username) => {
     try {
       const res = await axios.get("/api/v1/posts/all/" + profile.user.id);
       setPosts(res.data);
@@ -34,10 +34,12 @@ const Account = ({ match, location }) => {
       setPostsErr(true);
     }
   };
+  
 
   useEffect(() => {
+    setPostPending(true)
     makeCall();
-  }, [profilePending]);
+  }, [profilePending,profile]);
 
   return (
     <div className="account-page">
