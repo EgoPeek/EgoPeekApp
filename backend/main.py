@@ -2,6 +2,7 @@ import uvicorn
 from fastapi import FastAPI, Request
 from backend.api.v1 import user_router, post_router, comment_router, hashtag_router, friend_router, like_router, link_router, game_router, profile_router, message_router
 from backend.auth import auth_router
+from backend.socket import socket_router
 from backend.core import settings
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
@@ -26,6 +27,7 @@ backend.include_router(link_router, prefix=settings.API_V1_STR)
 backend.include_router(game_router, prefix=settings.API_V1_STR)
 backend.include_router(profile_router, prefix=settings.API_V1_STR)
 backend.include_router(message_router, prefix=settings.API_V1_STR)
+backend.include_router(socket_router, prefix=settings.API_V1_STR)
 
 # handle CORS error for local development across ports
 backend.add_middleware(
