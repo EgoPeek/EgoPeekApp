@@ -1,0 +1,104 @@
+.Chat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #315a39;
+    margin-bottom: 25px;
+
+}
+.papa-container {
+    margin-top:25px;
+    width: 50%;
+}
+
+.chat-window {
+    padding: 10px;
+    border-radius: 12px;
+    width: 100%;
+    height: 100%;
+    background-color: #24222f44;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    -webkit-box-shadow: 8px 2px 24px 4px rgba(58, 63, 92, 0.637); 
+    box-shadow: 8px 2px 24px 4px #315a39
+}
+
+.chat-window::-webkit-scrollbar {
+    display: none;
+}
+
+.my-chat-bubble {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    padding: 5px;
+}
+
+.my-chat-message {
+    border-radius: 12px;
+    padding: 5px;
+    width: fit-content;
+    min-width: 15%;
+    max-width: 40%;
+    /* -webkit-box-shadow: 8px 2px 24px 4px rgba(58, 63, 92, 0.637); 
+    box-shadow: 8px 2px 24px 4px #492896; */
+    background-color: rgba(58, 63, 92, 0.637);
+    border: 3px solid #492896;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.other-chat-bubble{
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.other-chat-message {
+    border-radius: 12px;
+    padding: 5px;
+    width: fit-content;
+    min-width: 15%;
+    max-width: 40%;
+    /* -webkit-box-shadow: 8px 2px 24px 4px rgba(58, 63, 92, 0.637); 
+    box-shadow: 8px 2px 24px 4px #1ca137; */
+    background-color: rgba(58, 63, 92, 0.637);
+    border: 3px solid #315a39;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+
+.text-bar {
+    padding: 10px;
+    border-radius: 12px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    background-color:rgba(58, 63, 92, 0.637);
+}
+
+.text-bar-input {
+    border-radius: 12px;
+    width: 100%;
+    min-height: 25px;
+    outline: none;
+    border: 1px solid black;
+}
+
+.bubble {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
