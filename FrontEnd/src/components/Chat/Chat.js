@@ -1,33 +1,65 @@
-import React, { useState, useEffect} from 'react'
-import { messageHandlerCallback, send, startSocket } from './socket'
-import { GreenButton } from "../Misc/Input/Buttons";
-import { IconBubble } from '../Misc/CustomComponents/IconBubble'
+import React, { useState, useEffect } from 'react'
+import Socket from './socket'
 import Header from '../Misc/CustomComponents/Header'
 import './Chat.css'
+import ChatWindow from './ChatWindow';
+import ChatInput from './ChatInput';
 
 
 function Chat() {
 
     const userID = window.localStorage.getItem('userID')
     const username = window.localStorage.getItem('userName')
-    const [messages, setMessages] = useState([])
+    const [socket, setSocket] = useState()
+    const [messages, setMessage] = useState([])
+    const [connected, setConnected] = useState(false)
 
     useEffect(() => {
-        startSocket(userID)
+        const client = new Socket(userID,setMessage)
+        setSocket(client)
+        setConnected(true)
+        return () => {
+            socket?.disconnect()
+            setConnected(false)
+        }
     }, [])
 
-    const messageReceived = (newMessage) => {
-        console.log('Message received...')
-        console.log('Old Messages: ', messages)
+    useEffect(() => {
+        if (!socket) return;
+        let timeoutID;
 
-        newMessage = JSON.parse(newMessage)
-        const newMessages = messages.concat(newMessage)
 
-        console.log('New Messages: ', newMessages)
-        setMessages(newMessages)
-    }
+        // checks if a user leaves the tab or not
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'hidden') {
+                //sets the timeout to disconnect from the socket once disconnected
+                timeoutID = setTimeout(() => {
+                    socket.disconnect();
+                    console.log('left tab');
+                    setConnected(false);
 
-    messageHandlerCallback(messageReceived)
+                }, 5000)
+
+            } else {
+                // clears the timeout if that elapsed time hasn't passed yet otherwise it connects back to the server
+                console.log('returned to tab');
+                clearTimeout(timeoutID)
+                if (!connected) {
+                    console.log('connected again')
+                    socket.connect()
+                    setConnected(true);
+                }
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, [connected]);
+
+
 
     const messageSent = (newMessage) => {
         const payload = {
@@ -36,68 +68,22 @@ function Chat() {
             userID: userID
         }
         console.log('Sending message: ', payload)
-        send(JSON.stringify(payload))
-    }
-
-    const ChatMessage = ({body, username, avatar, isSelf, time, msgKey}) => {
-        if (isSelf) {
-            return (<div className='my-chat-bubble'>
-                <div className='my-chat-message' style={{textAlign: 'right'}} key={msgKey}>
-                    {time}    {username}<br/>{body}
-                    </div>
-                    <IconBubble className='bubble' imgStyle={{ height: '3rem', width: '3rem' }} userImgSrc={avatar}></IconBubble>
-            </div>
-            )
-            
-        }
-        return (<div className='other-chat-bubble'>
-            <IconBubble className='bubble' imgStyle={{ height: '3rem', width: '3rem' }} userImgSrc={avatar}></IconBubble>
-            <div className={'other-chat-message'} style={{textAlign: 'left'}} key={msgKey}>
-            {time}    {username}<br/>{body}
-            </div>
-        </div>)
-    }
-
-    const ChatWindow = ({messages, username}) => {
-        return <div className='chat-window'>
-            {
-                messages.map((msg, index) => {
-                    return <ChatMessage msgKey={index} body={msg.message.body} username={msg.message.username} isSelf={username === msg.message.username} time={msg.time} avatar={msg.avatar_path} />
-                })
-            }
-        </div>
-    }
-
-    const ChatInput = ({onSend}) => {
-        const text = React.createRef()
-
-        const sendMessage = () => {
-            onSend && onSend(text.current.value)
-            text.current.value = ""
-        }
-
-        const sendMessageEnterKey = (eve) => {
-            if (eve.keyCode === 13) {
-                sendMessage()
-            }
-        }
-
-        return (<div className='text-bar'>
-            <input className='text-bar-input' type='text' ref={text} onKeyDown={sendMessageEnterKey}/>
-            <GreenButton className="send-button" variant="outlined" onClick={sendMessage}>
-                Send
-            </GreenButton>
-        </div>)
+        socket.send(JSON.stringify(payload))
     }
 
     return (
         <div>
             <Header />
-            <div className = 'Chat' >
-                <div className = 'papa-container'>
-                <div className = 'title'>CHAT BITCHES</div>
-                <ChatWindow messages={messages} username={username}/>
-                <ChatInput onSend={messageSent}/>
+            <div className='Chat' >
+                <div className='papa-container'>
+                    <div className='title'>CHAT BITCHES</div>
+                    {!connected ? <p>...</p>
+                        :
+                        <>
+                            <ChatWindow messages={messages} username={username} />
+                            <ChatInput onSend={messageSent} />
+                        </>
+                    }
                 </div>
             </div>
         </div>

@@ -1,29 +1,63 @@
-export let send
-let messageHandler
+// filename: socket.js
+// Socket class that controls all of the sockets functionality 
 
-export const startSocket = (userID) => {
-    const url = 'ws://localhost:5000/api/v1/chat/' + userID
-    const socket = new WebSocket(url)
 
-    socket.onopen = () => {
-        console.log('opened socket connection')
+/**
+ * @description Socket class that handles functionality of all socket.io requests
+ * @param userID
+ */
+export default class Socket {
+    #socket;
+    send;
+    #setMessageRef;
+    #messages = [];
+    #url;
+
+    #messageHandler = (newMessage) => {
+        // console.log('Message received...')
+        // console.log('Old Messages: ', this.#messages)
+
+        const newMessages = this.#messages.concat(newMessage)
+
+        // console.log('New Messages: ', newMessages)
+        this.#messages = newMessages
+        this.#setMessageRef(newMessages)
     }
 
-    socket.onclose = (e) => {
-        console.log('closed socket connection: ', e.code, e.reason)
+    constructor(userID, messageRef) {
+        this.#url = 'ws://localhost:5000/api/v1/chat/' + userID;
+        this.connect()
+        this.#setMessageRef = messageRef
+
     }
 
-    socket.onmessage = function (e){
-        messageHandler && messageHandler(e.data)
+    connect() {
+        this.#socket = new WebSocket(this.#url)
+        this.#socket.onopen = (e) => {
+            console.log('opened socket connection')
+        }
+
+        this.#socket.onclose = (e) => {
+            console.log('closed socket connection: ', e.code, e.reason)
+        }
+
+        this.#socket.onmessage = (e) => {
+            // idk why but sometimes the data gets returned as "YOUR MESSAGE : {obj stff}"
+            // really weird
+            try {
+                const jsonData = JSON.parse(e.data)
+                this.#messageHandler(jsonData)
+            }catch(e){
+                return
+            }
+        }
+
+        this.send = this.#socket.send.bind(this.#socket)
     }
-
-    window.addEventListener('unload', function() {
-        if(socket.readyState === WebSocket.OPEN){
-            socket.close()}
-    })
-    send = socket.send.bind(socket)
-}
-
-export const messageHandlerCallback = (func) => {
-    messageHandler = func
+    disconnect() {
+        if (this.#socket.readyState === WebSocket.OPEN) {
+            this.#socket.close()
+            console.log('SOCKET DISCONNECTED')
+        }
+    }
 }

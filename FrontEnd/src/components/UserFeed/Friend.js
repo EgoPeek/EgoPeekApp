@@ -34,7 +34,6 @@ export const Friend = ({ friendInfo, updateStatus,index, ...props }) => {
     )
 }
 export const Stranger = ({ friendInfo,updateStatus,index, ...props }) => {
-    console.log('STRANGER',friendInfo)
 
     const { username, avatar_path: userImg, friend_status } = friendInfo
 
@@ -57,7 +56,6 @@ export const Stranger = ({ friendInfo,updateStatus,index, ...props }) => {
 export const PendingFriendRequest = ({ friendInfo,updateStatus,index, ...props }) => {
 
     const { username, avatar_path: userImg, friend_status } = friendInfo
-    console.log('PENDING',friendInfo)
 
     // const {avatarUrl} = profile[0]
 
@@ -75,7 +73,6 @@ export const PendingFriendRequest = ({ friendInfo,updateStatus,index, ...props }
     )
 }
 export const ReceivingFriendRequest = ({ friendInfo,updateStatus,index, ...props }) => {
-    console.log('RECEIVING',friendInfo)
     const { username, avatar_path: userImg, friend_status } = friendInfo
 
     // const {avatarUrl} = profile[0]

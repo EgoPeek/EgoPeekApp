@@ -27,12 +27,8 @@ function App() {
   return (
     // main entrance point where all of our routes are going to be placed
     <div className="App main-container">
-      {/* renders this section if user is NOT logged in */}
       <Router>
         <Routes>
-          {/* if you want to test a route simply place it at the top and navigate within the browser
-              place route within the appropriate location when finished
-           */}
 
           {/* if a user is NOT logged in, only unprotected routes are shown*/}
           <Route path="/" element={<UnProtectedRoute />}>
