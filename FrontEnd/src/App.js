@@ -18,7 +18,8 @@ import Submit from "./components/Submit/Submit";
 import UserSettings from "./components/AccountSettings/AccountSettings";
 import ResetRequest from "./components/Reset/ResetRequest";
 import RequestSent from "./components/Reset/RequestSent";
-import ResetPassword from "./components/Reset/ResetPassword"
+import ResetPassword from "./components/Reset/ResetPassword";
+import Chat from "./components/Chat/Chat";
 
 function App() {
   //session token will be stored in the brother and will be replaced later
@@ -38,9 +39,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path = '/reset/email' element={<ResetRequest />} />
-            <Route path = '/reset/sent' element={<RequestSent />} />
-            <Route path = '/reset/password' element={<ResetPassword />} />
+            <Route path='/reset/email' element={<ResetRequest />} />
+            <Route path='/reset/sent' element={<RequestSent />} />
+            <Route path='/reset/password' element={<ResetPassword />} />
           </Route>
 
           {/* if a user IS logged in protected routes are shown */}
@@ -49,6 +50,7 @@ function App() {
             <Route path='/home' element={<UserFeed />} />
             <Route path='/submit' element={<Submit />}/>
             <Route path="/settings" element={<UserSettings />} />
+            <Route path='/chat' element={<Chat />} />
           </Route>
 
           <Route path="*" element={<div>404 not found</div>} />
