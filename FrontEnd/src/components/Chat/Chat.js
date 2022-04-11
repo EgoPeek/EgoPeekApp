@@ -76,7 +76,7 @@ function Chat() {
             <Header />
             <div className='Chat' >
                 <div className='papa-container'>
-                    <div className='title'>CHAT BITCHES</div>
+                    <div className='title'>EGOPEEK CHAT</div>
                     {!connected ? <p>...</p>
                         :
                         <>
