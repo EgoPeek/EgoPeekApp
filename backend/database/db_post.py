@@ -4,13 +4,14 @@ db_post.py
     - functions from here are called by post-related CRUD endpoints
 """
 
-from pymysql import NULL
 from backend import schemas
 from sqlalchemy.orm.session import Session
-from .models import DbPost, DbFriend, DbProfile, DbHashtag
+from .models import DbPost, DbFriend, DbProfile, DbHashtag, DbComment, DbLike
 from datetime import datetime
 from backend.database import db_hashtag
 from sqlalchemy import func, or_
+from typing import List
+from collections import Counter
 
 
 def create_post(db: Session, request: schemas.PostRequest):
@@ -78,6 +79,47 @@ def get_all_user_posts(db: Session, user_id: int):
 
 def get_post(db: Session, post_id: int):
     return db.query(DbPost).filter(DbPost.post_id == post_id).first()
+
+
+def get_hashtag_posts(db: Session, hashtags: List[int]):
+    # build set of unique group ids that match with the list of hashtags passed in
+    group_ids = set([row[0] for row in db.query(DbHashtag.hashtag_group_id).filter(func.lower(DbHashtag.hashtag_label).in_(hashtags)).all()])
+
+    # build list of posts that are associated with given hashtag ids
+    post_ids = [row[0] for row in db.query(DbPost.post_id).filter(DbPost.hashtag_group_id.in_(group_ids)).all()]
+
+    # return all posts associated with passed in hashtags
+    return db.query(DbPost).filter(DbPost.post_id.in_(post_ids)).order_by(DbPost.timestamp.desc()).all()
+
+
+def get_top_liked_posts(db: Session, count: int):
+    liked_post_ids = [row[0] for row in db.query(DbLike.post_id).all()]
+
+    top_liked_posts = Counter()
+    for post in liked_post_ids:
+        top_liked_posts[post] += 1
+    
+    top_posts = top_liked_posts.most_common()[:count]
+    top_post_ids = [post[0] for post in top_posts]
+
+    return db.query(DbPost).filter(DbPost.post_id.in_(top_post_ids)).all()
+
+
+def get_top_commented_posts(db: Session, count: int):
+    commented_post_ids = [row[0] for row in db.query(DbComment.post_id).all()]
+
+    top_commented_posts = Counter()
+    for post in commented_post_ids:
+        top_commented_posts[post] += 1
+
+    top_posts = top_commented_posts.most_common()[:count]
+    top_post_ids = [post[0] for post in top_posts]
+
+    return db.query(DbPost).filter(DbPost.post_id.in_(top_post_ids)).all()
+
+
+def get_most_recent_posts(db: Session, count: int):
+    return db.query(DbPost).order_by(DbPost.timestamp.desc()).all()[:count]
 
 
 def update_post(db: Session, post_id: int, request: schemas.PostRequest):
