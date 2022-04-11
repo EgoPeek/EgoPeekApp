@@ -38,7 +38,7 @@ function Chat() {
                     console.log('left tab');
                     setConnected(false);
 
-                }, 5000)
+                }, 1800000)
 
             } else {
                 // clears the timeout if that elapsed time hasn't passed yet otherwise it connects back to the server
