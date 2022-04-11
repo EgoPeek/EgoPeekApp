@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from backend.api.v1 import hashtag, user, post, comment, friend, like, link, game, profile, message
+from backend.api.v1 import hashtag, user, post, comment, friend, like, link, game, profile, message, discover
 
 
 user_router = APIRouter()
@@ -32,3 +32,6 @@ profile_router.include_router(profile.router, prefix='/profiles',tags=['profile'
 
 message_router = APIRouter()
 message_router.include_router(message.router, prefix='/messages',tags=['message'])
+
+discover_router = APIRouter()
+discover_router.include_router(discover.router, prefix='/discover',tags=['discover'])
