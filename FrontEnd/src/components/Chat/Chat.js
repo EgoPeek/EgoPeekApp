@@ -19,7 +19,7 @@ function Chat() {
         setSocket(client)
         setConnected(true)
         return () => {
-            socket?.disconnect()
+            client.disconnect()
             setConnected(false)
         }
     }, [])
@@ -38,7 +38,7 @@ function Chat() {
                     console.log('left tab');
                     setConnected(false);
 
-                }, 5000)
+                }, 60000)
 
             } else {
                 // clears the timeout if that elapsed time hasn't passed yet otherwise it connects back to the server
