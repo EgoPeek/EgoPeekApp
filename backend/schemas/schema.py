@@ -389,3 +389,6 @@ class ResetEmailResponse(BaseModel):
 class UpdatePasswordRequest(BaseModel):
     new_password: str
     reset_token: str
+
+class DiscoverCustomRequest(BaseModel):
+    hashtags: List[str]

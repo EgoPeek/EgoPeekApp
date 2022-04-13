@@ -26,7 +26,7 @@ export default class Socket {
     }
 
     constructor(userID, messageRef) {
-        this.#url = 'ws://localhost:5000/api/v1/chat/' + userID;
+        this.#url = 'ws://localhost:5000/api/v1/chat/' + userID; // change this to 'ws://13.57.35.14:80/api/v1/chat/' in prod
         this.connect()
         this.#setMessageRef = messageRef
 
