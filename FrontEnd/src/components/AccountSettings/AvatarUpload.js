@@ -12,19 +12,19 @@ const AvatarUpload = ({
   isEditting,
   avatar,
 }) => {
-  const [file, setFile] = useState(null);
   const fileSomethingidk = useRef(null);
 
-  const fileChangedHandler = (event) => {
-    setFile(event.target.files[0]);
+  const fileChangedHandler = (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      const file = e.target.files[0]
+      setAvatar(URL.createObjectURL(file))
+      uploadHandler(file)
   };
 
-  const uploadHandler = async () => {
+  const uploadHandler = async (file) => {
     const fd = new FormData();
-    console.log(fd);
-    console.log(file);
     fd.append("avatar", file);
-    console.log(fd);
     const { res, error } = await postFormData("/api/v1/profiles/avatars", fd);
     if(error) return
     console.log(res);
@@ -55,7 +55,6 @@ const AvatarUpload = ({
         > 
         </IconBubble>
         <EditIcon className="avatar-edit-icon"/>
-        {!isEditting ? null : <GreenButton onClick={uploadHandler}>Upload</GreenButton>}
       </div>
     </div>
   );
