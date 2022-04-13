@@ -3,6 +3,7 @@
     display: flex;
     background-color: #24222F;
     padding: 1.6rem;
+    height: var(--header-height);
 }
 
 .header-information{

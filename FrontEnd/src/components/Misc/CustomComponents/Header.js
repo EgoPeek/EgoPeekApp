@@ -62,20 +62,20 @@ const Header = () => {
                 <div className='header-title'>
                     <h1>EgoPeek</h1>
                 </div>
-                <Link to='/#' className='header-item'><p>Home</p></Link>
+                <Link to='/home' className='header-item'><p>Home</p></Link>
                 <Link to="/chat" className='header-item'><p> Looking to Queue</p></Link>
-                <Link to='/#' className='header-item'><p> Discover </p></Link>
-                <Link to='/#' className='header-item'><p> Contact </p></Link>
+                <Link to='#' className='header-item'><p> Discover </p></Link>
+                <Link to='#' className='header-item'><p> Contact </p></Link>
             </div>
             {/* custom user profile thing will go here */}
-            {
-                isPending
+            { 
+                (isPending || error)
                     ? <GreenCircle />
                     :
                     <IconBubble imgStyle={{ height: '6rem', width: '6rem' }} userImgSrc={data.avatar_path}>
                         <MenuItem MenuIcon={<AccountBoxIcon />} redirect={`/account/${userName}`}>Profile</MenuItem>
                         <MenuItem MenuIcon={<SettingsIcon />} redirect='/settings'>Settings</MenuItem>
-                        <MenuItem MenuIcon={<InboxIcon />} redirect='#'>Messages</MenuItem>
+                        <MenuItem MenuIcon={<InboxIcon />} redirect='/message'>Messages</MenuItem>
                         <MenuItem MenuIcon={<LogoutIcon />} method={() => {
                             logout();
                         }} redirect="/home">Log Out</MenuItem>
