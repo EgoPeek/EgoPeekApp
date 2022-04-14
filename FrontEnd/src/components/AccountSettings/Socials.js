@@ -5,6 +5,8 @@ import { TextInputStandard } from "../Misc/Input/TextFields";
 import axios from "axios";
 import "./Socials.css";
 
+const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
+
 const Socials = ({ userSocials,setUserSocials, isEditting, user_id }) => {
   const [newSocials, setNewSocials] = useState([]);
   useEffect(() => {
@@ -32,7 +34,7 @@ const Socials = ({ userSocials,setUserSocials, isEditting, user_id }) => {
 
   const deleteSocials = async (link_id) => {
     try {
-      const response = await axios.delete(`/api/v1/links/${link_id}`);
+      const response = await axios.delete(`/api/v1/links/${link_id}`, {headers: {Authorization: authHeader}});
       setUserSocials(userSocials.filter(x=>x.link_id !== link_id))
       console.log(response);
       return response.data;
@@ -53,7 +55,7 @@ const Socials = ({ userSocials,setUserSocials, isEditting, user_id }) => {
         link_url: item.link_url,
       };
       try {
-        const response = await axios.post(`/api/v1/links/`, payload);
+        const response = await axios.post(`/api/v1/links/`, payload, {headers: {Authorization: authHeader}});
         console.log(response);
         setUserSocials(prevState => [...prevState, response.data])
         return response.data;

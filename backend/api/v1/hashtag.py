@@ -10,21 +10,13 @@ from sqlalchemy.orm import Session
 from backend.database import db_hashtag
 from backend.schemas import schema
 from typing import List
+from backend.auth.oauth import get_current_user
 
 router = APIRouter()
 
 
-# Include database model in models.py
-# Include input and output classes in schema.py
-# Include database functions in db_tag.py
-# Write CRUD endpoints
-#   - inputs/outputs use schema to filter where appropriate
-#   - logic should happen in the db_tag.py file
-#   - keep url strings as simple as possible
-
-
 @router.post('/', response_model = schema.HashtagResponse)
-def create_new_hashtag(response: Response, request: schema.HashtagRequest, database: Session = Depends(get_database)):
+def create_new_hashtag(response: Response, request: schema.HashtagRequest, database: Session = Depends(get_database), current_user: schema.UserAuth = Depends(get_current_user)):
     '''
     Creates a hashtag entry (if it does not already exist) and adds it to the hashtag database.
     Inputs: {'hashtag_label' : str}
@@ -34,7 +26,7 @@ def create_new_hashtag(response: Response, request: schema.HashtagRequest, datab
 
 
 @router.get('/all/hashtag_groups', response_model = List[schema.HashtagGroupResponse])
-def retrieve_all_db_hashtag_groups(database: Session = Depends(get_database)):
+def retrieve_all_db_hashtag_groups(database: Session = Depends(get_database), current_user: schema.UserAuth = Depends(get_current_user)):
     """
     Retrieves all hashtag groups with their associated hashtags
     Inputs: None
@@ -44,7 +36,7 @@ def retrieve_all_db_hashtag_groups(database: Session = Depends(get_database)):
 
 
 @router.get('/{hashtag_id}', response_model = schema.HashtagResponse)
-def retrieve_hashtag(hashtag_id, database: Session = Depends(get_database)):
+def retrieve_hashtag(hashtag_id, database: Session = Depends(get_database), current_user: schema.UserAuth = Depends(get_current_user)):
     """
     Retrieves from the EgoPeek database given a specific tag id.
     Inputs: {'hashtag_id' : int}
@@ -53,9 +45,8 @@ def retrieve_hashtag(hashtag_id, database: Session = Depends(get_database)):
     return db_hashtag.get_hashtag(database, hashtag_id)
 
 
-# @router.get('/all/hashtags', response_model = List[schema.HashtagResponse])
 @router.get('/all/hashtags', response_model = List[schema.HashtagResponse])
-def retrieve_all_db_hashtags(database: Session = Depends(get_database)):
+def retrieve_all_db_hashtags(database: Session = Depends(get_database), current_user: schema.UserAuth = Depends(get_current_user)):
     """
     Retrieves all tags in the EgoPeek database.
     Inputs: {None}
@@ -75,7 +66,7 @@ def retrieve_top_hashtags(count, database: Session = Depends(get_database)):
 
 
 @router.put('/{hashtag_id}')
-def update_tag(hashtag_id, request: schema.HashtagRequest, database: Session = Depends(get_database)):
+def update_tag(hashtag_id, request: schema.HashtagRequest, database: Session = Depends(get_database), current_user: schema.UserAuth = Depends(get_current_user)):
     """
     Updates a hashtag in the EgoPeek database.
     Inputs: {'hashtag_id' : int}
@@ -85,18 +76,8 @@ def update_tag(hashtag_id, request: schema.HashtagRequest, database: Session = D
 
 
 @router.delete('/{hashtag_id}')
-def delete_tag(hashtag_id, database: Session = Depends(get_database)):
+def delete_tag(hashtag_id, database: Session = Depends(get_database), current_user: schema.UserAuth = Depends(get_current_user)):
     """
     Deletes a hashtag from the EgoPeek database.
     """
     return db_hashtag.delete_hashtag(database, int(hashtag_id))
-
-
-#Endpoints
-#The Hashtag Search API consists of the following nodes and edges:
-
-# GET /ig_hashtag_search — to get a specific hashtag's node ID
-# GET /{ig-hashtag-id} — to get data about a hashtag
-# GET /{ig-hashtag-id}/top_media — to get the most popular photos and videos that have a specific hashtag
-# GET /{ig-hashtag-id}/recent_media — to get the most recently published photos and videos that have a specific hashtag
-# GET /{ig-user-id}/recently_searched_hashtags — to determine the unique hashtags an Instagram Business or Creator Account has searched for in the current week

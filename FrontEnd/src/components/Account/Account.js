@@ -14,6 +14,8 @@ import { GreenLoadingBar } from "../Misc/Input/LoadingBar";
 import { useParams } from "react-router";
 import axios from "axios";
 
+const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
+
 const Account = ({ match, location }) => {
   const { username } = useParams();
   const {
@@ -27,7 +29,7 @@ const Account = ({ match, location }) => {
 
   const makeCall = async (username) => {
     try {
-      const res = await axios.get("/api/v1/posts/all/" + profile.user.id);
+      const res = await axios.get("/api/v1/posts/all/" + profile.user.id, {headers: {Authorization: authHeader}});
       setPosts(res.data);
       setPostPending(false);
     } catch (err) {

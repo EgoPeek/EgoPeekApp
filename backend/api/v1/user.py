@@ -11,6 +11,7 @@ from backend.database import get_database
 from sqlalchemy.orm.session import Session
 from backend.database import db_user
 from typing import List
+from backend.auth.oauth import get_current_user
 
 router = APIRouter()
 
@@ -30,7 +31,7 @@ def create_new_user(response: Response, request: schemas.UserRequest, database: 
 
 
 @router.get('/all', response_model=List[schemas.UserResponse])
-def retrieve_all_users(database: Session = Depends(get_database)):
+def retrieve_all_users(database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Returns all users and their emails currently entered in the EgoPeek database.
     Inputs: None
@@ -40,7 +41,7 @@ def retrieve_all_users(database: Session = Depends(get_database)):
 
 
 @router.get('/{username}', response_model=schemas.UserResponse)
-def retrieve_user(username, database: Session = Depends(get_database)):
+def retrieve_user(username, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves user information from the EgoPeek database.
     Inputs: {username: str}
@@ -50,7 +51,7 @@ def retrieve_user(username, database: Session = Depends(get_database)):
 
 
 @router.put('/{username}')
-def update_user(username: str, request: schemas.UserRequest, database: Session = Depends(get_database)):
+def update_user(username: str, request: schemas.UserRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Updates user data stored in EgoPeek database.
     Inputs: {'username': str, 'email': str, 'password': str}
@@ -73,33 +74,10 @@ def update_password(username: str, request: schemas.UpdatePasswordRequest, datab
 
 
 @router.delete('/{username}')
-def delete_user(username, database: Session = Depends(get_database)):
+def delete_user(username, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Deletes user data from EgoPeek database.
     Inputs: {'username': str}
     Outputs: {'success': bool, 'message': str}
     """
     return db_user.delete_user_data(database, username)
-
-
-# Notes for raw SQL queries (tested, they work)
-"""
-@router.get('/test')
-def test_SQL(database: Session = Depends(get_database)):
-    print('attempting to retrieve table info')
-    result = database.execute('DESCRIBE user')
-    names = [row for row in result]
-    print(names)
-
-    
-@router.put('/alter/table')
-def test_alter(database: Session = Depends(get_database)):
-    print('attempting to alter table schema')
-    result = database.execute('ALTER TABLE user MODIFY email varchar(60)')
-
-@router.delete('/delete/table/{name}')
-def delete_table(name, database: Session = Depends(get_database)):
-    print(f'attempting to delete table: {name}')
-    result = database.execute(f'DROP TABLE IF EXISTS {name};')
-    return result
-"""
