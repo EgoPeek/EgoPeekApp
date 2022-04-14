@@ -33,7 +33,7 @@ const Login = () => {
     const classes = useStyles()
 
     //hooks to keep track of userName and password
-    const [email, setEmail] = useState('UserName or Email')
+    const [username, setUsername] = useState('Username')
     const [password, setPassword] = useState('Password')
     const [error, setError] = useState(false)
     const [errorMessage, seterrorMessage] = useState('')
@@ -44,7 +44,7 @@ const Login = () => {
 
     const handleLogin = async () => {
         //if a sucess is read it stores users credentials within local storage and redirects them
-        const jsonRes = await auth.login(email,password);
+        const jsonRes = await auth.login(username,password);
         if (jsonRes.success) {
             navigate('/home', { replace: true })
         } else {
@@ -69,9 +69,9 @@ const Login = () => {
                         and I had to to a bunch of nonsense to customize the css */}
                         <TextInputStandard
                             onChange={(props) => {
-                                setEmail(props.target.value)
+                                setUsername(props.target.value)
                             }}
-                            label="Username or Email"
+                            label="Username"
                             variant="outlined"
                             size='small'
                             autoComplete='off'

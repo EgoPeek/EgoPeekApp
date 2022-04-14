@@ -14,8 +14,9 @@ import { GreenButton } from '../Misc/Input/Buttons'
 import InternalImageOrVideo from './InternalImageOrVideo'
 import { post } from '../../util'
 import axios from 'axios'
-
 import './Submit.css'
+
+const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
 
 const FILETYPES_IMG = [
     'image/png',
@@ -289,7 +290,8 @@ const postFormData = async (url, formData) => {
         const response = await axios.post(url, formData, {
             headers: {
                 accept: 'application/json',
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                Authorization: authHeader
             },
         })
         res = response

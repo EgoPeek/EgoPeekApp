@@ -52,17 +52,17 @@ const useAuth = () => {
     const navigate = useNavigate();
 
     //checks for valid login
-    const checkForValidEmail = async (email, password) => {
-        //json body
-        const data = {
-            username: email,
-            password: password
-        }
+    const checkForValidUser = async (username, password) => {
 
-        //verifys user input correct details for login
+        // FormData body for oauth2
+        let formData = new FormData()
+        formData.append('username', username)
+        formData.append('password', password)
+
+        // verifies user input correct details for login
         try {
             //hits API endpoint
-            const res = await axios.post('/api/v1/login', data)
+            const res = await axios.post('/api/v1/login', formData)
             console.log(res)
             //converts it to json   
             return {...res.data, success:res.status===200}
@@ -73,14 +73,16 @@ const useAuth = () => {
     }
 
     return {
-        async login(email, password) {
-            const res = await checkForValidEmail(email, password)
+        async login(username, password) {
+            const res = await checkForValidUser(username, password)
             
             // NOTE: pretty sure my auth snippet from above should live here, but ask Steve
 
             // adds the userID userName and auth token into the window localstorage
             if (res.success) {
                 window.localStorage.setItem('auth', true)
+                window.localStorage.setItem('token', res.access_token)
+                window.localStorage.setItem('token_type', res.token_type)
                 window.localStorage.setItem('userID',res.user_id)
                 window.localStorage.setItem('userName',res.username)
             }
@@ -91,6 +93,8 @@ const useAuth = () => {
         },
         logout() {
             window.localStorage.removeItem('auth')
+            window.localStorage.removeItem('token')
+            window.localStorage.removeItem('token_type')
             window.localStorage.removeItem('userID')
             window.localStorage.removeItem('userName')
             navigate('/')

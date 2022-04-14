@@ -4,6 +4,8 @@ import { TextInputStandard } from "../Misc/Input/TextFields";
 import axios from "axios";
 import { GreenButton } from "../Misc/Input/Buttons";
 
+const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
+
 const AccountBio = ({setBio, userBio, avatar, isEditting, userID }) => {
   const [newBio, setNewBio] = useState("");
 
@@ -19,7 +21,7 @@ const AccountBio = ({setBio, userBio, avatar, isEditting, userID }) => {
       avatar_path: avatar,
     };
     try {
-      const response = await axios.put(`/api/v1/profiles/${userID}`, payload);
+      const response = await axios.put(`/api/v1/profiles/${userID}`, payload, {headers: {Authorization: authHeader}});
       console.log(response);
       return response.data;
     } catch (e) {

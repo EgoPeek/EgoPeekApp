@@ -96,13 +96,13 @@ const RegisterForm = ({ accountCreated }) => {
 
           if (userRes.status === 201) {
               //if successful creation is made, user profile is made
-              await axios.post('api/v1/profiles/', {
-                  user_id: userRes.data.id,
-                  avatar_path: '',
-                  bio: '',
-                  quote: '',
-                  interests: []
-              })
+              // await axios.post('api/v1/profiles/', {
+              //     user_id: userRes.data.id,
+              //     avatar_path: '',
+              //     bio: '',
+              //     quote: '',
+              //     interests: []
+              // })
 
               //flags the parent component a success has been made
               //clears all userInformation for safety purposes

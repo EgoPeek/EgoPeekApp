@@ -70,12 +70,14 @@ const InterestPage = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
+        const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
         console.log('submit')
         try {
             await axios.put(`/api/v1/profiles/${userID}`, {
                 user_id: userID,
                 interests: selectedTags
-            })
+            },
+            {headers: {Authorization: authHeader}})
             navigate('/')
 
         } catch (err) {

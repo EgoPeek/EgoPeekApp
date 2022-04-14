@@ -5,6 +5,8 @@ import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import './AvatarUpload.css'
 import { GreenButton } from "../Misc/Input/Buttons";
 
+const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
+
 const AvatarUpload = ({
   setAvatar,
   user_id,
@@ -68,7 +70,7 @@ const avatarrandom = async (avatar_path, user_id, userBio) => {
     avatar_path: avatar_path,
   };
   try {
-    const response = await axios.put(`/api/v1/profiles/${user_id}`, payload);
+    const response = await axios.put(`/api/v1/profiles/${user_id}`, payload, {headers: {Authorization: authHeader}});
     console.log(response);
     return response.data;
   } catch (e) {
@@ -86,6 +88,7 @@ const postFormData = async (url, formData) => {
       headers: {
         accept: "application/json",
         "Content-Type": "multipart/form-data",
+        Authorization: authHeader
       },
     });
     res = response;
