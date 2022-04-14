@@ -15,7 +15,7 @@ from typing import List
 import random
 import string
 import shutil
-# from backend.auth.oauth import get_current_user
+from backend.auth.oauth import get_current_user
 
 router = APIRouter()
 
@@ -23,7 +23,7 @@ content_path_types = ['internal', 'external']
 
 
 @router.post('/', response_model = schemas.PostResponse)
-def create_post(request: schemas.PostRequest, database: Session = Depends(get_database)):
+def create_post(request: schemas.PostRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Creates a new post in the EgoPeek database, linked to user. Optional photo/video url links.
     Inputs: {'user_id': int, 'image_url': str, 'video_url': str, 'content_path_type': str, 'message': str}
@@ -36,7 +36,7 @@ def create_post(request: schemas.PostRequest, database: Session = Depends(get_da
 
 
 @router.post('/images')
-def upload_image(image: UploadFile = File(...)):
+def upload_image(image: UploadFile = File(...), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Uploads an image to the EgoPeek file directory for posting directly to the app instead of by url.
     Inputs: file
@@ -56,7 +56,7 @@ def upload_image(image: UploadFile = File(...)):
 
 
 @router.post('/videos')
-def upload_video(video: UploadFile = File(...)):
+def upload_video(video: UploadFile = File(...), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Uploads a video to the EgoPeek file directory for posting directly to the app instead of by url.
     Inputs: file
@@ -76,7 +76,7 @@ def upload_video(video: UploadFile = File(...)):
 
 
 @router.get('/all', response_model = List[schemas.PostResponse])
-def retrieve_all_db_posts(database: Session = Depends(get_database)):
+def retrieve_all_db_posts(database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all posts in the EgoPeek database.
     Inputs: None
@@ -86,7 +86,7 @@ def retrieve_all_db_posts(database: Session = Depends(get_database)):
 
 
 @router.get('/feed/{user_id}', response_model = List[schemas.PostResponse])
-def retrieve_user_feed(user_id, database: Session = Depends(get_database)):
+def retrieve_user_feed(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves a feed comprising of a user's posts, their friend's posts, and their interests, ordered chronologically.
     Inputs: user_id: int
@@ -96,7 +96,7 @@ def retrieve_user_feed(user_id, database: Session = Depends(get_database)):
 
 
 @router.get('/all/{user_id}', response_model = List[schemas.PostResponse])
-def retrieve_all_user_posts(user_id, database: Session = Depends(get_database)):
+def retrieve_all_user_posts(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all posts from the EgoPeek database made by a specific user.
     Inputs: 'user_id': str
@@ -106,7 +106,7 @@ def retrieve_all_user_posts(user_id, database: Session = Depends(get_database)):
 
 
 @router.get('/{post_id}', response_model = schemas.PostResponse)
-def retrieve_post(post_id, database: Session = Depends(get_database)):
+def retrieve_post(post_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves from the EgoPeek database given a specific post given a post id.
     Inputs: 'post_id': str
@@ -116,7 +116,7 @@ def retrieve_post(post_id, database: Session = Depends(get_database)):
 
 
 @router.put('/{post_id}')
-def update_post(post_id, request: schemas.PostRequest, database: Session = Depends(get_database)):
+def update_post(post_id, request: schemas.PostRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Updates a post in the EgoPeek database.
     Inputs: 'post_id': str, {'user_id': int, 'image_url': str, 'video_url': str, 'content_path_type': str, 'message': str}
@@ -126,7 +126,7 @@ def update_post(post_id, request: schemas.PostRequest, database: Session = Depen
 
 
 @router.delete('/{user_id}/{post_id}')
-def delete_post(user_id, post_id, database: Session = Depends(get_database)):
+def delete_post(user_id, post_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Deletes a post from the EgoPeek database.
     """

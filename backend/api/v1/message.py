@@ -4,19 +4,19 @@ message.py
     - Takes in REST api calls from the front end and returns requested direct message data for use in the front end application.
 """
 
-from pkgutil import get_data
 from fastapi import APIRouter, Depends, status
 from backend import schemas
 from backend.database import get_database
 from sqlalchemy.orm.session import Session
 from backend.database import db_message
 from typing import List
+from backend.auth.oauth import get_current_user
 
 router = APIRouter()
 
 
 @router.post('/', response_model = schemas.MessageResponse)
-def create_thread(request: schemas.FirstMessageRequest, database: Session = Depends(get_database)):
+def create_thread(request: schemas.FirstMessageRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Creates new thread, thread_member, and message entries in the EgoPeek database.
     Inputs: schema: FirstMessageRequest
@@ -26,7 +26,7 @@ def create_thread(request: schemas.FirstMessageRequest, database: Session = Depe
 
 
 @router.post('/replies', response_model = schemas.MessageResponse)
-def create_reply(request: schemas.ReplyRequest, database: Session = Depends(get_database)):
+def create_reply(request: schemas.ReplyRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Creates a new message entry in the EgoPeek database in reference to an existing thread.
     Inputs: schema: ReplyRequest
@@ -36,7 +36,7 @@ def create_reply(request: schemas.ReplyRequest, database: Session = Depends(get_
 
 
 @router.get('/threads', response_model = List[schemas.ThreadResponse])
-def retrieve_all_db_threads(database: Session = Depends(get_database)):    
+def retrieve_all_db_threads(database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):    
     """
     Retrieves all direct message threads stored in the EgoPeek database.
     Inputs: None
@@ -46,7 +46,7 @@ def retrieve_all_db_threads(database: Session = Depends(get_database)):
 
 
 @router.get('/thread_ids/{user_id}/{friend_id}')
-def retrieve_thread_id(user_id, friend_id, database: Session = Depends(get_database)):
+def retrieve_thread_id(user_id, friend_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves the unique thread ID in use between two users.
     Inputs: user_id: int, friend_id: int
@@ -56,7 +56,7 @@ def retrieve_thread_id(user_id, friend_id, database: Session = Depends(get_datab
 
 
 @router.get('/threads/all/{user_id}', response_model = List[schemas.ThreadResponse])
-def retrieve_all_user_threads(user_id, database: Session = Depends(get_database)):
+def retrieve_all_user_threads(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all direct message threads associated with the given user.
     Inputs: user_id: int
@@ -66,7 +66,7 @@ def retrieve_all_user_threads(user_id, database: Session = Depends(get_database)
 
 
 @router.get('/threads/{thread_id}/{user_id}', response_model = schemas.ThreadResponse)
-def retrieve_thread(thread_id, user_id, database: Session = Depends(get_database)):
+def retrieve_thread(thread_id, user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves a specific direct message thread.
     Inputs: thread_id: int, user_id: int
@@ -76,7 +76,7 @@ def retrieve_thread(thread_id, user_id, database: Session = Depends(get_database
 
 
 @router.get('/new/{user_id}')
-def retrieve_user_unread_counts(user_id, database: Session = Depends(get_database)):
+def retrieve_user_unread_counts(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves thread IDs and the number of unread messages in each for given user.
     Inputs: user_id: int
@@ -86,7 +86,7 @@ def retrieve_user_unread_counts(user_id, database: Session = Depends(get_databas
 
 
 @router.put('/{message_id}')
-def update_message(message_id, request: schemas.ReplyRequest, database: Session = Depends(get_database)):
+def update_message(message_id, request: schemas.ReplyRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Updates the body of a message.
     Inputs: message_id: int, schema: ReplyRequest
@@ -96,7 +96,7 @@ def update_message(message_id, request: schemas.ReplyRequest, database: Session 
 
 
 @router.delete('/{message_id}')
-def delete_message(message_id, database: Session = Depends(get_database)):
+def delete_message(message_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Deletes a message from the database.
     Inputs: message_id: int
