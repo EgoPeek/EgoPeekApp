@@ -1,0 +1,30 @@
+.user-card{
+    width: 100%;
+    transition: 0.25s;
+}
+.user-card:hover{
+    background-color: #161533;
+    cursor: pointer;
+}
+
+.user-card-info{
+    display: flex;
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.card-details{
+    margin-left: 1rem;
+}
+.card-details p{
+    margin: 0;
+}
+
+.date-receieved{
+    bottom: 5px;
+    right: 10px;
+}
+.date-receieved p{
+    margin: 0;
+    color: rgb(155, 155, 155);
+}

@@ -20,6 +20,7 @@ import ResetRequest from "./components/Reset/ResetRequest";
 import RequestSent from "./components/Reset/RequestSent";
 import ResetPassword from "./components/Reset/ResetPassword";
 import Chat from "./components/Chat/Chat";
+import DirectMessage from './components/DirectMessage/DirectMessage'
 
 function App() {
   //session token will be stored in the brother and will be replaced later
@@ -46,6 +47,7 @@ function App() {
             <Route path='/home' element={<UserFeed />} />
             <Route path='/submit' element={<Submit />}/>
             <Route path="/settings" element={<UserSettings />} />
+            <Route path='/message' element={<DirectMessage />}/>
             <Route path='/chat' element={<Chat />} />
           </Route>
 

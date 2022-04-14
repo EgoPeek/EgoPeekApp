@@ -75,9 +75,10 @@ const InterestPage = () => {
         try {
             await axios.put(`/api/v1/profiles/${userID}`, {
                 user_id: userID,
-                interests: selectedTags
+                interests: [...searchTag,...customTag]
             },
             {headers: {Authorization: authHeader}})
+
             navigate('/')
 
         } catch (err) {

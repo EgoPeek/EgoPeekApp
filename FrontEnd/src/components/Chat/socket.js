@@ -5,6 +5,7 @@
 /**
  * @description Socket class that handles functionality of all socket.io requests
  * @param userID
+ * @param messageRef
  */
 export default class Socket {
     #socket;

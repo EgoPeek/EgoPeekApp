@@ -1,0 +1,7 @@
+.input-message{
+    display: flex;
+    align-items: center;
+}
+.send-message{
+    margin-left: 10px;
+}
