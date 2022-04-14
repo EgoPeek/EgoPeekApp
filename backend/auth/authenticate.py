@@ -21,21 +21,21 @@ import string
 router = APIRouter()
 
 
-@router.post('/login')
-def login(request: schemas.LoginRequest, database: Session = Depends(get_database)):
-    """
-    Attempts user login for EgoPeek App.
-    Inputs: {username: str, password: str}
-    Outputs: {'success': bool, 'reason': str}
-    """
-    user = database.query(DbUser).filter(DbUser.username == request.username).first()
-    if not user:
-        raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED,
-                            detail = 'Invalid username.')
-    if not Hash.verify(user.password, request.password):
-        raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED,
-                            detail = 'Invalid password.')
-    return {'user_id': user.id, 'username': user.username}
+# @router.post('/login')
+# def login(request: schemas.LoginRequest, database: Session = Depends(get_database)):
+#     """
+#     Attempts user login for EgoPeek App.
+#     Inputs: {username: str, password: str}
+#     Outputs: {'success': bool, 'reason': str}
+#     """
+#     user = database.query(DbUser).filter(DbUser.username == request.username).first()
+#     if not user:
+#         raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED,
+#                             detail = 'Invalid username.')
+#     if not Hash.verify(user.password, request.password):
+#         raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED,
+#                             detail = 'Invalid password.')
+#     return {'user_id': user.id, 'username': user.username}
 
 
 @router.post('/emails/reset-password', response_model = schemas.ResetEmailResponse)
@@ -73,26 +73,26 @@ async def create_password_email(request: schemas.ResetEmailRequest, background_t
             'success': success,
             'status': status}
 
+ 
+@router.post('/login')
+def login(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_database)):
+    user = db.query(DbUser).filter(DbUser.username == request.username).first()
+    if not user:
+        raise HTTPException(status_code = status.HTTP_404_NOT_FOUND,
+            detail = 'Invalid username.')
+    if not Hash.verify(user.password, request.password):
+        raise HTTPException(status_code = status.HTTP_404_NOT_FOUND,
+            detail = 'Invalid password.')
 
-# @router.post('/login')
-# def login(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_database)):
-#     user = db.query(DbUser).filter(DbUser.username == request.username).first()
-#     if not user:
-#         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND,
-#             detail = 'Invalid username.')
-#     if not Hash.verify(user.password, request.password):
-#         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND,
-#             detail = 'Invalid password.')
+    print('creating access token')
+    access_token = create_access_token(data = {'username': user.username}) # key 'username'
 
-#     print('creating access token')
-#     access_token = create_access_token(data = {'username': user.username})
-
-#     return {
-#         'access_token': access_token,
-#         'token_type': 'bearer',
-#         'user_id': user.id,
-#         'username': user.username
-#     }
+    return {
+        'access_token': access_token,
+        'token_type': 'Bearer',
+        'user_id': user.id,
+        'username': user.username
+    }
 
 
 """
