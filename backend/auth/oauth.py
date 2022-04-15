@@ -10,7 +10,7 @@ from backend.env import TOKEN_SECRET
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/v1/login")
  
 ALGORITHM = 'HS256'
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+ACCESS_TOKEN_EXPIRE_MINUTES = 9999
 
  
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
@@ -48,3 +48,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
   if user is None:
     raise cred_error
   return user
+
+
+def get_current_active_user(current_user = Depends(get_current_user)):
+  return current_user
