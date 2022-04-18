@@ -73,4 +73,4 @@ def delete_like(request: schemas.LikeRequest, database: Session = Depends(get_da
         raise HTTPException(status_code = status.HTTP_422_UNPROCESSABLE_ENTITY,
                         detail = "Cannot include both a post ID and a comment ID.")
     db_like.decrement_like_count(database, request.post_id, request.comment_id)
-    db_like.delete_like(database, request)
+    return db_like.delete_like(database, request)
