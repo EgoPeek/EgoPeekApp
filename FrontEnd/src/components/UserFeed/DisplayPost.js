@@ -28,7 +28,7 @@ const FILETYPES_VIDEO = [
 
 
 const DisplayPost = ({ post, closeDisplay, ...props }) => {
-    const { post_id, comments, like_count, content_path_type, title, message, timestamp, user, video_url, image_url, hashtag_group } = post
+    const { post_id, comments, liked_by, content_path_type, title, message, timestamp, user, video_url, image_url, hashtag_group } = post
     const { data: avatarData, isPending: avatarIsPending, error: avatarError } = useFetch(`/api/v1/profiles/${user.id}`)
     const author = user.username
     const hashtags = hashtag_group !== null ? hashtag_group.hashtags : []
@@ -102,12 +102,9 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
                                     </div>
                                     <div className='post-info-details'>
                                         <p>
-                                            Like Count: {like_count}0
+                                            Like Count: {liked_by.length}
                                         </p>
                                     </div>
-                                    {/* <div className='content-dislikes'>
-                                THIS DOESN'T EXIST IT'LL BE FOR V2
-                            </div> */}
                                     <div className='post-info-details'>
                                         <p>
                                             Comments: {comments.length}

@@ -11,7 +11,7 @@ const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
     setNewGame([])
   }, [isEditting])
 
-  const DeleteGame = async (game_id) => {
+  const deleteGame = async (game_id) => {
     try {
       const response = await axios.delete(`/api/v1/games/${game_id}`);
       console.log(response);
@@ -140,7 +140,7 @@ const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
               <GreenButton
                 size="small"
                 onClick={() => {
-                  DeleteGame(item.game_id);
+                  deleteGame(item.game_id);
                 }}
               >
                 Delete
