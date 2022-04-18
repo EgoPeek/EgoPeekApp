@@ -196,10 +196,10 @@ const Submit = () => {
                             <div onClick={() => setHighLighted(2)} className={`${highLighted === 2 && 'highlighted'} post-option`}>
                                 <p>Images & Video</p>
                             </div>
-
+{/* 
                             <div onClick={() => setHighLighted(3)} className={`${highLighted === 3 && 'highlighted'} post-option`}>
                                 <p>link</p>
-                            </div>
+                            </div> */}
 
                         </div>
 
@@ -212,7 +212,7 @@ const Submit = () => {
                             <div className='post-body'>
                                 {highLighted === 1 && <TextPost setDescription={setDescription} />}
                                 {highLighted === 2 && <InternalImageOrVideo videoElem={videoElem} files={files} setFiles={setFiles} blob={blob} setBlob={setBlob} setImageDescription={setImageDescription} />}
-                                {highLighted === 3 && <ExternalLink setUrlLink={setUrlLink} />}
+                                {/* {highLighted === 3 && <ExternalLink setUrlLink={setUrlLink} />} */}
 
                                 <div className='submit-post'>
                                     <GreenButton variant='outlined' fullWidth onClick={onButtonSubmit}>Submit</GreenButton>
@@ -265,22 +265,22 @@ const Tag = ({ title, removeTag }) => {
 
 
 
-const ExternalLink = ({ setUrlLink }) => {
+// const ExternalLink = ({ setUrlLink }) => {
 
-    return (
-        <div>
-            <TextareaAutosize
-                placeholder='Post URL link'
-                className='textPost-textField'
-                style={{ height: '117px', minHeight: '0', resize: 'none' }}
-                onChange={(e) => {
-                    const url = e.target.value
-                    setUrlLink(url)
-                }}
-            />
-        </div>
-    )
-}
+//     return (
+//         <div>
+//             <TextareaAutosize
+//                 placeholder='Post URL link'
+//                 className='textPost-textField'
+//                 style={{ height: '117px', minHeight: '0', resize: 'none' }}
+//                 onChange={(e) => {
+//                     const url = e.target.value
+//                     setUrlLink(url)
+//                 }}
+//             />
+//         </div>
+//     )
+// }
 
 const postFormData = async (url, formData) => {
     let res = null

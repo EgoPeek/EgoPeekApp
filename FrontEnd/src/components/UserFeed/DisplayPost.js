@@ -47,7 +47,6 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
     const dateObj = new Date(timestamp)
     const [comment, setComment] = useState('')
     const [isExternalImage, setIsExternalImage] = useState(false)
-    const [deleteAlert, setDeleteAlert] = useState(false)
 
     const addComment = async () => {
         if (comment === '') return;
@@ -62,7 +61,6 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
             const newComment = res.data
             comments.push(newComment)
             console.log(res.data)
-            setComment('')
         } catch (e) {
             console.log(e)
         }
@@ -74,7 +72,7 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
 
         try {
             const res = await axios.delete(`/api/v1/posts/${userID}/${post_id}`, { headers: { Authorization: authHeader } })
-            navigate('/',{replace:true})
+            navigate('/', { replace: true })
         } catch (e) {
             console.log(e)
         }
@@ -96,16 +94,17 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
                     <div className='display-top-half'>
 
                         <div className='display-post-content'>
-                            {
-                                content_path_type === 'external' ?
+                            {/* content_path_type === 'external' ?
                                     FILETYPES_IMG.filter(x => image_url.match(x)).length > 0 ?
                                         <img src={image_url}></img> :
                                         <video src={video_url}></video>
+                                    : */}
+                            {
+                                isVideo
+                                    ?
+                                    <video src={video_url} controls></video>
                                     :
-                                    isVideo ?
-                                        <video src={video_url} controls></video>
-                                        :
-                                        <img src={image_url}></img>
+                                    <img src={image_url}></img>
                             }
                         </div>
                         <div className='display-content-info'>
