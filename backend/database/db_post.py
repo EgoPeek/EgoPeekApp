@@ -156,7 +156,32 @@ def update_post(db: Session, post_id: int, request: schemas.PostRequest):
 
 
 def delete_post(db: Session, user_id: int, post_id: int):
-    result = db.query(DbPost).filter(DbPost.post_id == post_id).first()
-    db.delete(result)
-    db.commit()
+    # retrieve post, comments, and likes associated with post_id to delete
+    post = db.query(DbPost).filter(DbPost.post_id == post_id).first()
+    comments = db.query(DbComment).filter(DbComment.post_id == post_id).all()
+    likes = db.query(DbLike).filter(DbLike.post_id == post_id).all()
+    
+    # delete likes associated with post_id
+    try:
+        for like in likes:
+            db.delete(like)
+            db.commit
+    except Exception as e:
+        return {'sucess': False, 'message': f'Failed to delete likes: {str(e)}'}
+
+    # delete coments associated with post_id
+    try:
+        for comment in comments:
+            db.delete(comment)
+            db.commit()
+    except Exception as e:
+        return {'success': False, 'message': f'Failed to delete comments: {str(e)}'}
+
+    # delete post
+    try:
+        db.delete(post)
+        db.commit()
+    except Exception as e:
+        return {'success': False, 'message': f'Failed to delete post: {str(e)}'}
+
     return {'success': True, 'message': 'Deleted post ID: {post_id}'}

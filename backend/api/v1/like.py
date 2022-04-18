@@ -11,11 +11,12 @@ from sqlalchemy.orm.session import Session
 from backend.database import db_like
 from fastapi.exceptions import HTTPException
 from typing import List
+from backend.auth.oauth import get_current_user
 
 router = APIRouter()
 
 @router.post('/')
-def create_like(request: schemas.LikeRequest, database: Session = Depends(get_database)):
+def create_like(request: schemas.LikeRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Creates a like in the database, increments the number of likes for the given post or comment.
     """
@@ -30,7 +31,7 @@ def create_like(request: schemas.LikeRequest, database: Session = Depends(get_da
 
 
 @router.get('/all')
-def retrieve_all_db_likes(database: Session = Depends(get_database)):
+def retrieve_all_db_likes(database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all like data stored in the database.
     """
@@ -38,7 +39,7 @@ def retrieve_all_db_likes(database: Session = Depends(get_database)):
 
 
 @router.get('/users/{user_id}')
-def retrieve_all_likes_by_user(user_id, database: Session = Depends(get_database)):
+def retrieve_all_likes_by_user(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all like data for a user.
     """
@@ -46,7 +47,7 @@ def retrieve_all_likes_by_user(user_id, database: Session = Depends(get_database
 
 
 @router.get('/posts/{post_id}', response_model = List[schemas.LikeResponse])
-def retrieve_all_likes_by_post(post_id, database: Session = Depends(get_database)):
+def retrieve_all_likes_by_post(post_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all like data for a post.
     """
@@ -54,7 +55,7 @@ def retrieve_all_likes_by_post(post_id, database: Session = Depends(get_database
 
 
 @router.get('/comments/{comment_id}', response_model = List[schemas.LikeResponse])
-def retrieve_all_likes_by_comment(comment_id, database: Session = Depends(get_database)):
+def retrieve_all_likes_by_comment(comment_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all like data for a comment.
     """
@@ -62,7 +63,7 @@ def retrieve_all_likes_by_comment(comment_id, database: Session = Depends(get_da
 
 
 @router.delete('/')
-def delete_like(request: schemas.LikeRequest, database: Session = Depends(get_database)):
+def delete_like(request: schemas.LikeRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Deletes a like in the database, decrements the like count for the given post or comment
     """

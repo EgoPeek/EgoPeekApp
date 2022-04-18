@@ -10,12 +10,13 @@ from backend.database import get_database
 from sqlalchemy.orm.session import Session
 from backend.database import db_game
 from typing import List
+from backend.auth.oauth import get_current_user
 
 router = APIRouter()
 
 
 @router.post('/', response_model = schemas.GameResponse)
-def create_game(request: schemas.GameRequest, database: Session = Depends(get_database)):
+def create_game(request: schemas.GameRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Creates a favorite game entry for display on the given user's profile.
     Inputs: schema: GameRequest
@@ -25,7 +26,7 @@ def create_game(request: schemas.GameRequest, database: Session = Depends(get_da
 
 
 @router.get('/all', response_model = List[schemas.GameResponse])
-def retrieve_all_db_games(database: Session = Depends(get_database)):
+def retrieve_all_db_games(database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all game data stored in the database.
     Inputs: None
@@ -35,7 +36,7 @@ def retrieve_all_db_games(database: Session = Depends(get_database)):
 
 
 @router.get('/users/{user_id}', response_model = List[schemas.GameResponse])
-def retrieve_all_user_games(user_id, database: Session = Depends(get_database)):
+def retrieve_all_user_games(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all game data for a user.
     Inputs: user_id: int
@@ -45,7 +46,7 @@ def retrieve_all_user_games(user_id, database: Session = Depends(get_database)):
 
 
 @router.get('/{game_id}', response_model = schemas.GameResponse)
-def retrieve_game(game_id, database: Session = Depends(get_database)):
+def retrieve_game(game_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves data stored for the given game ID.
     Inputs: game_id: int
@@ -55,7 +56,7 @@ def retrieve_game(game_id, database: Session = Depends(get_database)):
 
 
 @router.put('/{game_id}')
-def update_game(game_id, request: schemas.GameRequest, database: Session = Depends(get_database)):
+def update_game(game_id, request: schemas.GameRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Updates the database entry associated with the given game_id.
     Inputs: game_id: int, schema: GameRequest
@@ -65,7 +66,7 @@ def update_game(game_id, request: schemas.GameRequest, database: Session = Depen
 
 
 @router.delete('/{game_id}')
-def delete_game(game_id, database: Session = Depends(get_database)):
+def delete_game(game_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Deletes the given game entry from the EgoPeek database.
     Inputs: game_id: int

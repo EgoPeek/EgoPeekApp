@@ -13,7 +13,7 @@ import PendingIcon from '@mui/icons-material/Pending';
 import { post } from '../../util';
 import axios from 'axios';
 
-
+const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
 
 export const Friend = ({ friendInfo, updateStatus,index, ...props }) => {
     const { username, avatar_path: userImg, friend_status } = friendInfo
@@ -101,7 +101,7 @@ const sendRequest = async (userInfo) => {
         friend_id: userInfo.user_id,
     }
     console.log(body)
-    const { res, error } = await post('/api/v1/friends/requests', body)
+    const { res, error } = await post('/api/v1/friends/requests', body, {headers: {Authorization: authHeader}})
     if (error) {
         console.log(error)
         return
@@ -118,7 +118,7 @@ const updateFriendStatus = async (userInfo, status) => {
     }
 
     try {
-        const res = await axios.put('/api/v1/friends/responses', body)
+        const res = await axios.put('/api/v1/friends/responses', body, {headers: {Authorization: authHeader}})
         console.log(res.data)
     } catch (err) {
         console.log(err)
@@ -127,7 +127,7 @@ const updateFriendStatus = async (userInfo, status) => {
 const deleteFriend = async (userInfo) => {
     const userID = window.localStorage.getItem('userID')
     try {
-        const res = await axios.delete(`/api/v1/friends/${userID}/${userInfo.user_id}`)
+        const res = await axios.delete(`/api/v1/friends/${userID}/${userInfo.user_id}`, {headers: {Authorization: authHeader}})
         console.log(res.data)
     } catch (err) {
         console.log(err)

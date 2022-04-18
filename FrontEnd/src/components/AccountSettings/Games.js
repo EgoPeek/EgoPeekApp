@@ -4,6 +4,8 @@ import axios from "axios";
 import { GreenButton } from "../Misc/Input/Buttons";
 import "./Games.css";
 
+const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
+
 const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
   const [newGame, setNewGame] = useState([]);
 
@@ -13,7 +15,7 @@ const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
 
   const deleteGame = async (game_id) => {
     try {
-      const response = await axios.delete(`/api/v1/games/${game_id}`);
+      const response = await axios.delete(`/api/v1/games/${game_id}`, {headers: {Authorization: authHeader}});
       console.log(response);
       setUserGames(userGames.filter(x => x.game_id !== game_id))
       return response.data;
@@ -32,7 +34,7 @@ const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
         game_title: item.game_title,
       };
       try {
-        const response = await axios.post(`/api/v1/games/`, payload);
+        const response = await axios.post(`/api/v1/games/`, payload, {headers: {Authorization: authHeader}});
         console.log(response);
         setUserGames((prevState) => [...prevState, response.data])
       } catch (e) {

@@ -15,6 +15,8 @@ import useFetch from '../../hooks/useFetch';
 import { useNavigate } from 'react-router';
 import { GreenCircle } from '../Misc/Input/LoadingCircle';
 
+const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
+
 const FILETYPES_IMG = [
     '.png',
     '.gif',
@@ -49,7 +51,7 @@ const DisplayPost = ({ post, closeDisplay, ...props }) => {
             post_id: post_id
         }
         try {
-            const res = await axios.post('/api/v1/comments/', body)
+            const res = await axios.post('/api/v1/comments/', body, {headers: {Authorization: authHeader}})
             const newComment = res.data
             comments.push(newComment)
             console.log(res.data)

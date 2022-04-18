@@ -14,12 +14,13 @@ from typing import List
 import string
 import random
 import shutil
+from backend.auth.oauth import get_current_user
 
 router = APIRouter()
 
 
 @router.post('/', response_model = schemas.ProfileResponse)
-def create_profile(request: schemas.ProfileRequest, database: Session = Depends(get_database)):
+def create_profile(request: schemas.ProfileRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Creates a user profile.
     Inputs: schema: ProfileRequest
@@ -29,7 +30,7 @@ def create_profile(request: schemas.ProfileRequest, database: Session = Depends(
 
 
 @router.post('/avatars')
-def upload_avatar(avatar: UploadFile = File(...)):
+def upload_avatar(avatar: UploadFile = File(...), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Uploads an avatar to the EgoPeek file directory for profile display.
     Inputs: file
@@ -49,7 +50,7 @@ def upload_avatar(avatar: UploadFile = File(...)):
 
 
 @router.get('/all', response_model = List[schemas.ProfileResponse])
-def retrieve_all_db_profiles(database: Session = Depends(get_database)):
+def retrieve_all_db_profiles(database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all profile data stored in the database.
     Inputs: None
@@ -59,7 +60,7 @@ def retrieve_all_db_profiles(database: Session = Depends(get_database)):
 
 
 @router.get('/{user_id}', response_model = schemas.ProfileResponse)
-def retrieve_user_profile(user_id, database: Session = Depends(get_database)):
+def retrieve_user_profile(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all information stored for the given user ID.
     Inputs: user_id: int
@@ -69,7 +70,7 @@ def retrieve_user_profile(user_id, database: Session = Depends(get_database)):
 
 
 @router.get('/users/{username}', response_model = schemas.ProfileResponse)
-def retrieve_user_profile_by_username(username, database: Session = Depends(get_database)):
+def retrieve_user_profile_by_username(username, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all information stored for the given user ID.
     Inputs: user_id: int
@@ -79,7 +80,7 @@ def retrieve_user_profile_by_username(username, database: Session = Depends(get_
 
 
 @router.get('/interests/{user_id}')
-def retrieve_user_interests(user_id, database: Session = Depends(get_database)):
+def retrieve_user_interests(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all interests associated with the provided user profile
     Inputs: user_id: int
@@ -89,7 +90,7 @@ def retrieve_user_interests(user_id, database: Session = Depends(get_database)):
 
 
 @router.get('/avatar/{user_id}', response_model = schemas.AvatarResponse)
-def retrieve_user_avatar(user_id, database: Session = Depends(get_database)):
+def retrieve_user_avatar(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves the relative path to the current user's avatar image
     Inputs: user_id: int
@@ -99,7 +100,7 @@ def retrieve_user_avatar(user_id, database: Session = Depends(get_database)):
 
 
 @router.put('/{user_id}')
-def update_profile(user_id, request: schemas.ProfileRequest, database: Session = Depends(get_database)):
+def update_profile(user_id, request: schemas.ProfileRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Updates the profile database entry associated with the given user_id.
     Inputs: user_id: int, schema: ProfileRequest
@@ -109,7 +110,7 @@ def update_profile(user_id, request: schemas.ProfileRequest, database: Session =
 
 
 @router.delete('/{user_id}')
-def delete_profile(user_id, database: Session = Depends(get_database)):
+def delete_profile(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Deletes the profile of the given user from the EgoPeek database.
     Inputs: user_id: int

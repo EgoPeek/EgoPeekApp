@@ -11,13 +11,14 @@ from sqlalchemy.orm.session import Session
 from backend.database import db_friend
 from fastapi.exceptions import HTTPException
 from typing import List
+from backend.auth.oauth import get_current_user
 
 router = APIRouter()
 
 responses = ['friends', 'declined']
 
 @router.post('/requests', response_model = schemas.FriendResponse)
-def create_friend_request(response: Response, request: schemas.FriendRequest, database: Session = Depends(get_database)):
+def create_friend_request(response: Response, request: schemas.FriendRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Creates a friend request in the EgoPeek database.
     Inputs: class: FriendRequest
@@ -34,7 +35,7 @@ def create_friend_request(response: Response, request: schemas.FriendRequest, da
 
 
 @router.get('/all', response_model = List[schemas.FriendResponse])
-def retrieve_all_db_friends(database: Session = Depends(get_database)):
+def retrieve_all_db_friends(database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all friends for the specified user from the EgoPeek database.
     Inputs: user_id: None
@@ -44,7 +45,7 @@ def retrieve_all_db_friends(database: Session = Depends(get_database)):
 
 
 @router.get('/all/{user_id}', response_model = List[schemas.FriendResponse])
-def retrieve_all_user_friends(user_id, database: Session = Depends(get_database)):
+def retrieve_all_user_friends(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all friends for the specified user from the EgoPeek database.
     Inputs: user_id: int
@@ -54,7 +55,7 @@ def retrieve_all_user_friends(user_id, database: Session = Depends(get_database)
 
 
 @router.get('/list/{user_id}', response_model = List[schemas.FriendListResponse])
-def retrieve_friend_list_data(user_id, database: Session = Depends(get_database)):
+def retrieve_friend_list_data(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves the user id, username, and avatar path for all of the user's current friends
     Inputs: user_id: int
@@ -64,7 +65,7 @@ def retrieve_friend_list_data(user_id, database: Session = Depends(get_database)
 
 
 @router.get('/status/{user_id}', response_model = List[schemas.FriendStatusResponse])
-def retrieve_friend_list_status(user_id, database: Session = Depends(get_database)):
+def retrieve_friend_list_status(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all of a user's friends along with status
     Inputs: user_id: int
@@ -74,7 +75,7 @@ def retrieve_friend_list_status(user_id, database: Session = Depends(get_databas
 
 
 @router.get('/search/{username}', response_model = schemas.FriendListResponse)
-def retrieve_user_by_name(username, database: Session = Depends(get_database)):
+def retrieve_user_by_name(username, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves user id, username, and avatar path for searched user
     Inputs: username: str
@@ -88,7 +89,7 @@ def retrieve_user_by_name(username, database: Session = Depends(get_database)):
 
 
 @router.put('/responses')
-def update_friend_request(request: schemas.FriendRequest, database: Session = Depends(get_database)):
+def update_friend_request(request: schemas.FriendRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Updates friend status to 'friends' or 'declined' for both sender and recipient.
     Inputs: class: FriendRequest
@@ -101,7 +102,7 @@ def update_friend_request(request: schemas.FriendRequest, database: Session = De
 
 
 @router.delete('/{user_id}/{friend_id}')
-def delete_friend(user_id, friend_id, database: Session = Depends(get_database)):
+def delete_friend(user_id, friend_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Deletes a friend entry in the EgoPeek database for both users.
     Inputs: user_id: int, friend_id: int

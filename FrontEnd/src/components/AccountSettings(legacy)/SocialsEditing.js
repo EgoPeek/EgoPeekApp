@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 
+const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
+
 const Socials = ({ socialsInfo }) => {
   const user_id = window.localStorage.getItem("userID");
   const link_id = socialsInfo.link_id;
@@ -11,7 +13,7 @@ const Socials = ({ socialsInfo }) => {
       link_id: link_id,
     };
     try {
-      const response = await axios.delete(`/api/v1/links/${link_id}`, payload);
+      const response = await axios.delete(`/api/v1/links/${link_id}`, payload, {headers: {Authorization: authHeader}});
       console.log(response);
       return response.data;
     } catch (e) {

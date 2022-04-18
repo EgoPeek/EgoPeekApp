@@ -10,12 +10,13 @@ from backend.database import get_database
 from sqlalchemy.orm.session import Session
 from backend.database import db_link
 from typing import List
+from backend.auth.oauth import get_current_user
 
 router = APIRouter()
 
 
 @router.post('/', response_model = schemas.LinkResponse)
-def create_link(request: schemas.LinkRequest, database: Session = Depends(get_database)):
+def create_link(request: schemas.LinkRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Creates a link to another social media site for given user.
     Inputs: schema: LinkRequest
@@ -25,7 +26,7 @@ def create_link(request: schemas.LinkRequest, database: Session = Depends(get_da
 
 
 @router.get('/all', response_model = List[schemas.LinkResponse])
-def retrieve_all_db_links(database: Session = Depends(get_database)):
+def retrieve_all_db_links(database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all link data stored in the database.
     Inputs: None
@@ -35,7 +36,7 @@ def retrieve_all_db_links(database: Session = Depends(get_database)):
 
 
 @router.get('/users/{user_id}', response_model = List[schemas.LinkResponse])
-def retrieve_all_user_links(user_id, database: Session = Depends(get_database)):
+def retrieve_all_user_links(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves all link data for a user.
     Inputs: user_id: int
@@ -45,7 +46,7 @@ def retrieve_all_user_links(user_id, database: Session = Depends(get_database)):
 
 
 @router.get('/{link_id}', response_model = schemas.LinkResponse)
-def retrieve_link(link_id, database: Session = Depends(get_database)):
+def retrieve_link(link_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Retrieves the url associated with a given link_id.
     Inputs: link_id: int
@@ -55,7 +56,7 @@ def retrieve_link(link_id, database: Session = Depends(get_database)):
 
 
 @router.put('/{link_id}')
-def update_link(link_id, request: schemas.LinkRequest, database: Session = Depends(get_database)):
+def update_link(link_id, request: schemas.LinkRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Updates the url associated with the given link_id.
     Inputs: link_id: int, schema: LinkRequest
@@ -65,7 +66,7 @@ def update_link(link_id, request: schemas.LinkRequest, database: Session = Depen
 
 
 @router.delete('/{link_id}')
-def delete_link(link_id, database: Session = Depends(get_database)):
+def delete_link(link_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Deletes the given link entry from the EgoPeek database.
     Inputs: link_id: int
