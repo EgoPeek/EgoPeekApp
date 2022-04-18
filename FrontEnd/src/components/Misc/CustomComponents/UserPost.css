@@ -15,6 +15,14 @@
 
 .userpost-votes{
     margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.userpost-votes p{
+    font-weight: 500;
+    font-size: 2rem;
+    margin: 0 0 15px 0;
 }
 
 .userpost-image img, video{
