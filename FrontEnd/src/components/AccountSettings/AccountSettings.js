@@ -9,6 +9,7 @@ import { GreenButton } from "../Misc/Input/Buttons";
 import "./AccountSettings.css";
 import Header from "../Misc/CustomComponents/Header";
 import AvatarUpload from "./AvatarUpload";
+import { GreenCircle } from "../Misc/Input/LoadingCircle";
 
 const AccountSettings = () => {
   const user_id = window.localStorage.getItem("userID");
@@ -27,7 +28,7 @@ const AccountSettings = () => {
     const games = !isPending ? data.user.games : [];
     const social = !isPending ? data.user.links : [];
     const bio = !isPending ? data.bio : "...";
-    const avatar = !isPending ? data.avatar_path : "...";
+    const avatar = !isPending ? data.avatar_path : "/";
 
     setSocials(social);
     setGames(games);
@@ -37,7 +38,7 @@ const AccountSettings = () => {
   }, [isPending]);
 
 
-  if(error) return <></>
+  if (error) return <></>
 
   return (
     <div className="idk">
@@ -45,13 +46,17 @@ const AccountSettings = () => {
       <div className="usersettings">
         <div className="left-side-profile">
           <div className="settings-edit-icon">
-            <AvatarUpload
-              avatar={avatar}
-              user_id={user_id}
-              userBio={bio}
-              setAvatar={setAvatar}
-              isEditting={isEditting}
-            />
+            {!isPending ?
+              <AvatarUpload
+                avatar={avatar}
+                user_id={user_id}
+                userBio={bio}
+                setAvatar={setAvatar}
+                isEditting={isEditting}
+              />
+              :
+              <GreenCircle />
+            }
             <GreenButton
               sx={{ marginTop: "1rem" }}
               variant="outlined"
