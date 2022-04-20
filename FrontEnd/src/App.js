@@ -20,7 +20,8 @@ import ResetRequest from "./components/Reset/ResetRequest";
 import RequestSent from "./components/Reset/RequestSent";
 import ResetPassword from "./components/Reset/ResetPassword";
 import Chat from "./components/Chat/Chat";
-import DirectMessage from './components/DirectMessage/DirectMessage'
+import DirectMessage from "./components/DirectMessage/DirectMessage";
+import Discover from "./components/Discover/Discover";
 
 function App() {
   //session token will be stored in the brother and will be replaced later
@@ -30,26 +31,26 @@ function App() {
     <div className="App main-container">
       <Router>
         <Routes>
-
           {/* if a user is NOT logged in, only unprotected routes are shown*/}
           <Route path="/" element={<UnProtectedRoute />}>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path='/reset/email' element={<ResetRequest />} />
-            <Route path='/reset/sent' element={<RequestSent />} />
-            <Route path='/reset/password' element={<ResetPassword />} />
+            <Route path="/reset/email" element={<ResetRequest />} />
+            <Route path="/reset/sent" element={<RequestSent />} />
+            <Route path="/reset/password" element={<ResetPassword />} />
           </Route>
 
           {/* if a user IS logged in protected routes are shown */}
-          <Route path='/' element={<ProtectedRoute />}>
+          <Route path="/" element={<ProtectedRoute />}>
             <Route path="/account/:username" element={<Account />} />
-            <Route path='/home' element={<UserFeed />} />
-            <Route path='/submit' element={<Submit />}/>
+            <Route path="/home" element={<UserFeed />} />
+            <Route path="/submit" element={<Submit />} />
             <Route path="/settings" element={<UserSettings />} />
             <Route path='/message/:username' element={<DirectMessage />}/>
             <Route path='/message' element={<DirectMessage />}/>
-            <Route path='/chat' element={<Chat />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/discover" element={<Discover />} />
           </Route>
 
           <Route path="*" element={<div>404 not found</div>} />
