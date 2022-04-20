@@ -1,0 +1,38 @@
+.slideshow {
+  margin-right: 1rem;
+  overflow: hidden;
+  max-width: 70vh;
+}
+
+.slideshowSlider {
+  white-space: nowrap;
+  transition: ease 1000ms;
+}
+
+.slide {
+  display: inline-block;
+  height: 90vh;
+  width: 100%;
+}
+
+.home-img {
+  height: 96vh;
+}
+
+.slideshowDots {
+  text-align: center;
+}
+
+.slideshowDot {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 15px 7px 0px;
+  background-color: #c4c4c4;
+}
+
+.slideshowDot.active {
+  background-color: green;
+}

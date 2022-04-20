@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { useState } from "react";
 import SidebarIcon from "./SidebarIcon";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
+import { GreenButton } from "../Misc/Input/Buttons";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import { GreenCircle } from "../Misc/Input/LoadingCircle";
 import GamePosts from "./GamePosts";
-import "./Account.css";
+import "./Sidebar.css";
 
 const Sidebar = ({ Accountdata }) => {
   const friends = Accountdata.user.friends;
@@ -35,6 +36,9 @@ const Sidebar = ({ Accountdata }) => {
           <div className="name-container">
             <span>{Accountdata.user.username}</span>
             <ForwardToInboxIcon />
+            <GreenButton variant="outlined">
+              <PersonAddIcon />
+            </GreenButton>
             <div className="followers">
               <span>Friends: {friendsAmount}</span>
             </div>
@@ -49,7 +53,7 @@ const Sidebar = ({ Accountdata }) => {
         </div>
 
         <div className="account-favorites">
-          <h1>Favorite Games</h1>
+          <h2>Favorite Games</h2>
           <div className="favorite-spacing">
             <span>
               {games.map((item, i) => (
