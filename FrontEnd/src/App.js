@@ -21,7 +21,7 @@ import RequestSent from "./components/Reset/RequestSent";
 import ResetPassword from "./components/Reset/ResetPassword";
 import Chat from "./components/Chat/Chat";
 import DirectMessage from "./components/DirectMessage/DirectMessage";
-import Discover from "./components/Discover/Discover";
+// import Discover from "./components/Discover/Discover";
 
 function App() {
   //session token will be stored in the brother and will be replaced later
@@ -50,7 +50,7 @@ function App() {
             <Route path='/message/:username' element={<DirectMessage />}/>
             <Route path='/message' element={<DirectMessage />}/>
             <Route path="/chat" element={<Chat />} />
-            <Route path="/discover" element={<Discover />} />
+            {/* <Route path="/discover" element={<Discover />} /> */}
           </Route>
 
           <Route path="*" element={<div>404 not found</div>} />
