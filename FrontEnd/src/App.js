@@ -47,6 +47,7 @@ function App() {
             <Route path='/home' element={<UserFeed />} />
             <Route path='/submit' element={<Submit />}/>
             <Route path="/settings" element={<UserSettings />} />
+            <Route path='/message/:username' element={<DirectMessage />}/>
             <Route path='/message' element={<DirectMessage />}/>
             <Route path='/chat' element={<Chat />} />
           </Route>
