@@ -42,11 +42,10 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
     const hashtags = hashtag_group !== null ? hashtag_group.hashtags : []
     const isVideo = video_url !== ""
     const navigate = useNavigate()
-    const userOwnsPost = parseInt(userID) === user.id // TO DO: change this to compare validUserID === user.id, but I can't get validUserID to resolve promise #ihatemyself
     const dateObj = new Date(timestamp)
     const [comment, setComment] = useState('')
     const [isExternalImage, setIsExternalImage] = useState(false)
-    const { data: validUserID, isPending: validUserIsPending, error: validUserError } = useToken(userID)
+    const { data: validUserID, isPending: validUserIsPending, error: validUserError } = useToken()
 
 
     const addComment = async () => {
@@ -80,13 +79,12 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
 
     }
 
-    // kinda hacky attempt to resolve validUserID promise
     if (validUserIsPending) {
-        console.log(validUserIsPending, 'PENDING CONDITIONAL')
         return <></>
     }
 
-    console.log(validUserID, validUserIsPending, validUserError, 'OMG PLS') // none of these vars are populating
+    // post ownership validation based on JWT token
+    const userOwnsPost = parseInt(validUserID) === user.id
 
     return (
         <div className='display-post-container' {...props}>
