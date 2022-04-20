@@ -17,9 +17,9 @@ import { GreenCircle } from '../Misc/Input/LoadingCircle';
 import { HeartSwitch } from '@anatoliygatt/heart-switch';
 import { MenuDropDown, MenuItem } from '../Misc/Input/MenuDropDown';
 import DeleteIcon from '@mui/icons-material/Delete';
+import useToken from '../../hooks/useToken';
 
 const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
-
 
 const FILETYPES_IMG = [
     '.png',
@@ -42,11 +42,12 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
     const hashtags = hashtag_group !== null ? hashtag_group.hashtags : []
     const isVideo = video_url !== ""
     const navigate = useNavigate()
-    const userOwnsPost = parseInt(userID) === user.id
-
+    const userOwnsPost = parseInt(userID) === user.id // TO DO: change this to compare validUserID === user.id, but I can't get validUserID to resolve promise #ihatemyself
     const dateObj = new Date(timestamp)
     const [comment, setComment] = useState('')
     const [isExternalImage, setIsExternalImage] = useState(false)
+    const { data: validUserID, isPending: validUserIsPending, error: validUserError } = useToken(userID)
+
 
     const addComment = async () => {
         if (comment === '') return;
@@ -78,6 +79,14 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
         }
 
     }
+
+    // kinda hacky attempt to resolve validUserID promise
+    if (validUserIsPending) {
+        console.log(validUserIsPending, 'PENDING CONDITIONAL')
+        return <></>
+    }
+
+    console.log(validUserID, validUserIsPending, validUserError, 'OMG PLS') // none of these vars are populating
 
     return (
         <div className='display-post-container' {...props}>
