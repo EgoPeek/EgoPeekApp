@@ -35,7 +35,7 @@ export const IconBubble = ({ imgStyle, userImgSrc, listStyles, ...props }) => {
 export const MenuItem = ({ MenuIcon, redirect, method, ...props }) => {
     return (
         <div className='item-dropdown' onClick={method}>
-            <Link to={redirect} className='menu-item'>
+            <Link to={redirect} {...props} className='menu-item'>
                 <span className='menu-logo'>{MenuIcon}</span>
                 {props.children}
             </Link>

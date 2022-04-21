@@ -7,14 +7,14 @@
 .dm-feed {
     background-color: #0E0E11;
     border-radius: 12px;
-    margin: 2rem;
-    height: calc(90% - var(--header-height));
     display: flex;
 }
 
 .dm-users {
     width: 100%;
     margin-top: 1.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 
@@ -33,9 +33,13 @@
     padding: 2rem;
 }
 
-.dm-messages {
+.dm-message-container {
     height: 100%;
-
+    display: flex;
+    flex-direction: column-reverse;
+}
+.dm-chat-messages{
+    overflow: scroll;
     display: flex;
     flex-direction: column-reverse;
 }

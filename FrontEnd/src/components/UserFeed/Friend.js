@@ -16,14 +16,14 @@ import axios from 'axios';
 const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
 
 export const Friend = ({ friendInfo, updateStatus,index, ...props }) => {
-    const { username, avatar_path: userImg, friend_status } = friendInfo
+    const { username, avatar_path: userImg, friend_status,user_id } = friendInfo
     // const {avatarUrl} = profile[0]
 
     return (
         <div className='user-friend' {...props}>
             {/* this user-icon should be the user bubble, this is temporary */}
             <IconBubble imgStyle={{ height: '3rem', width: '3rem' }} userImgSrc={userImg}>
-                <MenuItem redirect='#' MenuIcon={<InboxIcon />}>Message</MenuItem>
+                <MenuItem redirect={`/message/${username}`} state={{friendID: user_id}} MenuIcon={<InboxIcon />}>Message</MenuItem>
                 <MenuItem redirect={`/account/${username}`} MenuIcon={<AccountBoxIcon />}>Profile</MenuItem>
                 <MenuItem redirect='#' MenuIcon={<PersonRemoveAlt1Icon />} method={() => { deleteFriend(friendInfo); updateStatus('',index)}}>Remove Friend</MenuItem>
             </IconBubble>
