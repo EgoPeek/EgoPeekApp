@@ -17,9 +17,8 @@ import { GreenCircle } from '../Misc/Input/LoadingCircle';
 import { HeartSwitch } from '@anatoliygatt/heart-switch';
 import { MenuDropDown, MenuItem } from '../Misc/Input/MenuDropDown';
 import DeleteIcon from '@mui/icons-material/Delete';
-import useToken from '../../hooks/useToken';
+import useTokenID from '../../hooks/useTokenID';
 
-const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
 
 const FILETYPES_IMG = [
     '.png',
@@ -34,31 +33,30 @@ const FILETYPES_VIDEO = [
 
 
 const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDidLike, ...props }) => {
-    const userID = window.localStorage.getItem('userID')
-
     const { post_id, comments, liked_by, content_path_type, title, message, timestamp, user, video_url, image_url, hashtag_group } = post
     const { data: avatarData, isPending: avatarIsPending, error: avatarError } = useFetch(`/api/v1/profiles/${user.id}`)
     const author = user.username
     const hashtags = hashtag_group !== null ? hashtag_group.hashtags : []
     const isVideo = video_url !== ""
     const navigate = useNavigate()
-    const userOwnsPost = parseInt(userID) === user.id // TO DO: change this to compare validUserID === user.id, but I can't get validUserID to resolve promise #ihatemyself
     const dateObj = new Date(timestamp)
     const [comment, setComment] = useState('')
     const [isExternalImage, setIsExternalImage] = useState(false)
-    const { data: validUserID, isPending: validUserIsPending, error: validUserError } = useToken(userID)
+    const { data: validUserID, isPending: validUserIDIsPending, error: validUserIDError } = useTokenID()
+    const userOwnsPost = validUserID === user.id
 
 
     const addComment = async () => {
         if (comment === '') return;
 
         const body = {
-            user_id: userID,
+            user_id: validUserID,
             message: comment,
             post_id: post_id
         }
+        const headers = {headers: {Authorization: window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')}}
         try {
-            const res = await axios.post('/api/v1/comments/', body, { headers: { Authorization: authHeader } })
+            const res = await axios.post('/api/v1/comments/', body, headers)
             const newComment = res.data
             comments.push(newComment)
             console.log(res.data)
@@ -66,27 +64,20 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
             console.log(e)
         }
     }
+
     const deletePost = async () => {
-        // redundency to check if user actually owns the post
+        // redundancy to check if user actually owns the post
         // again gets checked by the auth key to triple check
         if (!userOwnsPost) return
+        const headers = {headers: {Authorization: window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')}}
 
         try {
-            const res = await axios.delete(`/api/v1/posts/${userID}/${post_id}`, { headers: { Authorization: authHeader } })
+            const res = await axios.delete(`/api/v1/posts/${validUserID}/${post_id}`, headers)
             navigate('/', { replace: true })
         } catch (e) {
             console.log(e)
         }
-
     }
-
-    // kinda hacky attempt to resolve validUserID promise
-    if (validUserIsPending) {
-        console.log(validUserIsPending, 'PENDING CONDITIONAL')
-        return <></>
-    }
-
-    console.log(validUserID, validUserIsPending, validUserError, 'OMG PLS') // none of these vars are populating
 
     return (
         <div className='display-post-container' {...props}>

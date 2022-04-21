@@ -5,7 +5,7 @@ authenticate.py
 """
 
 from fastapi import APIRouter, Depends, status, BackgroundTasks
-from backend.auth.oauth import create_access_token, get_current_active_user
+from backend.auth.oauth import create_access_token, get_current_user
 from backend.database import get_database, db_user
 from sqlalchemy.orm.session import Session
 from backend.database.models import DbUser
@@ -78,7 +78,5 @@ def login(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(
 
 
 @router.get('/users/me/', response_model=schemas.UserResponse)
-async def read_current_user(current_user = Depends(get_current_active_user)):
+async def read_current_user(current_user = Depends(get_current_user)):
     return current_user
-
-
