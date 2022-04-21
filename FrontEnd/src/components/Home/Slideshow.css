@@ -1,7 +1,5 @@
 .slideshow {
-  margin-right: 1rem;
   overflow: hidden;
-  max-width: 70vh;
 }
 
 .slideshowSlider {
@@ -16,7 +14,7 @@
 }
 
 .home-img {
-  height: 96vh;
+  height: 100vh;
 }
 
 .slideshowDots {
