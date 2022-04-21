@@ -4,16 +4,30 @@
 */
 
 import React from 'react'
-import { green } from '@mui/material/colors'
-import { Button } from '@mui/material'
+import { deepPurple, green, purple } from '@mui/material/colors'
+import { Button, IconButton } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-export const GreenButton = styled(Button)(()=>({
-    color:green[200],
+export const GreenButton = styled(Button)(() => ({
+    color: green[200],
     borderColor: green[400],
-    ':hover':{
-        backgroundColor:green[500],
+    ':hover': {
+        backgroundColor: green[500],
         borderColor: green[300]
+    }
+}))
+
+
+export const PurpleButton = styled(IconButton)(() => ({
+    color: deepPurple[400],
+    borderColor: purple[600],
+    ':hover': {
+        backgroundColor: deepPurple[700],
+        borderColor: purple[300]
+    },
+    ":disabled": {
+        color: deepPurple[900],
+
     }
 }))
 

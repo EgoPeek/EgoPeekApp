@@ -3,7 +3,6 @@ import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import './AvatarUpload.css'
-import { GreenButton } from "../Misc/Input/Buttons";
 
 const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
 
@@ -17,18 +16,18 @@ const AvatarUpload = ({
   const fileSomethingidk = useRef(null);
 
   const fileChangedHandler = (e) => {
-      e.preventDefault()
-      e.stopPropagation()
-      const file = e.target.files[0]
-      setAvatar(URL.createObjectURL(file))
-      uploadHandler(file)
+    e.preventDefault()
+    e.stopPropagation()
+    const file = e.target.files[0]
+    setAvatar(URL.createObjectURL(file))
+    uploadHandler(file)
   };
 
   const uploadHandler = async (file) => {
     const fd = new FormData();
     fd.append("avatar", file);
     const { res, error } = await postFormData("/api/v1/profiles/avatars", fd);
-    if(error) return
+    if (error) return
     console.log(res);
     const imagePath = res.data.relative_avatar_path;
     setAvatar(imagePath)
@@ -46,19 +45,17 @@ const AvatarUpload = ({
         ref={fileSomethingidk}
       />
       <div className="avatar-container">
-
-        <IconBubble 
+        <IconBubble
           userImgSrc={avatar}
           imgStyle={{ height: "150px", width: "150px" }}
           onClick={() => {
             const idk = fileSomethingidk.current;
             idk.click();
           }}
-        > 
-        </IconBubble>
-        <EditIcon className="avatar-edit-icon"/>
+        />
+        <EditIcon className="avatar-edit-icon" />
       </div>
-    </div>
+    </div >
   );
 };
 
@@ -69,7 +66,7 @@ const avatarrandom = async (avatar_path, user_id, userBio) => {
     avatar_path: avatar_path,
   };
   try {
-    const response = await axios.put(`/api/v1/profiles/${user_id}`, payload, {headers: {Authorization: authHeader}});
+    const response = await axios.put(`/api/v1/profiles/${user_id}`, payload, { headers: { Authorization: authHeader } });
     console.log(response);
     return response.data;
   } catch (e) {
