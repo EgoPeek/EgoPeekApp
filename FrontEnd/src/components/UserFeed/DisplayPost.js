@@ -19,8 +19,6 @@ import { MenuDropDown, MenuItem } from '../Misc/Input/MenuDropDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useToken from '../../hooks/useToken';
 
-const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
-
 const FILETYPES_IMG = [
     '.png',
     '.gif',
@@ -46,6 +44,7 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
     const [comment, setComment] = useState('')
     const [isExternalImage, setIsExternalImage] = useState(false)
     const { data: validUserID, isPending: validUserIsPending, error: validUserError } = useToken()
+    const userOwnsPost = validUserID === user.id
 
 
     const addComment = async () => {
@@ -56,8 +55,9 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
             message: comment,
             post_id: post_id
         }
+        const headers = {headers: {Authorization: window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')}}
         try {
-            const res = await axios.post('/api/v1/comments/', body, { headers: { Authorization: authHeader } })
+            const res = await axios.post('/api/v1/comments/', body, headers)
             const newComment = res.data
             comments.push(newComment)
             console.log(res.data)
@@ -65,26 +65,20 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
             console.log(e)
         }
     }
+
     const deletePost = async () => {
-        // redundency to check if user actually owns the post
+        // redundancy to check if user actually owns the post
         // again gets checked by the auth key to triple check
         if (!userOwnsPost) return
+        const headers = {headers: {Authorization: window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')}}
 
         try {
-            const res = await axios.delete(`/api/v1/posts/${userID}/${post_id}`, { headers: { Authorization: authHeader } })
+            const res = await axios.delete(`/api/v1/posts/${userID}/${post_id}`, headers)
             navigate('/', { replace: true })
         } catch (e) {
             console.log(e)
         }
-
     }
-
-    if (validUserIsPending) {
-        return <></>
-    }
-
-    // post ownership validation based on JWT token
-    const userOwnsPost = parseInt(validUserID) === user.id
 
     return (
         <div className='display-post-container' {...props}>
