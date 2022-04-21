@@ -17,7 +17,8 @@ import { GreenCircle } from '../Misc/Input/LoadingCircle';
 import { HeartSwitch } from '@anatoliygatt/heart-switch';
 import { MenuDropDown, MenuItem } from '../Misc/Input/MenuDropDown';
 import DeleteIcon from '@mui/icons-material/Delete';
-import useToken from '../../hooks/useToken';
+import useTokenID from '../../hooks/useTokenID';
+
 
 const FILETYPES_IMG = [
     '.png',
@@ -33,7 +34,6 @@ const FILETYPES_VIDEO = [
 
 const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDidLike, ...props }) => {
     const userID = window.localStorage.getItem('userID')
-
     const { post_id, comments, liked_by, content_path_type, title, message, timestamp, user, video_url, image_url, hashtag_group } = post
     const { data: avatarData, isPending: avatarIsPending, error: avatarError } = useFetch(`/api/v1/profiles/${user.id}`)
     const author = user.username
@@ -43,7 +43,7 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
     const dateObj = new Date(timestamp)
     const [comment, setComment] = useState('')
     const [isExternalImage, setIsExternalImage] = useState(false)
-    const { data: validUserID, isPending: validUserIsPending, error: validUserError } = useToken()
+    const { data: validUserID, isPending: validUserIDIsPending, error: validUserIDError } = useTokenID()
     const userOwnsPost = validUserID === user.id
 
 
