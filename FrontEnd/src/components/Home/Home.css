@@ -22,7 +22,7 @@
   width: 100%;
 }
 .home-left {
-  flex: 73%;
+  flex: 70%;
   flex-direction: column;
   display: flex;
   justify-content: center;
@@ -30,7 +30,7 @@
   padding-bottom: 10rem;
 }
 .home-right {
-  flex: 37%;
+  flex: 42%;
   height: 100%;
 }
 
