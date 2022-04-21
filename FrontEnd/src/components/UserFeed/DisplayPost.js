@@ -33,7 +33,6 @@ const FILETYPES_VIDEO = [
 
 
 const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDidLike, ...props }) => {
-    const userID = window.localStorage.getItem('userID')
     const { post_id, comments, liked_by, content_path_type, title, message, timestamp, user, video_url, image_url, hashtag_group } = post
     const { data: avatarData, isPending: avatarIsPending, error: avatarError } = useFetch(`/api/v1/profiles/${user.id}`)
     const author = user.username
@@ -51,7 +50,7 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
         if (comment === '') return;
 
         const body = {
-            user_id: userID,
+            user_id: validUserID,
             message: comment,
             post_id: post_id
         }
@@ -73,7 +72,7 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
         const headers = {headers: {Authorization: window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')}}
 
         try {
-            const res = await axios.delete(`/api/v1/posts/${userID}/${post_id}`, headers)
+            const res = await axios.delete(`/api/v1/posts/${validUserID}/${post_id}`, headers)
             navigate('/', { replace: true })
         } catch (e) {
             console.log(e)
