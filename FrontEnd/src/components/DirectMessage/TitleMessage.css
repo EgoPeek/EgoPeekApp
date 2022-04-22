@@ -1,0 +1,19 @@
+
+/* blank message screen on load */
+
+.dm-select-message{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.dm-title{
+    font-weight: 800;
+    font-size: 2.5rem;
+}
+.dm-subheading{
+    font-weight: 500;
+    margin-bottom: 1rem;
+}

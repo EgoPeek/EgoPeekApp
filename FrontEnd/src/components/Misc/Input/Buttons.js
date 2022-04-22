@@ -18,7 +18,7 @@ export const GreenButton = styled(Button)(() => ({
 }))
 
 
-export const PurpleButton = styled(IconButton)(() => ({
+export const PurpleIconButton = styled(IconButton)(() => ({
     color: deepPurple[400],
     borderColor: purple[600],
     ':hover': {
@@ -31,3 +31,17 @@ export const PurpleButton = styled(IconButton)(() => ({
     }
 }))
 
+export const PurpleButton = styled(Button)(() => ({
+    color: 'white',
+    borderColor: purple[600],
+    backgroundColor: deepPurple[500],
+    borderRadius:'50px',
+    ':hover': {
+        backgroundColor: deepPurple[700],
+        borderColor: purple[300]
+    },
+    ":disabled": {
+        color: deepPurple[900],
+
+    }
+}))

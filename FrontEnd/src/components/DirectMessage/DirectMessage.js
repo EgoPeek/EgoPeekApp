@@ -1,20 +1,22 @@
+import './DirectMessage.css'
 import React, { useEffect, useRef, useState } from 'react'
 import Header from '../Misc/CustomComponents/Header'
 import { DarkTextInput } from '../Misc/Input/TextFields'
 import MessageCard from './MessageCard'
-import SendMessageField from './SendMessageField'
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import SearchIcon from '@mui/icons-material/Search';
-import ChatMessage from '../Chat/ChatMessage'
-import './DirectMessage.css'
 import useFetch from '../../hooks/useFetch'
 import { useLocation, useNavigate, useParams } from 'react-router'
 import axios from 'axios'
+import TitleMessage from './TitleMessage'
+import ChatDisplay from './ChatDisplay'
+import NewThreadList from './NewThreadList';
+import { PurpleIconButton } from '../Misc/Input/Buttons';
 
-const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
 
 
 const DirectMessage = ({ props }) => {
+  const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
   const userID = window.localStorage.getItem('userID')
   const clientUsername = window.localStorage.getItem('username')
   const { username: friendUsername } = useParams()
@@ -22,11 +24,13 @@ const DirectMessage = ({ props }) => {
   const navigate = useNavigate()
   const [clientheight, setClientheight] = useState(0)
   const headerHeight = useRef(null)
+  const { data: friendData, isPending: friendsPending, error: friendsError } = useFetch(`/api/v1/friends/status/${userID}`)
   const { data: userThreads, isPending: threadsPending, error: threadsError } = useFetch(`/api/v1/messages/threads/all/${userID}`)
   const [dms, setDms] = useState([])
   const [displayedMessages, setDisplayedMessages] = useState({})
   const [userMessage, setUserMessage] = useState('')
   const [displayedAvatar, setDisplayedAvatar] = useState('')
+  const [displayThreadPopUp, setDisplayThreadPopUp] = useState(false)
 
   useEffect(() => {
     setClientheight(headerHeight.current?.clientHeight)
@@ -49,9 +53,18 @@ const DirectMessage = ({ props }) => {
       }
       // console.log(friendDMs, 'FOUND DMS')
     }
-
-    setDms([...userThreads])
+    setUserNames(userThreads)
+    setDms(userThreads)
   }, [threadsPending])
+
+  const setUserNames = () => {
+    userThreads.forEach(item => {
+      const otherID = item.user1_id === parseInt(userID) ? item.user2_id : item.user1_id
+      const index = item.messages.findIndex(x => x.sender.id === otherID)
+      const friendName = item.messages[index]?.sender.username;
+      item['friendName'] = friendName
+    })
+  }
 
   // creates a new thread if a user clicks on a user that they've never had a thread with
   const createNewUserThread = async (otherID, myID) => {
@@ -75,12 +88,28 @@ const DirectMessage = ({ props }) => {
   const setMessages = (thread) => {
     return (e) => {
       e.preventDefault()
-      const i = thread.messages.findIndex(x=>x.sender.id !== parseInt(userID))
-      const otherName = thread.messages[i].sender.username
+      const otherName = thread.friendName
 
-      navigate('/message/'+otherName, { replace: true })
+      navigate('/message/' + otherName, { replace: true })
       setDisplayedMessages(thread)
     }
+  }
+  const openUserThread = (otherID, myID) => {
+    return (e) => {
+      e.preventDefault()
+      setDisplayThreadPopUp(false)
+      const exists = dms.filter(x => x.user1_id == otherID || x.user2_id === otherID)
+      console.log(exists)
+      if (exists.length > 0) {
+        setMessages(exists[0])(e)
+      } else {
+        createNewUserThread(otherID, myID)
+      }
+    }
+  }
+
+  const displayPostEvent = () => {
+    setDisplayThreadPopUp(!displayThreadPopUp)
   }
   const userSearching = (e) => {
     const value = e.target.value
@@ -89,7 +118,8 @@ const DirectMessage = ({ props }) => {
       return
     }
 
-    const filteredUsers = userThreads.filter(x => x.messages[0].sender.username.match(value))
+    const filteredUsers = userThreads.filter(x => x.friendName?.match(value))
+    console.log(filteredUsers)
     setDms(filteredUsers)
   }
 
@@ -138,42 +168,28 @@ const DirectMessage = ({ props }) => {
                     <SearchIcon sx={{ color: 'white' }} />
                   )
                 }} />
-              <span><ForwardToInboxIcon fontSize='large' /></span>
+              <PurpleIconButton onClick={displayPostEvent}><ForwardToInboxIcon /></PurpleIconButton>
             </div>
-
+            {/* user cards on the left */}
             <div className='dm-users'>
               {dms.map((dm, i) => <MessageCard
                 messageInfo={dm}
                 highlighted={dm.thread_id === displayedMessages.thread_id}
                 onClick={setMessages(dm)}
                 setDisplayedAvatar={setDisplayedAvatar}
-                index={i}
                 key={i} />)}
             </div>
           </section>
 
           {/* contains user messages */}
           <section className='dm-right-container'>
+            {displayThreadPopUp && <NewThreadList friendsList={friendData} createThread={openUserThread} displayPostEvent={displayPostEvent} />}
             <div className='dm-message-container'>
+              {/* dms with chosen user */}
               {displayedMessages?.messages ?
-                <>
-                  <SendMessageField value={userMessage} setUserMessage={setUserMessage} sendMessage={sendMessage} />
-                  <div className='dm-chat-messages'>
-                    {
-                      displayedMessages.messages.map((item, i) => <ChatMessage
-                        avatar={item.sender.id === parseInt(userID) ? '' : displayedAvatar}
-                        body={item.body}
-                        isSelf={item.sender.id === parseInt(userID)}
-                        msgKey={i}
-                        username={item.sender.username}
-                        time={item.sent_time}
-                        key={i}
-                      />).reverse()
-                    }
-                  </div>
-                </>
+                <ChatDisplay displayedMessages={displayedMessages} userMessage={userMessage} setUserMessage={setUserMessage} sendMessage={sendMessage} />
                 :
-                <p>Select a message or create a new thread!</p>
+                <TitleMessage openPopUp={displayPostEvent} />
               }
             </div>
           </section>
@@ -193,5 +209,8 @@ const formatObj = (obj, username) => {
   }
   return msg;
 }
+
+
+
 
 export default DirectMessage

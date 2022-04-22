@@ -16,6 +16,15 @@
 .card-details{
     margin-left: 1rem;
 }
+.card-friendname{
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+.card-body{
+    font-weight: 500;
+}
+
 .card-details p{
     margin: 0;
 }
