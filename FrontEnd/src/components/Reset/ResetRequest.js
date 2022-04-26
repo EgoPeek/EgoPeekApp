@@ -3,7 +3,7 @@ FileName: ResetRequest.js
 Description: Reset password email request screen
 */
 
-import './ResetRequest.css'
+import '../Login/Login.css'
 import { useEffect, useState } from 'react'
 import { FormControl, Alert } from '@mui/material'
 import { GreenButton } from '../Misc/Input/Buttons'
@@ -67,8 +67,8 @@ const ResetRequest = () => {
       };
 
     return (
-        <div className='ResetRequest'>
-            <div>
+        <div className='login-style'>
+            <div className='login-container'>
                 <TitleAndLogo />
 
                 <form className='form'>

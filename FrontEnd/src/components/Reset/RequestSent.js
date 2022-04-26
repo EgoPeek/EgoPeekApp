@@ -3,7 +3,7 @@ FileName: RequestSent.js
 Description: Informational page after email sent for password reset. Buttons for navigation.
 */
 
-import './RequestSent.css'
+import '../Login/Login.css'
 import { useEffect, useState } from 'react'
 import { FormControl, Alert } from '@mui/material'
 import { GreenButton } from '../Misc/Input/Buttons'
@@ -54,8 +54,8 @@ const RequestSent = () => {
     }
 
     return (
-        <div className='RequestSent'>
-            <div>
+        <div className='login-style'>
+            <div className='login-container'>
                 <TitleAndLogo />
 
                 <form className='form'>

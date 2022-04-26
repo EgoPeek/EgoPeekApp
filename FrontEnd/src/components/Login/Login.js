@@ -20,6 +20,7 @@ const useStyles = makeStyles({
     }
 })
 
+
 //main Login Component
 const Login = () => {
     //this is kind of hacky but oh well, it literally just changes the background color
@@ -44,7 +45,7 @@ const Login = () => {
 
     const handleLogin = async () => {
         //if a sucess is read it stores users credentials within local storage and redirects them
-        const jsonRes = await auth.login(username,password);
+        const jsonRes = await auth.login(username, password);
         if (jsonRes.success) {
             navigate('/home', { replace: true })
         } else {
@@ -54,10 +55,9 @@ const Login = () => {
         }
     }
 
-
     return (
-        <div className='Login'>
-            <div>
+        <div className='login-style'>
+            <div className='login-container'>
                 <TitleAndLogo />
 
                 <form className='form'>
@@ -89,7 +89,7 @@ const Login = () => {
                             required
                         />
                         <GreenButton className={classes.fields} variant="outlined" onClick={handleLogin}>Submit</GreenButton>
-                        <p><Link className = 'reset-password' to={'/reset/email'}>Forgot password?</Link></p>
+                        <p><Link className='reset-password' to={'/reset/email'}>Forgot password?</Link></p>
                     </FormControl>
                 </form>
             </div>

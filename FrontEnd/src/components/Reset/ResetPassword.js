@@ -3,7 +3,8 @@ FileName: ResetPassword.js
 Description: Reset password request screen
 */
 
-import './ResetPassword.css'
+import '../Login/Login.css'
+
 import { useEffect, useState } from 'react'
 import { FormControl, Alert } from '@mui/material'
 import { GreenButton } from '../Misc/Input/Buttons'
@@ -66,8 +67,8 @@ const ResetPassword = () => {
       };
 
     return (
-        <div className='ResetPassword'>
-            <div>
+        <div className='login-style'>
+            <div className='login-container'>
                 <TitleAndLogo />
 
                 <form className='form'>

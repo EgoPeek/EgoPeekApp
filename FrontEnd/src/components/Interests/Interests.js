@@ -2,28 +2,41 @@
  *  File name: INterests.js
  *  Description: Interest page where users can select what types of topics they're interested in viewing on their userFeed
  */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { TextInputStandard } from '../Misc/Input/TextFields'
 import { GreenButton } from '../Misc/Input/Buttons'
 import { useNavigate } from 'react-router';
 import useFetch from '../../hooks/useFetch';
 import axios from 'axios';
+import './Interests.css'
+import TitleAndLogo from '../Misc/CustomComponents/TitleAndLogo';
 
 //interest page in component Form
-const InterestPage = () => {
+const Interests = () => {
 
     //Tag component that takes a title
     const [selectedTags, setSelectedTags] = useState([]);
-    const { data: tags, isPending: tagPending} = useFetch('/api/v1/hashtags/top/15')
+    const { data: tags, isPending: tagPending } = useFetch('/api/v1/hashtags/top/15')
     const [searchTag, setSearchTag] = useState('')
     const userID = window.localStorage.getItem('userID')
     const navigate = useNavigate();
     const [tagData, setTagData] = useState([])
     const [customTag, setCustomTag] = useState([])
+    const interestsContainer = useRef(null)
 
     useEffect(() => {
         setTagData(!tagPending ? tags : [])
     }, [tagPending])
+
+    //this literally just changes the background color, yes its kind of hacky deal with it
+    useEffect(() => {
+        document.body.style.backgroundColor = 'rgb(2,0,36)'
+        document.body.style.background = 'linear-gradient(42deg, rgba(2,0,36,1) 0%, rgba(19,16,39,1) 51%, rgba(33,28,65,1) 100%)'
+        document.body.style.backgroundAttachment = 'fixed'
+        return () => {
+            document.body.style.background = "#171621"
+        }
+    }, [])
 
 
     const updateTag = (tagName) => {
@@ -51,14 +64,6 @@ const InterestPage = () => {
         setCustomTag([...selectedTags, tagName])
     }
 
-    const Tag = ({ title, updateFunction }) => {
-        return (
-            <div className='tag' onClick={() => updateFunction(title)}>
-                <p>{title}</p>
-            </div>
-        )
-    }
-
     const handleSearchTag = (e) => {
         if (e.key !== 'Enter' || searchTag === '') return
         const tag = formatString(searchTag)
@@ -75,9 +80,9 @@ const InterestPage = () => {
         try {
             await axios.put(`/api/v1/profiles/${userID}`, {
                 user_id: userID,
-                interests: [...searchTag,...customTag]
+                interests: [...selectedTags, ...customTag]
             },
-            {headers: {Authorization: authHeader}})
+                { headers: { Authorization: authHeader } })
 
             navigate('/')
 
@@ -95,23 +100,34 @@ const InterestPage = () => {
     }
 
     return (
-        <div className='form-container'>
-            <h2>Interests</h2>
-            <p>Pick games that interest you the most to receieve a more personalized feed</p>
-            <TextInputStandard autoComplete='off' value={searchTag} size='small' sx={{ width: '70%' }} label="Search by tag" onChange={(e) => setSearchTag(e.target.value)} onKeyPress={handleSearchTag} />
-            <div className='tag-container'>
-                <div className='chosen-tags interests'>
-                    {selectedTags.map((x, i) => <Tag title={x} updateFunction={updateTag} key={i} />)}
-                    {customTag.map((x, i) => <Tag title={x} updateFunction={updateCustomTag} key={i} />)}
-                </div>
-                <div className='interests'>
-                    {!tagPending && tagData.map((item, i) => <Tag title={item} updateFunction={updateTag} key={i} />)}
+        <div className='interests-wrapper'>
+            <div>
+                <TitleAndLogo />
+                <div className='interests-container' ref={interestsContainer}>
+                    <h1>Interests</h1>
+                    <p>Pick games that interest you the most to receieve a more personalized feed</p>
+                    <TextInputStandard autoComplete='off' value={searchTag} size='small' sx={{ width: '70%' }} label="Search by tag" onChange={(e) => setSearchTag(e.target.value)} onKeyPress={handleSearchTag} />
+                    <div className='tag-container'>
+                        <div className='chosen-tags interests'>
+                            {selectedTags.map((x, i) => <Tag title={x} updateFunction={updateTag} key={i} />)}
+                            {customTag.map((x, i) => <Tag title={x} updateFunction={updateCustomTag} key={i} />)}
+                        </div>
+                        <div className='interests'>
+                            {!tagPending && tagData.map((item, i) => <Tag title={item} updateFunction={updateTag} key={i} />)}
+                        </div>
+                    </div>
+                    <GreenButton variant='outlined' onClick={handleSubmit}>Submit</GreenButton>
                 </div>
             </div>
-            <GreenButton variant='outlined' onClick={handleSubmit}>Submit</GreenButton>
+        </div>
+    )
+}
+const Tag = ({ title, updateFunction }) => {
+    return (
+        <div className='tag' onClick={() => updateFunction(title)}>
+            <p>{title}</p>
         </div>
     )
 }
 
-
-export default InterestPage 
+export default Interests 

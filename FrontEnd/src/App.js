@@ -21,6 +21,7 @@ import RequestSent from "./components/Reset/RequestSent";
 import ResetPassword from "./components/Reset/ResetPassword";
 import Chat from "./components/Chat/Chat";
 import DirectMessage from "./components/DirectMessage/DirectMessage";
+import Interests from "./components/Interests/Interests";
 // import Discover from "./components/Discover/Discover";
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
             <Route path='/message/:username' element={<DirectMessage />}/>
             <Route path='/message' element={<DirectMessage />}/>
             <Route path="/chat" element={<Chat />} />
+            <Route path="/interests" element={<Interests />} />
             {/* <Route path="/discover" element={<Discover />} /> */}
           </Route>
 
