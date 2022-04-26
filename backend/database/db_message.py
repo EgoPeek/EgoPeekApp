@@ -20,17 +20,8 @@ def create_thread(db: Session, request: schema.FirstMessageRequest):
     db.commit()
     db.refresh(new_thread)
 
-    new_message = DbMessage(
-        thread_id = new_thread.thread_id,
-        sender_id = request.sender_id,
-        body = request.body,
-        sent_time = datetime.now(),
-        message_status = 'sent'
-    )
-    db.add(new_message)
-    db.commit()
-    db.refresh(new_message)
-    return new_message
+    return {'success': True, 'message': f'Sucessfully created a new thread between users {request.sender_id} and {request.receiver_id}'}
+
 
 def create_reply(db: Session, request: schema.ReplyRequest):
     new_message = DbMessage(

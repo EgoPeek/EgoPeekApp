@@ -15,7 +15,7 @@ const MessageCard = ({ messageInfo, highlighted, setDisplayedAvatar, ...props })
   }
   // const { avatarPath,friendName } = messageInfo
   const userID = window.localStorage.getItem('userID')
-  const { body, sent_time } = messageInfo?.messages[messageInfo?.messages.length - 1]
+  const { body, sent_time } = messageInfo?.messages[messageInfo?.messages.length - 1] || ""
   const dateObj = new Date(sent_time)
 
   useEffect(() => {

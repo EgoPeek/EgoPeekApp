@@ -324,7 +324,6 @@ class ProfileResponse(BaseModel):
 class FirstMessageRequest(BaseModel):
     sender_id: int
     receiver_id: int
-    body: str
 
 class ReplyRequest(BaseModel):
     thread_id: int

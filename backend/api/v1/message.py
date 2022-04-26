@@ -15,7 +15,7 @@ from backend.auth.oauth import get_current_user
 router = APIRouter()
 
 
-@router.post('/', response_model = schemas.MessageResponse)
+@router.post('/')
 def create_thread(request: schemas.FirstMessageRequest, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Creates new thread, thread_member, and message entries in the EgoPeek database.
