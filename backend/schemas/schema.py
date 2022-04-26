@@ -345,7 +345,7 @@ class ThreadResponse(BaseModel):
     thread_id: int
     user1_id: int
     user2_id: int
-    messages: List[Message]
+    messages: Optional[List[Message]]
     class Config():
         orm_mode = True
 
