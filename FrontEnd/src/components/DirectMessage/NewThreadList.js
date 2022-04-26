@@ -35,7 +35,7 @@ const NewThreadList = ({ friendsList, createThread, displayPostEvent }) => {
         <div className='dm-thread-friends'>
           {friendsList.map((friend, i) => (
             friend.friend_status === 'friends' &&
-            <div className='dm-friend-card' onClick={createThread(friend.user_id, userID)} key={i}>
+            <div className='dm-friend-card' onClick={createThread(friend.user_id, userID,friend.username)} key={i}>
               <IconBubble imgStyle={{ height: '3.5rem', width: '3.5rem', marginRight: '0.8rem' }}
                 userImgSrc={friend.avatar_path} />
               <span>{friend.username}</span>

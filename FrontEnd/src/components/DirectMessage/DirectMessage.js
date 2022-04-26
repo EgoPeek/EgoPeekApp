@@ -47,7 +47,7 @@ const DirectMessage = ({ props }) => {
       const friendDMs = userThreads.filter(x => x.user1_id === friendID || x.user2_id === friendID)
       console.log(friendDMs)
       if (friendDMs.length === 0) {
-        createNewUserThread(friendID, userID)
+        createNewUserThread(friendID, userID, friendUsername)
       } else {
         setDisplayedMessages(...friendDMs)
       }
@@ -67,16 +67,17 @@ const DirectMessage = ({ props }) => {
   }
 
   // creates a new thread if a user clicks on a user that they've never had a thread with
-  const createNewUserThread = async (otherID, myID) => {
+  const createNewUserThread = async (otherID, myID, friendName) => {
     try {
       const body = {
         sender_id: myID,
-        receiver_id: otherID,
-        body: ''
+        receiver_id: otherID
       }
       const res = await axios.post('/api/v1/messages/', body, { headers: { Authorization: authHeader } })
-      const msg = formatObj(res, clientUsername)
-      setDisplayedMessages(msg)
+      const newDm = res.data
+      newDm['friendName'] = friendName
+      setDms(prev => [...prev, newDm])
+      setDisplayedMessages(newDm)
     } catch (e) {
       console.log(e)
     }
@@ -94,16 +95,16 @@ const DirectMessage = ({ props }) => {
       setDisplayedMessages(thread)
     }
   }
-  const openUserThread = (otherID, myID) => {
+  const openUserThread = (otherID, myID, username) => {
     return (e) => {
       e.preventDefault()
       setDisplayThreadPopUp(false)
       const exists = dms.filter(x => x.user1_id == otherID || x.user2_id === otherID)
-      console.log(exists)
+      console.log(exists, 'USER ECISTS')
       if (exists.length > 0) {
         setMessages(exists[0])(e)
       } else {
-        createNewUserThread(otherID, myID)
+        createNewUserThread(otherID, myID, username)
       }
     }
   }
@@ -111,6 +112,8 @@ const DirectMessage = ({ props }) => {
   const displayPostEvent = () => {
     setDisplayThreadPopUp(!displayThreadPopUp)
   }
+
+  // checks if a user is searching for a friend
   const userSearching = (e) => {
     const value = e.target.value
     if (value === '') {
@@ -123,7 +126,7 @@ const DirectMessage = ({ props }) => {
     setDms(filteredUsers)
   }
 
-
+  // sends a message to another user 
   const sendMessage = async () => {
     if (!displayedMessages?.thread_id) return
 
@@ -199,6 +202,7 @@ const DirectMessage = ({ props }) => {
   )
 }
 
+// does a small format for the displayMessages 
 const formatObj = (obj, username) => {
   const msg = {
     sender: {
@@ -209,8 +213,6 @@ const formatObj = (obj, username) => {
   }
   return msg;
 }
-
-
 
 
 export default DirectMessage

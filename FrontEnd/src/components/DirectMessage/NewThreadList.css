@@ -15,9 +15,12 @@
 .dm-thread-list {
     min-width: 60%;
     min-height: 550px;
+    max-height: 80%;
     background-color: #24222f;
     padding: 1rem;
     border-radius: 15px;
+
+    overflow: scroll;
 }
 
 .dm-top-window {

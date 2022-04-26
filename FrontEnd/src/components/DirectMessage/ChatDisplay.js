@@ -27,7 +27,7 @@ const ChatDisplay = ({ userMessage, setUserMessage, sendMessage, displayedMessag
               msgKey={i}
               username={item.sender.username}
               time={date} key={i} />)
-        }).reverse()}
+        })}
       </div>
 
     </>);
