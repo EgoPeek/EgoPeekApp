@@ -18,7 +18,7 @@ import { PurpleIconButton } from '../Misc/Input/Buttons';
 const DirectMessage = ({ props }) => {
   const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
   const userID = window.localStorage.getItem('userID')
-  const clientUsername = window.localStorage.getItem('username')
+  const clientUsername = window.localStorage.getItem('userName')
   const { username: friendUsername } = useParams()
   const { state: locationParams } = useLocation()
   const navigate = useNavigate()
@@ -139,7 +139,7 @@ const DirectMessage = ({ props }) => {
     }
     try {
       const res = await axios.post('/api/v1/messages/replies', body, headers)
-      const msg = formatObj(res, friendUsername)
+      const msg = formatObj(res, clientUsername)
       displayedMessages?.messages.push(msg)
       setUserMessage('')
     } catch (e) {

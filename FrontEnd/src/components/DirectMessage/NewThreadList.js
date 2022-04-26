@@ -1,8 +1,7 @@
 import React from 'react'
-import { DarkTextInput } from '../Misc/Input/TextFields'
+import { TextInputPurple } from '../Misc/Input/TextFields'
 import './NewThreadList.css'
 import SearchIcon from '@mui/icons-material/Search';
-import Friend from '../UserFeed/Friend';
 import { IconBubble } from '../Misc/CustomComponents/IconBubble';
 import { PurpleIconButton } from '../Misc/Input/Buttons';
 import Close from '@mui/icons-material/Close';
@@ -25,7 +24,7 @@ const NewThreadList = ({ friendsList, createThread, displayPostEvent }) => {
           </span>
         </div>
         <div>
-          <DarkTextInput size='small'
+          <TextInputPurple size='small'
             label='Search for a friend'
             InputProps={{
               startAdornment: (
@@ -36,11 +35,11 @@ const NewThreadList = ({ friendsList, createThread, displayPostEvent }) => {
         <div className='dm-thread-friends'>
           {friendsList.map((friend, i) => (
             friend.friend_status === 'friends' &&
-              <div className='dm-friend-card' onClick={createThread(friend.user_id, userID)} key={i}>
-                <IconBubble imgStyle={{ height: '3.5rem', width: '3.5rem', marginRight: '0.8rem' }}
-                  userImgSrc={friend.avatar_path} />
-                <span>{friend.username}</span>
-              </div>
+            <div className='dm-friend-card' onClick={createThread(friend.user_id, userID)} key={i}>
+              <IconBubble imgStyle={{ height: '3.5rem', width: '3.5rem', marginRight: '0.8rem' }}
+                userImgSrc={friend.avatar_path} />
+              <span>{friend.username}</span>
+            </div>
           ))}
         </div>
       </div>
