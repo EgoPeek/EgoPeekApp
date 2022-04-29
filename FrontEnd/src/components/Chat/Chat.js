@@ -4,6 +4,7 @@ import Header from '../Misc/CustomComponents/Header'
 import './Chat.css'
 import ChatWindow from './ChatWindow';
 import ChatInput from './ChatInput';
+import { useParams } from "react-router";
 
 
 function Chat() {
@@ -13,9 +14,10 @@ function Chat() {
     const [socket, setSocket] = useState()
     const [messages, setMessage] = useState([])
     const [connected, setConnected] = useState(false)
+    const { game } = useParams();
 
     useEffect(() => {
-        const client = new Socket(userID,setMessage)
+        const client = new Socket(game,userID,setMessage)
         setSocket(client)
         setConnected(true)
         return () => {
