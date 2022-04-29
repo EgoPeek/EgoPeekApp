@@ -50,7 +50,7 @@ function App() {
             <Route path="/settings" element={<UserSettings />} />
             <Route path='/message/:username' element={<DirectMessage />}/>
             <Route path='/message' element={<DirectMessage />}/>
-            <Route path="/chat" element={<Chat />} />
+            <Route path="/chat/:game" element={<Chat />}/>
             <Route path="/interests" element={<Interests />} />
             {/* <Route path="/discover" element={<Discover />} /> */}
           </Route>

@@ -63,7 +63,7 @@ const Header = () => {
                     <h1>EgoPeek</h1>
                 </div>
                 <Link to='/home' className='header-item'><p>Home</p></Link>
-                <Link to="/chat" className='header-item'><p> Looking to Queue</p></Link>
+                <Link to="/chat/global" className='header-item'><p> Looking to Queue</p></Link>
                 <Link to='#' className='header-item'><p> Discover </p></Link>
                 <Link to='#' className='header-item'><p> Contact </p></Link>
             </div>
