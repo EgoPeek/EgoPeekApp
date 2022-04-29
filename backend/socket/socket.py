@@ -13,7 +13,7 @@ from backend.database import get_database
 from sqlalchemy.orm.session import Session
 
 router = APIRouter()
-
+socket_map = {}
 
 class SocketConnection:
     def __init__(self):
@@ -32,26 +32,38 @@ class SocketConnection:
     async def send_public_message(self, message: str):
         for connection in self.active_connections:
             await connection.send_text(message)
-            
-
-socket_manager = SocketConnection()
 
 
-@router.websocket("/{client_id}")
-async def chat_socket(websocket: WebSocket, client_id: int,  database: Session = Depends(get_database)):
-    await socket_manager.chat_connect(websocket)
+@router.get('/counts/{game_name}')
+async def get_room_count(game_name: str):
+    try:
+        count = len(socket_map[game_name].active_connections)
+    except KeyError:
+        count = 0
+    return {'room': game_name, 'connected_users': count}
+
+
+@router.websocket("/{game_name}/{client_id}")
+async def chat_socket(websocket: WebSocket, game_name: str, client_id: int,  database: Session = Depends(get_database)):
+    try: 
+        if not socket_map[game_name]:
+            socket_map[game_name] = SocketConnection()
+    except KeyError:
+        socket_map[game_name] = SocketConnection()
+
+    await socket_map[game_name].chat_connect(websocket)
     now = datetime.now()
     current_time = now.strftime("%H:%M")
     try:
         while True:
             data = await websocket.receive_text()
-            await socket_manager.send_private_message(f"You wrote: {data}", websocket)
+            await socket_map[game_name].send_private_message(f"You wrote: {data}", websocket)
             data = json.loads(data)
             avatar = db_profile.get_user_avatar(database, client_id).avatar_path
             message = {"time":current_time,"clientId":client_id,"message":data,"avatar_path":avatar}
-            await socket_manager.send_public_message(json.dumps(message))
+            await socket_map[game_name].send_public_message(json.dumps(message))
             
     except WebSocketDisconnect:
-        socket_manager.chat_disconnect(websocket)
+        socket_map[game_name].chat_disconnect(websocket)
         message = {"time":current_time,"User ID":client_id,"message":"Offline"}
-        await socket_manager.send_public_message(json.dumps(message))
+        await socket_map[game_name].send_public_message(json.dumps(message))
