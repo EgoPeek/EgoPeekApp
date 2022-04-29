@@ -4,6 +4,7 @@
 
 /**
  * @description Socket class that handles functionality of all socket.io requests
+ * @param chatGame
  * @param userID
  * @param messageRef
  */
@@ -25,8 +26,9 @@ export default class Socket {
         this.#setMessageRef(newMessages)
     }
 
-    constructor(userID, messageRef) {
-        this.#url = 'ws://localhost:5000/api/v1/chat/' + userID; // change this to 'ws://13.57.35.14:80/api/v1/chat/' in prod
+    constructor(chatGame, userID, messageRef) {
+        this.#url = 'ws://localhost:5000/api/v1/chat/' + chatGame + '/' + userID; // change this to 'ws://13.57.35.14:80/api/v1/chat/' in prod
+        console.log(this.#url, 'URL')
         this.connect()
         this.#setMessageRef = messageRef
 
