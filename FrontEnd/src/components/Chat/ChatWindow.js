@@ -2,8 +2,8 @@ import React from 'react'
 import ChatMessage from './ChatMessage';
 
 
-const ChatWindow = ({ messages, username }) => {
-    return <div className='chat-window'>
+const ChatWindow = ({ messages, username, ...props }) => {
+    return <div className='chat-window' {...props}>
         {
             
             messages.map((msg, index) => {

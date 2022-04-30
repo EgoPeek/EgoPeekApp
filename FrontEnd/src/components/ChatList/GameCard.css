@@ -1,0 +1,23 @@
+.lfg-game-card{
+    display: flex;
+    height: min-content;
+    padding: 0.8rem;
+    text-align: center;
+    align-items: center;
+    height: 4rem;
+}
+.lfg-game-card:hover{
+    background-color: rgba(255, 255, 255, 0.274);
+    cursor: pointer;
+}
+.lfg-game-info{
+    flex-grow: 1;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.lfg-game-img{
+    display: block;
+    object-fit: scale-down;
+    flex-grow: 2;
+    height: 5rem;
+}

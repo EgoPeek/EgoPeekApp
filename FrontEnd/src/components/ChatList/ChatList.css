@@ -1,0 +1,32 @@
+.lfg-home-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.lfg-home{
+    width: 70%;
+}
+
+.lfg-queue-header{
+    padding: 1.5rem;
+    background-color: #341650;
+}
+.lfg-list-details{
+    padding: .5rem;
+    background-color: #383838;
+}
+.lfg-games{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.lfg-game-wrapper{
+    background-color: #341650;
+}
+.lfg-game-wrapper:hover{
+    background-color: #341650;
+}   

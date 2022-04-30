@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Socket from './socket'
 import Header from '../Misc/CustomComponents/Header'
 import './Chat.css'
@@ -14,12 +14,21 @@ function Chat() {
     const [socket, setSocket] = useState()
     const [messages, setMessage] = useState([])
     const [connected, setConnected] = useState(false)
+    const [headerHeight, setHeaderHeight] = useState(0)
+    const header = useRef(null)
     const { game } = useParams();
 
     useEffect(() => {
-        const client = new Socket(game,userID,setMessage)
+        setHeaderHeight(header.current.clientHeight)
+    })
+
+
+    useEffect(() => {
+        setHeaderHeight(header.current.clientHeight)
+        const client = new Socket(game, userID, setMessage)
         setSocket(client)
         setConnected(true)
+
         return () => {
             client.disconnect()
             setConnected(false)
@@ -74,11 +83,13 @@ function Chat() {
     }
 
     return (
-        <div>
-            <Header />
-            <div className='Chat' >
+        <>
+            <div ref={header}>
+                <Header />
+            </div>
+            <div className='Chat' style={{ height: `calc(100% - ${headerHeight}px)` }}>
                 <div className='papa-container'>
-                    <div className='title'>EGOPEEK CHAT</div>
+                    <div className='title'>CHAT: {game.toUpperCase()}</div>
                     {!connected ? <p>...</p>
                         :
                         <>
@@ -88,7 +99,7 @@ function Chat() {
                     }
                 </div>
             </div>
-        </div>
+        </>
     )
 
 } export default Chat;
