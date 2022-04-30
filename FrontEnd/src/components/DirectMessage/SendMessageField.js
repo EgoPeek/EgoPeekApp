@@ -1,3 +1,8 @@
+/**
+ *  Filename: SendMessageField.js
+ *  Description: input field to send a user DM
+ * 
+ */
 import React, { useEffect, useState } from 'react'
 import { DarkTextInput } from '../Misc/Input/TextFields'
 import SendIcon from '@mui/icons-material/Send';

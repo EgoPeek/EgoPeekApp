@@ -65,7 +65,7 @@ const Header = () => {
                 <Link to='/home' className='header-item'><p>Home</p></Link>
                 <Link to="/chat/" className='header-item'><p> Looking to Queue</p></Link>
                 <Link to='#' className='header-item'><p> Discover </p></Link>
-                <Link to='#' className='header-item'><p> Contact </p></Link>
+                <Link to='#' className='header-item'><p> About Us </p></Link>
             </div>
             {/* custom user profile thing will go here */}
             { 

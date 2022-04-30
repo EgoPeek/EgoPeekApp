@@ -1,3 +1,8 @@
+/**
+ *  Filename: ChatList.js
+ *  Description: Lists all 'supported' games from egopeek that allow users to hop into chat rooms
+ * 
+ */
 import React, { useState } from 'react'
 import Header from '../Misc/CustomComponents/Header'
 import env from '../../env.json'

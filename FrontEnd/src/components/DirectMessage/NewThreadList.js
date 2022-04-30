@@ -1,3 +1,8 @@
+/**
+ *  Filename: NewThreadList.js
+ *  Description: Menu that shows a users friends and allows them to create a new message from it
+ * 
+ */
 import React from 'react'
 import { TextInputPurple } from '../Misc/Input/TextFields'
 import './NewThreadList.css'

@@ -1,3 +1,8 @@
+/**
+ *  Filename: Chat.js
+ *  Description: Chat room that allows users to have real time connections with one another
+ * 
+ */
 import React, { useState, useEffect, useRef } from 'react'
 import Socket from './socket'
 import Header from '../Misc/CustomComponents/Header'

@@ -1,3 +1,8 @@
+/**
+ *  Filename: DirectMessage.js
+ *  Description: Users DM's where they can send private messages to other friends
+ * 
+ */
 import './DirectMessage.css'
 import React, { useEffect, useRef, useState } from 'react'
 import Header from '../Misc/CustomComponents/Header'
@@ -95,6 +100,8 @@ const DirectMessage = ({ props }) => {
       setDisplayedMessages(thread)
     }
   }
+
+  // when a user clicks new message button and selects user from that list it'll either open their messages or create a new thread
   const openUserThread = (otherID, myID, username) => {
     return (e) => {
       e.preventDefault()

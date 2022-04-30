@@ -1,3 +1,8 @@
+/**
+ *  Filename: ChatDisplay.js
+ *  Description: Displays all chat messages between another user
+ * 
+ */
 import React from 'react'
 import ChatMessage from '../Chat/ChatMessage'
 import SendMessageField from './SendMessageField'

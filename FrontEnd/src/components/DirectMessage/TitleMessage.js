@@ -1,3 +1,8 @@
+/**
+ *  Filename: TitleMessage.js
+ *  Description: Splash screen that tells a user to create a new dm if there's nothing there
+ * 
+ */
 import React, { useState } from 'react'
 import { PurpleButton } from '../Misc/Input/Buttons'
 import './TitleMessage.css'

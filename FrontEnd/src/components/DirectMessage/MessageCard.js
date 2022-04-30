@@ -1,3 +1,8 @@
+/**
+ *  Filename: MessageCard.js
+ *  Description: Shows another users username and their most recent chat message
+ * 
+ */
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { IconBubble } from '../Misc/CustomComponents/IconBubble'
