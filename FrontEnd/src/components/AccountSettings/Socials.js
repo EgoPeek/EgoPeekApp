@@ -5,15 +5,16 @@ import { TextInputStandard } from "../Misc/Input/TextFields";
 import axios from "axios";
 import "./Socials.css";
 
-const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
+const authHeader =
+  window.localStorage.getItem("token_type") +
+  " " +
+  window.localStorage.getItem("token");
 
-const Socials = ({ userSocials,setUserSocials, isEditting, user_id }) => {
+const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
   const [newSocials, setNewSocials] = useState([]);
   useEffect(() => {
-    setNewSocials([])    
-  }, [isEditting])
-  
-
+    setNewSocials([]);
+  }, [isEditting]);
 
   const createNewBody = () => {
     const body = {
@@ -34,8 +35,10 @@ const Socials = ({ userSocials,setUserSocials, isEditting, user_id }) => {
 
   const deleteSocials = async (link_id) => {
     try {
-      const response = await axios.delete(`/api/v1/links/${link_id}`, {headers: {Authorization: authHeader}});
-      setUserSocials(userSocials.filter(x=>x.link_id !== link_id))
+      const response = await axios.delete(`/api/v1/links/${link_id}`, {
+        headers: { Authorization: authHeader },
+      });
+      setUserSocials(userSocials.filter((x) => x.link_id !== link_id));
       console.log(response);
       return response.data;
     } catch (e) {
@@ -46,7 +49,12 @@ const Socials = ({ userSocials,setUserSocials, isEditting, user_id }) => {
 
   const createSocial = async (newSocials, user_id) => {
     newSocials.forEach(async (item) => {
-      if(item.link_platform === '' || item.link_username === '' || item.link_url === '') return
+      if (
+        item.link_platform === "" ||
+        item.link_username === "" ||
+        item.link_url === ""
+      )
+        return;
 
       const payload = {
         user_id: user_id,
@@ -55,16 +63,18 @@ const Socials = ({ userSocials,setUserSocials, isEditting, user_id }) => {
         link_url: item.link_url,
       };
       try {
-        const response = await axios.post(`/api/v1/links/`, payload, {headers: {Authorization: authHeader}});
+        const response = await axios.post(`/api/v1/links/`, payload, {
+          headers: { Authorization: authHeader },
+        });
         console.log(response);
-        setUserSocials(prevState => [...prevState, response.data])
+        setUserSocials((prevState) => [...prevState, response.data]);
         return response.data;
       } catch (e) {
         console.log(e);
         return e;
       }
     });
-    setNewSocials([])
+    setNewSocials([]);
   };
 
   const AddSocials = () => {
@@ -156,13 +166,13 @@ const Socials = ({ userSocials,setUserSocials, isEditting, user_id }) => {
             <div className="display-socials" key={i}>
               <p className="platform-spacing">Platform: {item.link_platform}</p>
               <p className="username-spacing">Username: {item.link_username}</p>
-              {/* <a className="url-spacing">Url: {item.link_url}</a> */}
+              <p className="url-spacing">Url: {item.link_url}</p>
             </div>
           ) : (
             <div className="links-spacing-edit" key={i}>
               <p className="platform-spacing">Platform: {item.link_platform}</p>
               <p className="username-spacing">Username: {item.link_username}</p>
-              {/* <a href="" className="url-spacing">Url: {item.link_url}</a> */}
+              <p className="url-spacing">Url: {item.link_url}</p>
               <GreenButton
                 onClick={() => {
                   deleteSocials(item.link_id);
