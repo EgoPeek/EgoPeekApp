@@ -1,0 +1,37 @@
+.discover {
+  height: 100vh;
+}
+
+.discover-search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.discover-top {
+  display: flex;
+  justify-content: space-around;
+  height: 40%;
+}
+
+.discover-bottom {
+  height: 40%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.discover-spacing {
+  width: 50%;
+  text-align: center;
+}
+
+.pp1 {
+  margin-right: 0.5rem;
+}
+
+.clickable-text {
+  cursor: pointer;
+  text-decoration-line: underline;
+  text-transform: capitalize;
+  font-size: large;
+}
