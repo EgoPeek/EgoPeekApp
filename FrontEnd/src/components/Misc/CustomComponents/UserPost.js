@@ -20,6 +20,7 @@ const UserPost = ({ post, ...props }) => {
 
 
   const { image_url, timestamp, user, title, content_path_type, like_count, liked_by, post_id } = post
+
   const [likeCount, setLikeCount] = useState(liked_by.length)
   const [userDidLike, setUserDidLike] = useState(() => {
     const liked = liked_by.find(x => x.user.id === parseInt(userID))
@@ -79,13 +80,21 @@ const UserPost = ({ post, ...props }) => {
             username: username
           })
         })
-
+        const index = liked_by.findIndex(x => x.user.id === parseInt(userID))
+        liked_by.splice(index,1)
       } catch (e) {
         console.log(e)
       }
     }
     else {
       setLikeCount(prev => prev + 1)
+      const obj = {
+        user: {
+          id: parseInt(userID),
+          username: username
+        }
+      }
+      liked_by.push(obj)
 
       try {
         const res = await axios.post('/api/v1/likes/', {

@@ -58,7 +58,9 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
         try {
             const res = await axios.post('/api/v1/comments/', body, headers)
             const newComment = res.data
-            comments.push(newComment)
+            const s = []
+            comments.splice(0,0,newComment)
+            setComment('')
             console.log(res.data)
         } catch (e) {
             console.log(e)
