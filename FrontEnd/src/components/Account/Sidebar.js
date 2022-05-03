@@ -7,6 +7,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import { GreenCircle } from "../Misc/Input/LoadingCircle";
 import GamePosts from "./GamePosts";
+import { IconButton } from "@mui/material";
 import "./Sidebar.css";
 
 const Sidebar = ({ Accountdata }) => {
@@ -34,17 +35,15 @@ const Sidebar = ({ Accountdata }) => {
           />
 
           <div className="name-container">
-            <span>{Accountdata.user.username}</span>
-            <ForwardToInboxIcon />
-            <GreenButton variant="outlined">
+            <p>{Accountdata.user.username}</p>
+            <IconButton>
+              <ForwardToInboxIcon />
+            </IconButton>
+            <IconButton>
               <PersonAddIcon />
-            </GreenButton>
-            <div className="followers">
-              <span>Friends: {friendsAmount}</span>
-            </div>
-            <div className="post-amount">
-              <span>Posts: {postsAmount}</span>
-            </div>
+            </IconButton>
+            <p>Posts: {postsAmount}</p>
+            <p>Friends: {friendsAmount}</p>
           </div>
         </div>
 
