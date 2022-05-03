@@ -23,6 +23,7 @@ import Chat from "./components/Chat/Chat";
 import DirectMessage from "./components/DirectMessage/DirectMessage";
 import Interests from "./components/Interests/Interests";
 import ChatList from "./components/ChatList/ChatList";
+import AboutUs from "./components/About/About";
 // import Discover from "./components/Discover/Discover";
 
 function App() {
@@ -57,6 +58,8 @@ function App() {
             {/* <Route path="/discover" element={<Discover />} /> */}
           </Route>
 
+
+          <Route path="/about" element={<AboutUs />} />
           <Route path="*" element={<div>404 not found</div>} />
         </Routes>
       </Router>
