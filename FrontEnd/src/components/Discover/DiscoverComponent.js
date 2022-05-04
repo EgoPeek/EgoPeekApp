@@ -17,12 +17,19 @@ const DiscoverComponent = ({ Hashtags }) => {
   const [postPreview, setPostPreview] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    if(Hashtags){
+      createPreviewDiscoverFeed()
+    }
+  }, [Hashtags])
+
+
+
   const togglePopup = () => {
     setIsOpen(!isOpen);
   };
 
-  const createDiscoverFeed = async () => {
-    togglePopup();
+  const createPreviewDiscoverFeed = async () => {
     const payload = {
       hashtags: [Hashtags],
     };
@@ -31,13 +38,14 @@ const DiscoverComponent = ({ Hashtags }) => {
         headers: { Authorization: authHeader },
       });
       console.log(response);
-      setPosts(response.data);
+      setPosts(prev => [...prev, ...response.data]);
       setPostPending(false);
     } catch (e) {
       console.log(e);
       setPostsErr(true);
     }
   };
+  
 
   return (
     <div>
@@ -57,10 +65,14 @@ const DiscoverComponent = ({ Hashtags }) => {
           handleClose={togglePopup}
         />
       )}
-      <a className="clickable-text" onClick={createDiscoverFeed}>
+      <a className="clickable-text" onClick={togglePopup}>
         {Hashtags}
       </a>
-      <div className="discover-preview"></div>
+      <div className="discover-preview">
+        <img className="discover-preview-image" src={posts[0]?.image_url}></img>
+        <img className="discover-preview-image" src={posts[1]?.image_url}></img>
+        <img className="discover-preview-image" src={posts[2]?.image_url}></img>
+      </div>
     </div>
   );
 };

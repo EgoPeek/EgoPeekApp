@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { TextInputStandard } from "../Misc/Input/TextFields";
 import axios from "axios";
 import { GreenButton } from "../Misc/Input/Buttons";
+import "./AccountSettings.css";
 
 const authHeader =
   window.localStorage.getItem("token_type") +
@@ -40,7 +41,7 @@ const AccountBio = ({ setBio, userBio, avatar, isEditting, userID }) => {
       <h2>Bio</h2>
       <div>
         {!isEditting ? (
-          <span>{userBio}</span>
+          <span className="bio-styling">{userBio}</span>
         ) : (
           <>
             <TextInputStandard

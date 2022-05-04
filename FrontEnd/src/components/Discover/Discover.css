@@ -35,3 +35,14 @@
   text-transform: capitalize;
   font-size: large;
 }
+
+.discover-preview{
+  display: flex;
+  justify-content: center;
+}
+
+.discover-preview-image{
+  margin-top: 1rem;
+  margin-right: .5rem;
+  width: 18rem;
+}

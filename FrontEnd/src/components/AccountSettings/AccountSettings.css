@@ -55,3 +55,7 @@
   flex-direction: column;
   align-items: center;
 }
+
+.bio-styling{
+  word-break: break-all;
+}

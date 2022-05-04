@@ -18,7 +18,7 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
 
   const createNewBody = () => {
     const body = {
-      link_platform: "",
+      link_platform: "Select",
       link_username: "",
       link_url: "",
     };
@@ -50,7 +50,7 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
   const createSocial = async (newSocials, user_id) => {
     newSocials.forEach(async (item) => {
       if (
-        item.link_platform === "" ||
+        item.link_platform === "Select" ||
         item.link_username === "" ||
         item.link_url === ""
       )
@@ -90,8 +90,10 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
       const val = event.target.value;
       newSocials[i].link_url = val;
     };
+    
 
     if (!isEditting) return <></>;
+
 
     return (
       <div className="add-socials">
@@ -99,13 +101,18 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
           {newSocials.map((item, i) => {
             return (
               <div key={i} className="socials-new-input">
-                <TextInputStandard
+                <select
                   onChange={(e) => changePlatform(e, i)}
-                  defaultValue={item.link_platform}
-                  autoComplete="off"
-                  label="platform"
-                  size="small"
-                />
+                  key={i}
+                  className="settings-dropdown"
+                  defaultValue="Select"
+                >
+                  <option value="Current">{item.link_platform}</option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="Snapchat">Snapchat</option>
+                  <option value="Twitter">Twitter</option>
+                  <option value="Youtube">Youtube</option>
+                </select>
                 <TextInputStandard
                   onChange={(e) => changeUsername(e, i)}
                   defaultValue={item.link_username}
