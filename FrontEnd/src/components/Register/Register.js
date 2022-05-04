@@ -60,7 +60,7 @@ const RegisterForm = () => {
   const auth = useAuth()
 
   useEffect(() => {
-    if (userName, email, password, secondPassword) {
+    if (userName && email && password && secondPassword) {
       setButtonDisabled(false)
     } else {
       setButtonDisabled(true)
@@ -124,7 +124,7 @@ const RegisterForm = () => {
     } catch (error) {
       console.log(error)
       setError(true)
-      setErrorMessage("UserName or Email already exists.")
+      setErrorMessage("Username or Email already exists.")
     }
 
   }
