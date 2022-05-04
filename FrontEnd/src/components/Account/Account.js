@@ -16,7 +16,6 @@ import axios from "axios";
 
 const Account = ({ match, location }) => {
   const { username } = useParams();
-  console.log(username, "GNOIGN#JG))V)");
   const {
     data: profile,
     isPending: profilePending,

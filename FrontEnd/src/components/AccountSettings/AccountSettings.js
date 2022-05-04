@@ -10,6 +10,7 @@ import "./AccountSettings.css";
 import Header from "../Misc/CustomComponents/Header";
 import AvatarUpload from "./AvatarUpload";
 import { GreenCircle } from "../Misc/Input/LoadingCircle";
+import useAvatar from "../../hooks/useAvatar";
 
 const AccountSettings = () => {
   const user_id = window.localStorage.getItem("userID");
@@ -19,7 +20,7 @@ const AccountSettings = () => {
   const [socials, setSocials] = useState([]);
   const [bio, setBio] = useState([]);
   const [isEditting, setIsEditting] = useState(false);
-  const [avatar, setAvatar] = useState([]);
+  const {avatar,updateAvatarCache} = useAvatar()
 
   useEffect(() => {
     const user = !isPending
@@ -34,7 +35,6 @@ const AccountSettings = () => {
     setGames(games);
     setBio(bio);
     setUser(user);
-    setAvatar(avatar);
   }, [isPending]);
 
 
@@ -46,17 +46,13 @@ const AccountSettings = () => {
       <div className="usersettings">
         <div className="left-side-profile">
           <div className="settings-edit-icon">
-            {!isPending ?
-              <AvatarUpload
-                avatar={avatar}
-                user_id={user_id}
-                userBio={bio}
-                setAvatar={setAvatar}
-                isEditting={isEditting}
-              />
-              :
-              <GreenCircle />
-            }
+            <AvatarUpload
+              avatar={avatar}
+              user_id={user_id}
+              userBio={bio}
+              setAvatar={updateAvatarCache}
+              isEditting={isEditting}
+            />
             <GreenButton
               sx={{ marginTop: "1rem" }}
               variant="outlined"

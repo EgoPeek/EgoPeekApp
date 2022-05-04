@@ -29,6 +29,7 @@ const useAvatar = () => {
     }
     const updateAvatarCache = (newAvatar) => {
         window.localStorage.setItem('avatar', newAvatar)
+        setAvatar(newAvatar)
     }
 
     useEffect(() => {
