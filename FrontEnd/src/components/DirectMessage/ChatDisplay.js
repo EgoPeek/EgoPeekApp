@@ -4,11 +4,13 @@
  * 
  */
 import React from 'react'
+import useAvatar from '../../hooks/useAvatar'
 import ChatMessage from '../Chat/ChatMessage'
 import SendMessageField from './SendMessageField'
 
 const ChatDisplay = ({ username, userMessage, setUserMessage, sendMessage, displayedMessages }) => {
   const userID = window.localStorage.getItem('userID')
+  const {avatar} = useAvatar()
   console.log(displayedMessages)
 
   const enterEvent = (e) => {
@@ -29,10 +31,11 @@ const ChatDisplay = ({ username, userMessage, setUserMessage, sendMessage, displ
         {displayedMessages.messages.map((item, i) => {
           const dateObj = new Date(item.sent_time);
           const date = `${dateObj.getFullYear()}/${dateObj.getMonth() + 1}/${dateObj.getDate()}`
+          console.log(item)
 
           return (
             <ChatMessage
-              avatar={item.sender.id === parseInt(userID) ? '' : item.avatarPath}
+              avatar={item.sender.id === parseInt(userID) ? avatar : displayedMessages.avatarPath}
               username={username}
               body={item.body}
               isSelf={item.sender.id === parseInt(userID)}

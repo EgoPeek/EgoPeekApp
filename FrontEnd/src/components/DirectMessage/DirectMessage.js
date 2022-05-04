@@ -43,6 +43,14 @@ const DirectMessage = ({ props }) => {
   }, [])
 
   useEffect(() => {
+    if(!friendUsername){
+      setDisplayedMessages({})
+    }    
+    console.log(friendUsername,'FRIENDUSERNAME')
+  }, [friendUsername])
+  
+
+  useEffect(() => {
     if (!userThreads) return
 
 

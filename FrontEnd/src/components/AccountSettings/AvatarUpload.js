@@ -3,6 +3,7 @@ import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import './AvatarUpload.css'
+import useAvatar from "../../hooks/useAvatar";
 
 const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
 
@@ -14,6 +15,7 @@ const AvatarUpload = ({
   avatar,
 }) => {
   const fileSomethingidk = useRef(null);
+  const {updateAvatarCache} = useAvatar()
 
   const fileChangedHandler = (e) => {
     e.preventDefault()
@@ -31,6 +33,7 @@ const AvatarUpload = ({
     console.log(res);
     const imagePath = res.data.relative_avatar_path;
     setAvatar(imagePath)
+    updateAvatarCache(imagePath)
     avatarrandom(imagePath, user_id, userBio);
   };
 

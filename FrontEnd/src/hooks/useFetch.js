@@ -10,12 +10,12 @@ const useFetch = (url) => {
     const [data, setData] = useState(null)
     const [isPending, setIsPending] = useState(true)
     const [error, setError] = useState(null)
+    const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
 
     useEffect(() => {
-        const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
         const userFeed = async () => {
             try {
-                const res = await axios.get(url, {headers: {Authorization: authHeader}})
+                const res = await axios.get(url, { headers: { Authorization: authHeader } })
                 console.log(res)
                 setData(res.data)
                 setIsPending(false)
