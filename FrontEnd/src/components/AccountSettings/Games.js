@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { GreenButton } from "../Misc/Input/Buttons";
 import "./Games.css";
+import env from '../../env.json'
+
+const imageMap = env.imageMap;
 
 const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
 
@@ -53,7 +56,6 @@ const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
 
   const addGame = () => {
     setNewGame([...newGame, createNewBody()]);
-
   };
 
   const changeGame = (event, i) => {
@@ -76,7 +78,7 @@ const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
                   onChange={(e) => changeGame(e, i)}
                   key={i}
                   className="settings-dropdown"
-                  defaultValue="Select"
+                  // defaultValue="Select"
                 >
                   <option value="Current">{item.game_title}</option>
                   <option value="Rocket League">Rocket League</option>
@@ -134,11 +136,11 @@ const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
         {userGames.map((item, i) => {
           return !isEditting ? (
             <div key={i}>
-              <p>{item.game_title}</p>
+              <img src={imageMap[item.game_title]} width="rem" height="90rem" />
             </div>
           ) : (
             <div className="gametitle-spacing" key={i}>
-              <p>{item.game_title}</p>
+              <img src={imageMap[item.game_title]} width="rem" height="70rem" />
               <GreenButton
                 size="small"
                 onClick={() => {
