@@ -54,12 +54,12 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
             message: comment,
             post_id: post_id
         }
-        const headers = {headers: {Authorization: window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')}}
+        const headers = { headers: { Authorization: window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token') } }
         try {
             const res = await axios.post('/api/v1/comments/', body, headers)
             const newComment = res.data
             const s = []
-            comments.splice(0,0,newComment)
+            comments.splice(0, 0, newComment)
             setComment('')
             console.log(res.data)
         } catch (e) {
@@ -67,11 +67,18 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
         }
     }
 
+    const enterEvent = (e) => {
+        if (e.key === 'Enter') {
+            addComment()
+            console.log('key')
+        }
+    }
+
     const deletePost = async () => {
         // redundancy to check if user actually owns the post
         // again gets checked by the auth key to triple check
         if (!userOwnsPost) return
-        const headers = {headers: {Authorization: window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')}}
+        const headers = { headers: { Authorization: window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token') } }
 
         try {
             const res = await axios.delete(`/api/v1/posts/${validUserID}/${post_id}`, headers)
@@ -168,7 +175,7 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
                         </div>
                     </div>
                     <div className='post-create-comment'>
-                        <TextInputStandard value={comment} onChange={(e) => { setComment(e.target.value) }} autoComplete='off' fullWidth size='small' variant='outlined' placeholder='Type a comment'></TextInputStandard>
+                        <TextInputStandard value={comment} onKeyPress={enterEvent} onChange={e=>setComment(e.target.value)} autoComplete='off' fullWidth size='small' variant='outlined' placeholder='Type a comment'></TextInputStandard>
                         <GreenButton onClick={addComment} variant='outlined'>Submit</GreenButton>
                     </div>
                     <div className='display-comments-container'>

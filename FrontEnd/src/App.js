@@ -24,7 +24,6 @@ import DirectMessage from "./components/DirectMessage/DirectMessage";
 import Interests from "./components/Interests/Interests";
 import ChatList from "./components/ChatList/ChatList";
 import AboutUs from "./components/About/About";
-// import Discover from "./components/Discover/Discover";
 import Discover from "./components/Discover/Discover";
 
 function App() {

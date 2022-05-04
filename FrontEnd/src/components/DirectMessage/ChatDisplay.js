@@ -7,18 +7,24 @@ import React from 'react'
 import ChatMessage from '../Chat/ChatMessage'
 import SendMessageField from './SendMessageField'
 
-const ChatDisplay = ({ userMessage, setUserMessage, sendMessage, displayedMessages }) => {
+const ChatDisplay = ({ username, userMessage, setUserMessage, sendMessage, displayedMessages }) => {
   const userID = window.localStorage.getItem('userID')
   console.log(displayedMessages)
+
+  const enterEvent = (e) => {
+    if(e.key ==='Enter'){
+      sendMessage()
+    }
+  }
 
   return (
     <>
       <div className='dm-chat-header'>
-        <span>
-          {displayedMessages.friendName}
+        <span style={{ textDecorationLine: 'underline' }}>
+          {username}
         </span>
       </div>
-      <SendMessageField value={userMessage} setUserMessage={setUserMessage} sendMessage={sendMessage} />
+      <SendMessageField onKeyDown={enterEvent} value={userMessage} setUserMessage={setUserMessage} sendMessage={sendMessage} />
       <div className='dm-chat-messages'>
         {displayedMessages.messages.map((item, i) => {
           const dateObj = new Date(item.sent_time);
@@ -27,12 +33,12 @@ const ChatDisplay = ({ userMessage, setUserMessage, sendMessage, displayedMessag
           return (
             <ChatMessage
               avatar={item.sender.id === parseInt(userID) ? '' : item.avatarPath}
+              username={username}
               body={item.body}
               isSelf={item.sender.id === parseInt(userID)}
               msgKey={i}
-              username={item.sender.username}
               time={date} key={i} />)
-        })}
+        }).reverse()}
       </div>
 
     </>);

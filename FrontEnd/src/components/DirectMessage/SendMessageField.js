@@ -9,7 +9,7 @@ import SendIcon from '@mui/icons-material/Send';
 import './SendMessage.css'
 import { PurpleIconButton } from '../Misc/Input/Buttons';
 
-const SendMessageField = ({ setUserMessage,value, sendMessage }) => {
+const SendMessageField = ({ setUserMessage,value, sendMessage,...props }) => {
   const [isDisabled, setIsDisabled] = useState(true)
   useEffect(() => {
     if(value === '')
@@ -24,7 +24,7 @@ const SendMessageField = ({ setUserMessage,value, sendMessage }) => {
 
   return (
     <div className='input-message'>
-      <DarkTextInput value={value} onChange={updateMessage} size='small' autoComplete='off' label="send message" fullWidth />
+      <DarkTextInput value={value} onChange={updateMessage} size='small' autoComplete='off' label="send message" fullWidth {...props}/>
 
       <PurpleIconButton onClick={sendMessage} disabled={isDisabled}>
         <SendIcon />

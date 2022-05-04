@@ -135,7 +135,7 @@ const DirectMessage = ({ props }) => {
 
   // sends a message to another user 
   const sendMessage = async () => {
-    if (!displayedMessages?.thread_id) return
+    if (!displayedMessages?.thread_id || userMessage === '') return
 
     const body = {
       thread_id: displayedMessages.thread_id,
@@ -154,6 +154,12 @@ const DirectMessage = ({ props }) => {
       setUserMessage('')
     } catch (e) {
       console.log(e)
+    }
+  }
+
+  const enterEvent = (e) => {
+    if(e.key==='Enter'){
+
     }
   }
 
@@ -197,7 +203,7 @@ const DirectMessage = ({ props }) => {
             <div className='dm-message-container'>
               {/* dms with chosen user */}
               {displayedMessages?.messages ?
-                <ChatDisplay displayedMessages={displayedMessages} userMessage={userMessage} setUserMessage={setUserMessage} sendMessage={sendMessage} />
+                <ChatDisplay username={friendUsername} displayedMessages={displayedMessages} userMessage={userMessage} setUserMessage={setUserMessage} sendMessage={sendMessage} />
                 :
                 <TitleMessage openPopUp={displayPostEvent} />
               }
