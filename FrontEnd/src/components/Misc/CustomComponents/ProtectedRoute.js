@@ -6,7 +6,6 @@ import useAvatar from '../../../hooks/useAvatar'
 
 const ProtectedRoute = ({ children }) => {
     const auth = useAuth()
-    useAvatar().fetchNewAvatar()
 
     return auth.isAuthenticated() ? <Outlet /> : <Navigate to="/" />
 }

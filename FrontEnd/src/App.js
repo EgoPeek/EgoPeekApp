@@ -26,10 +26,16 @@ import ChatList from "./components/ChatList/ChatList";
 import AboutUs from "./components/About/About";
 import Discover from "./components/Discover/Discover";
 import useAvatar from "./hooks/useAvatar";
+import { useEffect } from "react";
 
 function App() {
   //session token will be stored in the brother and will be replaced later
   //fetches avatar on app load  
+  const { fetchNewAvatar } = useAvatar()
+  useEffect(() => {
+    fetchNewAvatar()
+  }, [])
+
 
   return (
     // main entrance point where all of our routes are going to be placed

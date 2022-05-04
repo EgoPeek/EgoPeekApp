@@ -16,6 +16,7 @@ const useAvatar = () => {
     const userID = window.localStorage.getItem('userID')
 
     const fetchNewAvatar = async () => {
+        console.log('NEW AVATAR')
         try {
             const res = await axios.get(`/api/v1/profiles/avatar/${userID}`, { headers: { Authorization: authHeader } })
             const data = res.data
