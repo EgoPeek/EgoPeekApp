@@ -128,7 +128,7 @@ const UserPost = ({ post, ...props }) => {
 
         <div className='userpost-image'>
 
-          <img src={imageUrl === '' ? EGOPEEKIMG : imageUrl}></img>
+          <img src={image_url === '' ? EGOPEEKIMG : image_url}></img>
 
         </div>
 
