@@ -10,7 +10,7 @@ import EGOPEEK from '../../images/EGOPEEK.png'
 
 const descriptions = {
     steve:'Computer science major attending CSUSB',
-    nate:'You really clicked on that? Go touch grass, nerd.',
+    nate:'Go touch grass, nerds.',
     sam:'I\'m a bozo lmaooooo',
     kevin:'live laugh love',
     gio:'Are u adding a pic & description for each person?'
@@ -31,11 +31,11 @@ const About = () => {
                         github={'https://github.com/SteveF42'}
                     />
                     <MemberCard description={descriptions.nate}
-                        memberName={'Nate'}
-                        email={'nate@gmail.com'}
+                        memberName={'Nate Bush'}
+                        email={'natebush707@gmail.com'}
                         imgSrc={nate}
                         jobTitle={'Software Engineer (Backend)'}
-                        github={'https://github.com/SteveF42'}
+                        github={'https://github.com/natebush707'}
                     />
                     <MemberCard description={descriptions.sam}
                         memberName={'Sam'}
