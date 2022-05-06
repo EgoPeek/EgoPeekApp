@@ -36,7 +36,7 @@ const ChatDisplay = ({ username, userMessage, setUserMessage, sendMessage, displ
           return (
             <ChatMessage
               avatar={item.sender.id === parseInt(userID) ? avatar : displayedMessages.avatarPath}
-              username={username}
+              username={item.sender.username}
               body={item.body}
               isSelf={item.sender.id === parseInt(userID)}
               msgKey={i}

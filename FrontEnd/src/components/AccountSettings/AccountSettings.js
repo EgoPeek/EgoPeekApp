@@ -11,6 +11,8 @@ import Header from "../Misc/CustomComponents/Header";
 import AvatarUpload from "./AvatarUpload";
 import { GreenCircle } from "../Misc/Input/LoadingCircle";
 import useAvatar from "../../hooks/useAvatar";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const AccountSettings = () => {
   const user_id = window.localStorage.getItem("userID");
@@ -20,7 +22,13 @@ const AccountSettings = () => {
   const [socials, setSocials] = useState([]);
   const [bio, setBio] = useState([]);
   const [isEditting, setIsEditting] = useState(false);
-  const {avatar,updateAvatarCache} = useAvatar()
+  const { avatar, updateAvatarCache } = useAvatar();
+
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `/interests`;
+    navigate(path);
+  };
 
   useEffect(() => {
     const user = !isPending
@@ -37,8 +45,7 @@ const AccountSettings = () => {
     setUser(user);
   }, [isPending]);
 
-
-  if (error) return <></>
+  if (error) return <></>;
 
   return (
     <div className="idk">
@@ -58,7 +65,7 @@ const AccountSettings = () => {
               variant="outlined"
               onClick={() => setIsEditting(!isEditting)}
             >
-              {!isEditting ? 'Edit profile' : 'Save profile'}
+              {!isEditting ? "Edit profile" : "Save profile"}
             </GreenButton>
           </div>
 
@@ -70,6 +77,12 @@ const AccountSettings = () => {
               userID={user_id}
               isEditting={isEditting}
             />
+          </div>
+
+          <div className="settings-interests">
+            <GreenButton variant="outlined" onClick={routeChange}>
+              Interests Page
+            </GreenButton>
           </div>
         </div>
 

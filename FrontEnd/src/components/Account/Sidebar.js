@@ -2,15 +2,16 @@ import React, { Component } from "react";
 import { useState } from "react";
 import SidebarIcon from "./SidebarIcon";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
-import { GreenButton } from "../Misc/Input/Buttons";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
-import { GreenCircle } from "../Misc/Input/LoadingCircle";
 import GamePosts from "./GamePosts";
 import { IconButton } from "@mui/material";
 import "./Sidebar.css";
+import DisplaySocials from "./DisplaySocials";
 
 const Sidebar = ({ Accountdata }) => {
+  const games = Accountdata.user.games;
+  const socials = Accountdata.user.links;
   const friends = Accountdata.user.friends;
   const posts = Accountdata.user.posts;
   const friendsAmount = friends.filter(
@@ -19,10 +20,8 @@ const Sidebar = ({ Accountdata }) => {
   const postsAmount = posts.length;
   const [showSidebar, setShowSidebar] = useState(true);
 
-  const games = Accountdata.user.games;
-
   const renderSidebar = () => {
-    if (showSidebar == false) {
+    if (showSidebar === false) {
       return null;
     }
 
@@ -37,14 +36,23 @@ const Sidebar = ({ Accountdata }) => {
           <div className="name-container">
             <p>{Accountdata.user.username}</p>
             <IconButton>
-              <ForwardToInboxIcon />
+              <ForwardToInboxIcon className="sidebar-iconbutton" />
             </IconButton>
             <IconButton>
-              <PersonAddIcon />
+              <PersonAddIcon className="sidebar-iconbutton" />
             </IconButton>
             <p>Posts: {postsAmount}</p>
             <p>Friends: {friendsAmount}</p>
           </div>
+        </div>
+
+        <div className="sidebar-socials">
+          <p>Socials:</p>
+          <p>
+            {socials.map((item, i) => (
+              <DisplaySocials socialInfo={item} key={i} />
+            ))}
+          </p>
         </div>
 
         <div className="account-bio">

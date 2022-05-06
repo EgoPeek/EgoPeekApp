@@ -56,6 +56,10 @@
   align-items: center;
 }
 
-.bio-styling{
+.bio-styling {
   word-break: break-all;
+}
+
+.settings-interests {
+  margin: 2rem;
 }
