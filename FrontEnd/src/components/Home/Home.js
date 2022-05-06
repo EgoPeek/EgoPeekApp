@@ -11,6 +11,7 @@ import { GreenButton } from "../Misc/Input/Buttons";
 import "./Home.css";
 import Slideshow from "./Slideshow";
 import { Photo } from "./Slideshow";
+import EGOPEEKLOGO from '../../images/EGOPEEK_CLEAR.png'
 
 const Home = () => {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ const Home = () => {
       <div className="home-container">
         <div className="home-left">
           <div className="home-header">
+            <img src={EGOPEEKLOGO}/>
             <h1>EgoPeek</h1>
           </div>
           <div className="home-info">
