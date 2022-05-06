@@ -95,14 +95,14 @@ def update_user_password(db: Session, username: str, new_password: str):
     return{'success': True, 'message': f'Updated password for user: {username}'}
 
 
-def delete_user_data(db: Session, username: str):
-    user = db.query(DbUser).filter(DbUser.username == username).first()
-    profile = db.query(DbProfile).filter(DbProfile.user_id == user.id).first()
+def delete_user_data(db: Session, user_id: int):
+    user = db.query(DbUser).filter(DbUser.id == user_id).first()
+    profile = db.query(DbProfile).filter(DbProfile.user_id == user_id).first()
     db.delete(user)
     db.commit()
     db.delete(profile)
     db.commit()
-    return{'success': True, 'message': f'Deleted user: {username}'}
+    return{'success': True, 'message': f'Deleted user id: {user_id}'}
 
 
 def check_duplicates(db: Session, username: str, email: str):

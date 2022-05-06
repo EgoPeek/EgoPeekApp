@@ -73,11 +73,11 @@ def update_password(username: str, request: schemas.UpdatePasswordRequest, datab
     return db_user.update_user_password(database, username, request.new_password)
 
 
-@router.delete('/{username}')
-def delete_user(username, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
+@router.delete('/{user_id}')
+def delete_user(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
     Deletes user data from EgoPeek database.
     Inputs: {'username': str}
     Outputs: {'success': bool, 'message': str}
     """
-    return db_user.delete_user_data(database, username)
+    return db_user.delete_user_data(database, user_id)
