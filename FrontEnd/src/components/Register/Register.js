@@ -116,10 +116,10 @@ const RegisterForm = () => {
         //flags the parent component a success has been made
         //clears all userInformation for safety purposes
         await auth.login(userName, password)
-        navigate('/interests')
         setUserName('')
         setEmail('')
         setPassword('')
+        navigate('/interests')
       }
     } catch (error) {
       console.log(error)

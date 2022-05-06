@@ -36,14 +36,14 @@ const Header = () => {
                 <Link to='/home' className='header-item'><p>Home</p></Link>
                 <Link to="/chat/" className='header-item'><p> Looking to Queue</p></Link>
                 <Link to='/discover' className='header-item'><p> Discover </p></Link>
-                <Link to='#' className='header-item'><p> About Us </p></Link>
+                <Link to='/about' className='header-item'><p> About Us </p></Link>
             </div>
             {/* custom user profile thing will go here */}
             {
                 (isPending || error)
                     ? <GreenCircle />
                     :
-                    <IconBubble imgStyle={{ height: '6rem', width: '6rem' }} userImgSrc={avatar}>
+                    <IconBubble imgStyle={{ height: '6rem', width: '6rem' }} userImgSrc={avatar ? avatar : ''}>
                         <MenuItem MenuIcon={<AccountBoxIcon />} redirect={`/account/${userName}`}>Profile</MenuItem>
                         <MenuItem MenuIcon={<SettingsIcon />} redirect='/settings'>Settings</MenuItem>
                         <MenuItem MenuIcon={<InboxIcon />} redirect='/message'>Messages</MenuItem>
