@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import { useState } from "react";
 import SidebarIcon from "./SidebarIcon";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
-import { GreenButton } from "../Misc/Input/Buttons";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { IconBubble } from "../Misc/CustomComponents/IconBubble";
-import { GreenCircle } from "../Misc/Input/LoadingCircle";
 import GamePosts from "./GamePosts";
 import { IconButton } from "@mui/material";
 import "./Sidebar.css";
@@ -23,7 +21,7 @@ const Sidebar = ({ Accountdata }) => {
   const [showSidebar, setShowSidebar] = useState(true);
 
   const renderSidebar = () => {
-    if (showSidebar == false) {
+    if (showSidebar === false) {
       return null;
     }
 
@@ -37,11 +35,11 @@ const Sidebar = ({ Accountdata }) => {
 
           <div className="name-container">
             <p>{Accountdata.user.username}</p>
-            <IconButton className="sidebar-iconbutton">
-              <ForwardToInboxIcon />
+            <IconButton>
+              <ForwardToInboxIcon className="sidebar-iconbutton" />
             </IconButton>
-            <IconButton className="sidebar-iconbutton">
-              <PersonAddIcon />
+            <IconButton>
+              <PersonAddIcon className="sidebar-iconbutton" />
             </IconButton>
             <p>Posts: {postsAmount}</p>
             <p>Friends: {friendsAmount}</p>
