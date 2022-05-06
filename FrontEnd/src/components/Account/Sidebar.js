@@ -9,8 +9,11 @@ import { GreenCircle } from "../Misc/Input/LoadingCircle";
 import GamePosts from "./GamePosts";
 import { IconButton } from "@mui/material";
 import "./Sidebar.css";
+import DisplaySocials from "./DisplaySocials";
 
 const Sidebar = ({ Accountdata }) => {
+  const games = Accountdata.user.games;
+  const socials = Accountdata.user.links;
   const friends = Accountdata.user.friends;
   const posts = Accountdata.user.posts;
   const friendsAmount = friends.filter(
@@ -18,8 +21,6 @@ const Sidebar = ({ Accountdata }) => {
   ).length;
   const postsAmount = posts.length;
   const [showSidebar, setShowSidebar] = useState(true);
-
-  const games = Accountdata.user.games;
 
   const renderSidebar = () => {
     if (showSidebar == false) {
@@ -45,6 +46,15 @@ const Sidebar = ({ Accountdata }) => {
             <p>Posts: {postsAmount}</p>
             <p>Friends: {friendsAmount}</p>
           </div>
+        </div>
+
+        <div className="sidebar-socials">
+          <p>Socials:</p>
+          <p>
+            {socials.map((item, i) => (
+              <DisplaySocials socialInfo={item} key={i} />
+            ))}
+          </p>
         </div>
 
         <div className="account-bio">

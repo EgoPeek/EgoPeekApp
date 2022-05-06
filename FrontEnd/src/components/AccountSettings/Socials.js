@@ -18,7 +18,7 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
 
   const createNewBody = () => {
     const body = {
-      link_platform: "Select",
+      link_platform: "Select Platform",
       link_username: "",
       link_url: "",
     };
@@ -50,7 +50,7 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
   const createSocial = async (newSocials, user_id) => {
     newSocials.forEach(async (item) => {
       if (
-        item.link_platform === "Select" ||
+        item.link_platform === "Select Platform" ||
         item.link_username === "" ||
         item.link_url === ""
       )
@@ -90,10 +90,8 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
       const val = event.target.value;
       newSocials[i].link_url = val;
     };
-    
 
     if (!isEditting) return <></>;
-
 
     return (
       <div className="add-socials">
@@ -105,7 +103,7 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
                   onChange={(e) => changePlatform(e, i)}
                   key={i}
                   className="settings-dropdown"
-                  defaultValue="Select"
+                  defaultValue="Select Platform"
                 >
                   <option value="Current">{item.link_platform}</option>
                   <option value="Instagram">Instagram</option>
@@ -117,14 +115,14 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
                   onChange={(e) => changeUsername(e, i)}
                   defaultValue={item.link_username}
                   autoComplete="off"
-                  label="username"
+                  label="username:Required"
                   size="small"
                 />
                 <TextInputStandard
                   onChange={(e) => changeUrl(e, i)}
                   defaultValue={item.link_url}
                   autoComplete="off"
-                  label="url"
+                  label="url:Required"
                   size="small"
                 />
                 <GreenButton

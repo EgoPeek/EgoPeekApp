@@ -40,6 +40,12 @@
   width: 100%;
 }
 
+.sidebar-socials {
+  display: flex;
+  font-weight: bold;
+  font-size: large;
+}
+
 .account-bio {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
