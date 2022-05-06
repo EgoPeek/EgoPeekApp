@@ -97,6 +97,7 @@ const useAuth = () => {
             window.localStorage.removeItem('token_type')
             window.localStorage.removeItem('userID')
             window.localStorage.removeItem('userName')
+            window.localStorage.removeItem('avatar')
             navigate('/')
         },
         isAuthenticated() {

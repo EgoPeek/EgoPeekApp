@@ -20,8 +20,14 @@ const useAvatar = () => {
         try {
             const res = await axios.get(`/api/v1/profiles/avatar/${userID}`, { headers: { Authorization: authHeader } })
             const data = res.data
-            window.localStorage.setItem('avatar', data.avatar_path)
-            setAvatar(data.avatar_path)
+            console.log(data)
+            if (data.avatar_path === null) {
+                window.localStorage.setItem('avatar', '')
+                setAvatar('')
+            } else {
+                window.localStorage.setItem('avatar', data.avatar_path)
+                setAvatar(data.avatar_path)
+            }
             setIsPending(false)
         } catch (e) {
             setError(true)
@@ -44,7 +50,7 @@ const useAvatar = () => {
 
     }, [])
 
-    return { avatar, updateAvatarCache, fetchNewAvatar, isPending,error }
+    return { avatar, updateAvatarCache, fetchNewAvatar, isPending, error }
 }
 
 export default useAvatar
