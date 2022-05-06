@@ -64,3 +64,8 @@
   height: 90%;
   overflow-y: scroll;
 }
+
+.sidebar-iconbutton {
+  color: white;
+  margin-bottom: 3%;
+}

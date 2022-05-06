@@ -37,10 +37,10 @@ const Sidebar = ({ Accountdata }) => {
 
           <div className="name-container">
             <p>{Accountdata.user.username}</p>
-            <IconButton>
+            <IconButton className="sidebar-iconbutton">
               <ForwardToInboxIcon />
             </IconButton>
-            <IconButton>
+            <IconButton className="sidebar-iconbutton">
               <PersonAddIcon />
             </IconButton>
             <p>Posts: {postsAmount}</p>
