@@ -73,6 +73,11 @@ def get_user_feed(db: Session, user_id: int):
     return db.query(DbPost).filter(or_(DbPost.user_id.in_(users), DbPost.post_id.in_(post_ids))).order_by(DbPost.timestamp.desc()).all()
 
 
+def get_all_liked_posts(db: Session, user_id: int):
+    posts = [row[0] for row in db.query(DbLike.post_id).filter(DbLike.user_id == user_id).all()]
+    return db.query(DbPost).filter(DbPost.post_id.in_(posts)).order_by(DbPost.timestamp.desc()).all()
+
+
 def get_all_user_posts(db: Session, user_id: int):
     return db.query(DbPost).filter(DbPost.user_id == user_id).order_by(DbPost.timestamp.desc()).all()
 

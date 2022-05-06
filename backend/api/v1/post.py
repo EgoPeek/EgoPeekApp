@@ -95,6 +95,16 @@ def retrieve_user_feed(user_id, database: Session = Depends(get_database), curre
     return db_post.get_user_feed(database, user_id)
 
 
+@router.get('/all/liked/{user_id}', response_model = List[schemas.PostResponse])
+def retrieve_all_user_liked_posts(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
+    """
+    Retrieves all posts liked by the given user.
+    Inputs: user_id: int
+    Outputs: List[schema: PostResponse]
+    """
+    return db_post.get_all_liked_posts(database, user_id)
+
+
 @router.get('/all/{user_id}', response_model = List[schemas.PostResponse])
 def retrieve_all_user_posts(user_id, database: Session = Depends(get_database), current_user: schemas.UserAuth = Depends(get_current_user)):
     """
