@@ -6,6 +6,7 @@ import steve from '../../images/steve.jpg'
 import kevin from '../../images/kevin.jpg'
 import nate from '../../images/nate.jpg'
 import sam from '../../images/sam.jpg'
+import axel from '../../images/axel.jpg'
 import EGOPEEK from '../../images/EGOPEEK.png'
 
 const descriptions = {
@@ -13,7 +14,8 @@ const descriptions = {
     nate:'You really clicked on that? Go touch grass, nerd.',
     sam:'I\'m a bozo lmaooooo',
     kevin:'live laugh love',
-    gio:'Are u adding a pic & description for each person?'
+    gio:'Are u adding a pic & description for each person?',
+    axel:'Use this for me'
 }
 
 const About = () => {
@@ -27,6 +29,13 @@ const About = () => {
                         memberName={'Steve Flores'}
                         email={'stevewflores43@gmail.com'}
                         imgSrc={steve}
+                        jobTitle={'Software Engineer (Frontend)'}
+                        github={'https://github.com/SteveF42'}
+                    />
+                    <MemberCard description={descriptions.axel}
+                        memberName={'Axel'}
+                        email={'axel@gmail.com'}
+                        imgSrc={axel}
                         jobTitle={'Software Engineer (Frontend)'}
                         github={'https://github.com/SteveF42'}
                     />
