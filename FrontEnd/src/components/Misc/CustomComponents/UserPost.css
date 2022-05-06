@@ -25,7 +25,7 @@
     margin: 0 0 15px 0;
 }
 
-.userpost-image img, video{
+.userpost-image img{
     width: 100%;
     object-fit: cover;
     height: 120px;

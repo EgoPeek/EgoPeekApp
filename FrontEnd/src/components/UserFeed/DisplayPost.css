@@ -69,6 +69,7 @@ video {
 }
 
 .display-post-content {
+    min-width: 230px;
     width: auto;
 }
 

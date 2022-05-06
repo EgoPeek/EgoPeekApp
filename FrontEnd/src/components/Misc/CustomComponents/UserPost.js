@@ -26,19 +26,12 @@ const UserPost = ({ post, ...props }) => {
     const liked = liked_by.find(x => x.user.id === parseInt(userID))
     return liked ? true : false
   })
-  const [imageUrl, setImageUrl] = useState('')
   const [showPost, setShowPost] = useState(false)
-  const dateObj = new Date(timestamp)
   const [timeout, setTimeout] = useState(false)
+  const dateObj = new Date(timestamp)
 
   // set imageUrl and videoUrl based on whether it's a link or an uploaded file
   useEffect(() => {
-
-    if (content_path_type === 'external') {
-      setImageUrl(image_url)
-    } else {
-      setImageUrl(imgReference + image_url)
-    }
     return () => {
       document.getElementById('root').style.overflowY = 'scroll'
     }
@@ -127,8 +120,8 @@ const UserPost = ({ post, ...props }) => {
         </div>
 
         <div className='userpost-image'>
-
-          <img src={image_url === '' ? EGOPEEKIMG : image_url}></img>
+          
+          <img src={!image_url ? EGOPEEKIMG : image_url}></img>
 
         </div>
 
