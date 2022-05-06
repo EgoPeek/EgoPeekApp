@@ -18,6 +18,7 @@ import { HeartSwitch } from '@anatoliygatt/heart-switch';
 import { MenuDropDown, MenuItem } from '../Misc/Input/MenuDropDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useTokenID from '../../hooks/useTokenID';
+import { Link } from 'react-router-dom';
 
 
 const FILETYPES_IMG = [
@@ -45,6 +46,9 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
     const { data: validUserID, isPending: validUserIDIsPending, error: validUserIDError } = useTokenID()
     const userOwnsPost = validUserID === user.id
 
+    const showImgFullScreen = (e) => {
+        navigate()
+    }
 
     const addComment = async () => {
         if (comment === '') return;
@@ -111,9 +115,13 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
                             {
                                 isVideo
                                     ?
-                                    <video src={video_url} controls></video>
+                                    <Link to={video_url} target="_blank">
+                                        <video src={video_url} controls></video>
+                                    </Link>
                                     :
-                                    <img src={image_url}></img>
+                                    <Link to={image_url} target="_blank">
+                                        <img src={image_url}></img>
+                                    </Link>
                             }
                         </div>
                         <div className='display-content-info'>
@@ -175,7 +183,7 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
                         </div>
                     </div>
                     <div className='post-create-comment'>
-                        <TextInputStandard value={comment} onKeyPress={enterEvent} onChange={e=>setComment(e.target.value)} autoComplete='off' fullWidth size='small' variant='outlined' placeholder='Type a comment'></TextInputStandard>
+                        <TextInputStandard value={comment} onKeyPress={enterEvent} onChange={e => setComment(e.target.value)} autoComplete='off' fullWidth size='small' variant='outlined' placeholder='Type a comment'></TextInputStandard>
                         <GreenButton onClick={addComment} variant='outlined'>Submit</GreenButton>
                     </div>
                     <div className='display-comments-container'>
