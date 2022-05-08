@@ -13,6 +13,7 @@ import Header from "../Misc/CustomComponents/Header";
 import { GreenLoadingBar } from "../Misc/Input/LoadingBar";
 import { useParams } from "react-router";
 import axios from "axios";
+import { PurpleSwitch } from "../Misc/Input/Switches";
 
 const Account = ({ match, location }) => {
   const { username } = useParams();
@@ -22,8 +23,12 @@ const Account = ({ match, location }) => {
     error: profileError,
   } = useFetch(`/api/v1/profiles/users/${username}`);
   const [posts, setPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([])
+  const [displayedPosts, setDisplayedPosts] = useState([])
   const [postsErr, setPostsErr] = useState(false);
   const [postPending, setPostPending] = useState(true);
+  const [switchState, setSwitchState] = useState(false)
+  const [switchText, setSwitchText] = useState('User Posts')
 
   const makeCall = async (username) => {
     const authHeader =
@@ -31,10 +36,16 @@ const Account = ({ match, location }) => {
       " " +
       window.localStorage.getItem("token");
     try {
-      const res = await axios.get("/api/v1/posts/all/" + profile.user.id, {
+      const postRes = await axios.get("/api/v1/posts/all/" + profile.user.id, {
         headers: { Authorization: authHeader },
       });
-      setPosts(res.data);
+      const likedPosts = await axios.get('/api/v1/posts/all/liked/' + profile.user.id, {
+        headers: { Authorization: authHeader },
+      })
+
+      setLikedPosts(likedPosts.data)
+      setPosts(postRes.data);
+      setDisplayedPosts([...postRes.data])
       setPostPending(false);
     } catch (err) {
       setPostsErr(true);
@@ -44,7 +55,20 @@ const Account = ({ match, location }) => {
   useEffect(() => {
     setPostPending(true);
     makeCall();
-  }, [profilePending, profile]);
+  }, [profilePending, username]);
+
+  const toggleLikedPosts = () => {
+    return (e) => {
+      setSwitchState(!switchState)
+      if (switchState) {
+        setSwitchText("User Posts")
+        setDisplayedPosts([...posts])
+      } else {
+        setSwitchText("Liked Posts")
+        setDisplayedPosts([...likedPosts])
+      }
+    }
+  }
 
   return (
     <div className="account-page">
@@ -52,11 +76,19 @@ const Account = ({ match, location }) => {
       <div className="account-main">
         {!profilePending && <Sidebar Accountdata={profile} />}
         <div className="posts-container">
-          {postPending ? (
+          {postPending
+            ?
             <GreenLoadingBar />
-          ) : (
-            posts.map((item, i) => <UserPost post={item} key={i} />)
-          )}
+            :
+            <>
+              <div>
+                <PurpleSwitch color="primary" onChange={toggleLikedPosts()} />
+                <label>{switchText
+                }</label>
+              </div>
+              {displayedPosts.map((item, i) => <UserPost post={item} key={item.post_id} />)}
+            </>
+          }
         </div>
       </div>
     </div>
