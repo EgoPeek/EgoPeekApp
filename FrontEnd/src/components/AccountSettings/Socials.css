@@ -7,7 +7,7 @@
 }
 
 .add-btn-spacing {
-  margin-left: 2%;
+  margin-left: 1%;
 }
 
 .platform-spacing {
@@ -22,9 +22,9 @@
   display: flex;
   margin-top: 2%;
 }
-.socials-new-input{
+.socials-new-input {
   margin-top: 15px;
 }
-.socials-new-input:last-child{
+.socials-new-input:last-child {
   margin-bottom: 15px;
 }

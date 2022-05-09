@@ -65,7 +65,7 @@ const AccountSettings = () => {
               variant="outlined"
               onClick={() => setIsEditting(!isEditting)}
             >
-              {!isEditting ? "Edit profile" : "Save profile"}
+              {!isEditting ? "Edit Profile" : "Toggle Edit"}
             </GreenButton>
           </div>
 
@@ -80,8 +80,8 @@ const AccountSettings = () => {
           </div>
 
           <div className="settings-interests">
-            <GreenButton variant="outlined" onClick={routeChange}>
-              Interests Page
+            <GreenButton onClick={routeChange}>
+              Go To The Interests Page
             </GreenButton>
           </div>
         </div>

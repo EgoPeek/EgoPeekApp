@@ -3,24 +3,30 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { GreenButton } from "../Misc/Input/Buttons";
 import "./Games.css";
-import env from '../../env.json'
+import env from "../../env.json";
+import AddIcon from "@mui/icons-material/Add";
 
 const imageMap = env.imageMap;
 
-const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
+const authHeader =
+  window.localStorage.getItem("token_type") +
+  " " +
+  window.localStorage.getItem("token");
 
 const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
   const [newGame, setNewGame] = useState([]);
 
   useEffect(() => {
-    setNewGame([])
-  }, [isEditting])
+    setNewGame([]);
+  }, [isEditting]);
 
   const deleteGame = async (game_id) => {
     try {
-      const response = await axios.delete(`/api/v1/games/${game_id}`, {headers: {Authorization: authHeader}});
+      const response = await axios.delete(`/api/v1/games/${game_id}`, {
+        headers: { Authorization: authHeader },
+      });
       console.log(response);
-      setUserGames(userGames.filter(x => x.game_id !== game_id))
+      setUserGames(userGames.filter((x) => x.game_id !== game_id));
       return response.data;
     } catch (e) {
       console.log(e);
@@ -30,21 +36,23 @@ const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
 
   const createGame = async (game_title, user_id) => {
     game_title.forEach(async (item) => {
-      if(item.game_title === 'Select') return
+      if (item.game_title === "Select") return;
 
       const payload = {
         user_id: user_id,
         game_title: item.game_title,
       };
       try {
-        const response = await axios.post(`/api/v1/games/`, payload, {headers: {Authorization: authHeader}});
+        const response = await axios.post(`/api/v1/games/`, payload, {
+          headers: { Authorization: authHeader },
+        });
         console.log(response);
-        setUserGames((prevState) => [...prevState, response.data])
+        setUserGames((prevState) => [...prevState, response.data]);
       } catch (e) {
         console.log(e);
       }
     });
-    setNewGame([])
+    setNewGame([]);
   };
 
   const createNewBody = () => {
@@ -125,11 +133,11 @@ const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
       <div className="games-header">
         <h2>Favorite Games</h2>
         <div className="add-btn-spacing">
-          {isEditting &&
-            <GreenButton onClick={addGame} variant="outlined">
-              Add Games
+          {isEditting && (
+            <GreenButton onClick={addGame}>
+              <AddIcon />
             </GreenButton>
-          }
+          )}
         </div>
       </div>
       <div className="account-games">

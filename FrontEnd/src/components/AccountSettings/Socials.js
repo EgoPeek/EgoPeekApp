@@ -2,13 +2,23 @@
 import React, { useEffect, useState } from "react";
 import { GreenButton } from "../Misc/Input/Buttons";
 import { TextInputStandard } from "../Misc/Input/TextFields";
+import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 import "./Socials.css";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 
 const authHeader =
   window.localStorage.getItem("token_type") +
   " " +
   window.localStorage.getItem("token");
+
+const IconMap = {
+  Instagram: <InstagramIcon />,
+  Twitter: <TwitterIcon />,
+  Youtube: <YouTubeIcon />,
+};
 
 const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
   const [newSocials, setNewSocials] = useState([]);
@@ -145,7 +155,7 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
             }}
             variant="outlined"
           >
-            Save Socials
+            Save New Socials
           </GreenButton>
         )}
       </div>
@@ -155,11 +165,11 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
   return (
     <div>
       <div className="links-header">
-        <h2>External Links</h2>
+        <h2>Other Socials</h2>
         <div className="add-btn-spacing">
           {!isEditting ? null : (
-            <GreenButton onClick={addSocialLink} variant="outlined">
-              Add Social
+            <GreenButton onClick={addSocialLink}>
+              <AddIcon />
             </GreenButton>
           )}
         </div>
@@ -169,7 +179,7 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
         {userSocials.map((item, i) => {
           return !isEditting ? (
             <div className="display-socials" key={i}>
-              <p className="platform-spacing">Platform: {item.link_platform}</p>
+              <p className="platform-spacing">{IconMap[item.link_platform]}</p>
               <p className="username-spacing">Username: {item.link_username}</p>
               <p className="url-spacing">Url: {item.link_url}</p>
             </div>
