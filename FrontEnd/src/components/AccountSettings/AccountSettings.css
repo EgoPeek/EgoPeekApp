@@ -57,7 +57,7 @@
 }
 
 .bio-styling {
-  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .settings-interests {
