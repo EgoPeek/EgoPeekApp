@@ -26,32 +26,46 @@ async def create_password_email(request: schemas.ResetEmailRequest, background_t
     """
     Sends an email to the user with a reset password code, updates user table to reflect new code
     """
-    random_token = ''.join(random.choice(string.ascii_lowercase) for x in range(50))
-    db_user.update_user_reset_token(database, request.username, random_token)
-    body = {'name': request.username, 'title': 'EgoPeek Password Reset', 'token': random_token}
-    message = MessageSchema(
-        subject = "EgoPeek Password Reset Request",
-        recipients = [request.email],
-        template_body = body,)
-    success = True
-    status = f'Password reset request email sent.'
-
+    # retrieve user information from db with given username
     try:
-        user_id = db_user.get_user_by_username(database, request.username).id
+        user = db_user.get_user_by_username(database, request.username)
     except Exception as e:
         success = False
-        status = f'User ID retrieval failure: {str(e)}'
+        status = f'User database retrieval failure: {str(e)}'
 
-    try:
-        fm = FastMail(email_config)
-        background_tasks.add_task(fm.send_message, message, template_name = 'emails.html')
-    except Exception as e:
+    # make sure provided password matches password stored in the db
+    if request.email == user.email:
+
+        # generate random token and store it in the database
+        random_token = ''.join(random.choice(string.ascii_lowercase) for x in range(50))
+        db_user.update_user_reset_token(database, request.username, random_token)
+
+        # build email payload
+        body = {'name': request.username, 'title': 'EgoPeek Password Reset', 'token': random_token}
+        message = MessageSchema(
+            subject = "EgoPeek Password Reset Request",
+            recipients = [user.email],
+            template_body = body,)
+        success = True
+        status = f'Password reset request email sent.'
+
+        # send email
+        try:
+            fm = FastMail(email_config)
+            background_tasks.add_task(fm.send_message, message, template_name = 'emails.html')
+        except Exception as e:
+            success = False
+            status = f'Email send failure: {str(e)}'
+
+    # handle case where provided email does not match database
+    else:
         success = False
-        status = f'Email send failure: {str(e)}'
+        status = 'Provided email does not match email associated with this user.'
+        random_token = "error"
 
-    return {'user_id': user_id,
+    return {'user_id': user.id,
             'username': request.username,
-            'email': request.email,
+            'email': user.email,
             'reset_token': random_token,
             'success': success,
             'status': status}
