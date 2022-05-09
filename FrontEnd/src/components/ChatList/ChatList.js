@@ -29,7 +29,7 @@ const ChatList = () => {
 
           <div className='lfg-game-list'>
             <div className='lfg-list-details'>
-              <span>game</span>
+              {/* <span>game</span> */}
             </div>
 
             <div className='lfg-games'>
