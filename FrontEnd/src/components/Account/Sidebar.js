@@ -8,6 +8,8 @@ import GamePosts from "./GamePosts";
 import { IconButton } from "@mui/material";
 import "./Sidebar.css";
 import DisplaySocials from "./DisplaySocials";
+import { useNavigate } from "react-router";
+import AddFriend from "./AddFriend";
 
 const Sidebar = ({ Accountdata }) => {
   const games = Accountdata.user.games;
@@ -19,6 +21,12 @@ const Sidebar = ({ Accountdata }) => {
   ).length;
   const postsAmount = posts.length;
   const [showSidebar, setShowSidebar] = useState(true);
+
+  let navigate = useNavigate();
+  const messageUser = () => {
+    let path = `/message/${Accountdata.user.username}`;
+    navigate(path);
+  };
 
   const renderSidebar = () => {
     if (showSidebar === false) {
@@ -34,25 +42,25 @@ const Sidebar = ({ Accountdata }) => {
           />
 
           <div className="name-container">
-            <p>{Accountdata.user.username}</p>
-            <IconButton>
-              <ForwardToInboxIcon className="sidebar-iconbutton" />
-            </IconButton>
-            <IconButton>
-              <PersonAddIcon className="sidebar-iconbutton" />
-            </IconButton>
-            <p>Posts: {postsAmount}</p>
-            <p>Friends: {friendsAmount}</p>
+            <div className="sidebar-names">
+              <p>{Accountdata.user.username}</p>
+              <IconButton onClick={messageUser}>
+                <ForwardToInboxIcon className="sidebar-iconbutton" />
+              </IconButton>
+              <AddFriend Profile={Accountdata} />
+            </div>
+            <div className="sidebar-metrics">
+              <p>Posts: {postsAmount}</p>
+              <p>Friends: {friendsAmount}</p>
+            </div>
           </div>
         </div>
 
         <div className="sidebar-socials">
           <p>Socials:</p>
-          <p>
-            {socials.map((item, i) => (
-              <DisplaySocials socialInfo={item} key={i} />
-            ))}
-          </p>
+          {socials.map((item, i) => (
+            <DisplaySocials socialInfo={item} key={i} />
+          ))}
         </div>
 
         <div className="account-bio">
