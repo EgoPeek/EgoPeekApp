@@ -111,7 +111,7 @@ const ImagePreview = ({ post }) => {
           userDidLike={userDidLike}
         />
       )}
-      <div>
+      <>
         {image_url ? (
           <img
             className="discover-preview-image"
@@ -125,7 +125,7 @@ const ImagePreview = ({ post }) => {
             onClick={displayPost}
           ></img>
         )}
-      </div>
+      </>
     </>
   );
 };

@@ -41,12 +41,16 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-top: 1rem;
 }
 
 .discover-preview-image {
-  margin-top: 1rem;
   margin-right: 0.5rem;
-  width: 24rem;
+  width: 33.3%;
   max-height: 25rem;
   cursor: pointer;
+}
+
+.discover-container{
+  padding: 1rem;
 }

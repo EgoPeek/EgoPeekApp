@@ -50,15 +50,13 @@ const DiscoverComponent = ({ Hashtags }) => {
         {isOpen && (
           <Popup
             content={
-              <>
-                <div>
-                  {postPending ? (
-                    <GreenLoadingBar />
-                  ) : (
-                    post.map((item, i) => <UserPost post={item} key={i} />)
-                  )}
-                </div>
-              </>
+              <div>
+                {postPending ? (
+                  <GreenLoadingBar />
+                ) : (
+                  post.map((item, i) => <UserPost post={item} key={i} />)
+                )}
+              </div>
             }
             handleClose={togglePopup}
           />
