@@ -33,16 +33,20 @@
   cursor: pointer;
   text-decoration-line: underline;
   text-transform: capitalize;
-  font-size: large;
+  font-size: 2rem;
+  font-weight: 500;
 }
 
-.discover-preview{
+.discover-preview {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
-.discover-preview-image{
+.discover-preview-image {
   margin-top: 1rem;
-  margin-right: .5rem;
-  width: 18rem;
+  margin-right: 0.5rem;
+  width: 24rem;
+  max-height: 25rem;
+  cursor: pointer;
 }

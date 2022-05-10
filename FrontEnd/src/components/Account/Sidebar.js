@@ -25,7 +25,7 @@ const Sidebar = ({ Accountdata }) => {
   let navigate = useNavigate();
   const messageUser = () => {
     let path = `/message/${Accountdata.user.username}`;
-    navigate(path);
+    navigate(path, { state: { friendID: Accountdata.user.id } });
   };
 
   const renderSidebar = () => {
