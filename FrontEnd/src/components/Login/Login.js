@@ -89,7 +89,7 @@ const Login = () => {
                             required
                         />
                         <GreenButton className={classes.fields} variant="outlined" onClick={handleLogin}>Submit</GreenButton>
-                        <p><Link className='reset-password' to={'/reset/email'}>Forgot Password?</Link></p>
+                        <p><Link className='reset-password' to={'/reset/email'}>Forgor Password?</Link></p>
                     </FormControl>
                 </form>
             </div>
