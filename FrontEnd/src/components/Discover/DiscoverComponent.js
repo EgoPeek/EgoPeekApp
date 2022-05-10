@@ -45,34 +45,32 @@ const DiscoverComponent = ({ Hashtags }) => {
   };
 
   return (
-    <>
-      <div className="discover-container">
-        {isOpen && (
-          <Popup
-            content={
-              <div>
-                {postPending ? (
-                  <GreenLoadingBar />
-                ) : (
-                  post.map((item, i) => <UserPost post={item} key={i} />)
-                )}
-              </div>
-            }
-            handleClose={togglePopup}
-          />
-        )}
+    <div className="discover-container">
+      {isOpen && (
+        <Popup
+          content={
+            <div>
+              {postPending ? (
+                <GreenLoadingBar />
+              ) : (
+                post.map((item, i) => <UserPost post={item} key={i} />)
+              )}
+            </div>
+          }
+          handleClose={togglePopup}
+        />
+      )}
 
-        <a className="clickable-text" onClick={togglePopup}>
-          {Hashtags}
-        </a>
+      <a className="clickable-text" onClick={togglePopup}>
+        {Hashtags}
+      </a>
 
-        <div className="discover-preview">
-          {post.slice(0, 3).map((item, i) => (
-            <ImagePreview post={item} key={i} />
-          ))}
-        </div>
+      <div className="discover-preview">
+        {post.slice(0, 3).map((item, i) => (
+          <ImagePreview post={item} key={i} />
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

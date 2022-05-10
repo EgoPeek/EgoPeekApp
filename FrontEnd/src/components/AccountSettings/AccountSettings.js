@@ -80,8 +80,8 @@ const AccountSettings = () => {
           </div>
 
           <div className="settings-interests">
-            <GreenButton onClick={routeChange}>
-              Go To The Interests Page
+            <GreenButton onClick={routeChange} variant="outlined">
+              Adjust Interests
             </GreenButton>
           </div>
         </div>

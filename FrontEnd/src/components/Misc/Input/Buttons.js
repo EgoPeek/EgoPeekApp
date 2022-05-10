@@ -16,7 +16,18 @@ export const GreenButton = styled(Button)(() => ({
         borderColor: green[300]
     }
 }))
+export const GreenIconButton = styled(IconButton)(() => ({
+    color: green[200],
+    borderColor: green[600],
+    ':hover': {
+        backgroundColor: green[500],
+        borderColor: green[300]
+    },
+    ":disabled": {
+        color: green[900],
 
+    }
+}))
 
 export const PurpleIconButton = styled(IconButton)(() => ({
     color: deepPurple[400],

@@ -1,6 +1,6 @@
 /* allows user to add and remove external social links */
 import React, { useEffect, useState } from "react";
-import { GreenButton } from "../Misc/Input/Buttons";
+import { GreenButton, GreenIconButton } from "../Misc/Input/Buttons";
 import { TextInputStandard } from "../Misc/Input/TextFields";
 import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
@@ -168,9 +168,9 @@ const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
         <h2>Other Socials</h2>
         <div className="add-btn-spacing">
           {!isEditting ? null : (
-            <GreenButton onClick={addSocialLink}>
+            <GreenIconButton onClick={addSocialLink}>
               <AddIcon />
-            </GreenButton>
+            </GreenIconButton>
           )}
         </div>
       </div>

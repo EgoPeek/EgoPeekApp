@@ -1,7 +1,7 @@
 /* Allows user to add or delete games from profile */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { GreenButton } from "../Misc/Input/Buttons";
+import { GreenButton, GreenIconButton } from "../Misc/Input/Buttons";
 import "./Games.css";
 import env from "../../env.json";
 import AddIcon from "@mui/icons-material/Add";
@@ -134,9 +134,9 @@ const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
         <h2>Favorite Games</h2>
         <div className="add-btn-spacing">
           {isEditting && (
-            <GreenButton onClick={addGame}>
+            <GreenIconButton onClick={addGame}>
               <AddIcon />
-            </GreenButton>
+            </GreenIconButton>
           )}
         </div>
       </div>
