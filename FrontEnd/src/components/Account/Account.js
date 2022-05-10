@@ -16,6 +16,7 @@ import axios from "axios";
 import { PurpleSwitch } from "../Misc/Input/Switches";
 
 const Account = ({ match, location }) => {
+  const authHeader = window.localStorage.getItem("token_type") + " " + window.localStorage.getItem("token");
   const { username } = useParams();
   const {
     data: profile,
@@ -30,11 +31,7 @@ const Account = ({ match, location }) => {
   const [switchState, setSwitchState] = useState(false)
   const [switchText, setSwitchText] = useState('User Posts')
 
-  const makeCall = async (username) => {
-    const authHeader =
-      window.localStorage.getItem("token_type") +
-      " " +
-      window.localStorage.getItem("token");
+  const makeCall = async () => {
     try {
       const postRes = await axios.get("/api/v1/posts/all/" + profile.user.id, {
         headers: { Authorization: authHeader },
@@ -43,8 +40,8 @@ const Account = ({ match, location }) => {
         headers: { Authorization: authHeader },
       })
 
-      setLikedPosts(likedPosts.data)
-      setPosts(postRes.data);
+      setLikedPosts([...likedPosts.data])
+      setPosts([...postRes.data]);
       setDisplayedPosts([...postRes.data])
       setPostPending(false);
     } catch (err) {
@@ -54,8 +51,9 @@ const Account = ({ match, location }) => {
 
   useEffect(() => {
     setPostPending(true);
+    setSwitchState(false)
     makeCall();
-  }, [profilePending, username]);
+  }, [profile]);
 
   const toggleLikedPosts = () => {
     return (e) => {
