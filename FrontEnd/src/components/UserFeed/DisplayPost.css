@@ -1,154 +1,155 @@
 .display-post-container {
-    position: fixed;
-    z-index: 50;
-    border-radius: 12px;
-    width: 100%;
-    left: 0;
-    right: 0;
-    height: 100%;
-    top: 60px
+  position: fixed;
+  z-index: 50;
+  border-radius: 12px;
+  width: 100%;
+  left: 0;
+  right: 0;
+  height: 100%;
+  top: 60px;
 }
 
 .display-post-buffer {
-    position: relative;
-    height: 90%;
-    overflow-y: scroll;
-    background-color: rgba(0, 0, 0, 0.979);
-    margin: 0 2rem;
-    border-radius: 12px;
-    -ms-overflow-style: none;
-    /* IE and Edge /
+  position: relative;
+  height: 90%;
+  overflow-y: scroll;
+  background-color: rgba(0, 0, 0, 0.979);
+  margin: 0 2rem;
+  border-radius: 12px;
+  -ms-overflow-style: none;
+  /* IE and Edge /
   scrollbar-width: none; / Firefox */
 }
 
 .display-post-buffer::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .display-post {
-    position: relative;
-    padding: 2rem;
-    border-radius: 12px;
+  position: relative;
+  padding: 2rem;
+  border-radius: 12px;
 }
 
 .close-button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin: 25px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 25px;
 }
 
 .close-button:hover {
-    cursor: pointer;
-    background-color: #202022;
-    border-radius: 12px;
+  cursor: pointer;
+  background-color: #202022;
+  border-radius: 12px;
 }
 
 /* LEFT AND RIGHT CONTAINER FOR IMAGE AND POST DETAILS */
 .display-top-half {
-    display: flex;
-    position: relative;
-    justify-content: center;
+  display: flex;
+  position: relative;
+  justify-content: center;
 }
-.post-title{
-    display: flex;
-    align-items: center;
+.post-title {
+  display: flex;
+  align-items: center;
 }
-.post-title h1{
-    margin-left: 1rem;
+.post-title h1 {
+  margin-left: 1rem;
 }
 
 .display-post-content img,
 video {
-    width: 100%;
-    display: block;
-    object-fit: contain;
-    height: auto;
-    max-height: 350px;
-    min-height: 150px;
+  width: 100%;
+  display: block;
+  object-fit: contain;
+  height: auto;
+  max-height: 350px;
+  min-height: 150px;
 }
 
 .display-post-content {
-    min-width: 230px;
-    width: auto;
+  min-width: 230px;
+  width: auto;
 }
 
 /* USER DETAILS AND POST INFORMATION */
-.post-settings{
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin:2em;
+.post-settings {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 2em;
 }
 
 .display-content-info {
-    width: 100%;
-    position: relative;
-    max-width: 670px;
-    padding: 2em;
-    margin-left: 2em;
-    background-color: #202022;
-    font-size: 0.9em;
-    height: fit-content;
-    border-radius: 12PX;
+  width: 100%;
+  position: relative;
+  max-width: 670px;
+  padding: 2em;
+  margin-left: 2em;
+  background-color: #202022;
+  font-size: 0.9em;
+  height: fit-content;
+  border-radius: 12px;
 }
 
 .display-content-user-info {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1.5rem;
 }
 
 .display-user {
-    margin-right: 1rem;
+  margin-right: 1rem;
 }
 
 .post-info {
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
 }
-.post-info-details{
-    display: flex;
+.post-info-details {
+  display: flex;
 }
 .post-info-details p {
-    margin: 0;
-    font-size: 1.2rem;
+  margin: 0;
+  font-size: 1.2rem;
 }
 
+@media (max-width: 1200px) {
+  .display-top-half {
+    flex-direction: column;
+  }
 
-@media(max-width: 1200px) {
-    .display-top-half {
-        flex-direction: column;
-    }
-
-    .display-content-info {
-        margin-left: 0;
-        width: auto;
-        max-width: 100%;
-    }
+  .display-content-info {
+    margin-left: 0;
+    width: auto;
+    max-width: 100%;
+  }
 }
 
 /* CONTENT DESCRIPTION */
 .content-description-info {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
+  text-align: left;
 }
 
 .display-comments-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .tag-grouping {
-    display: flex;
+  display: flex;
 }
 
 .tag-grouping p {
-    margin-right: 0.8rem;
+  margin-right: 0.8rem;
 }
 
 /* EVERYTHING ELSE UNDER POST/ COMMENTS/ CREATE COMMENT*/
 
 .post-create-comment {
-    margin: 2rem 0;
+  margin: 2rem 0;
+  text-align: left;
 }
