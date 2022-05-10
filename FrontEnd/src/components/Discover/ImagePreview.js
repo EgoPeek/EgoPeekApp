@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import DisplayPost from "../UserFeed/DisplayPost";
 import "./Discover.css";
+import EGOPEEKIMG from "../../images/EGOPEEK.png";
 
 const authHeader =
   window.localStorage.getItem("token_type") +
@@ -111,11 +112,19 @@ const ImagePreview = ({ post }) => {
         />
       )}
       <div>
-        <img
-          className="discover-preview-image"
-          src={image_url}
-          onClick={displayPost}
-        ></img>
+        {image_url ? (
+          <img
+            className="discover-preview-image"
+            src={image_url}
+            onClick={displayPost}
+          ></img>
+        ) : (
+          <img
+            className="discover-preview-image"
+            src={EGOPEEKIMG}
+            onClick={displayPost}
+          ></img>
+        )}
       </div>
     </>
   );
