@@ -116,7 +116,7 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
                                 isVideo
                                     ?
                                     <Link to={video_url} target="_blank">
-                                        <video src={video_url} controls></video>
+                                        <video src={video_url} controls muted></video>
                                     </Link>
                                     :
                                     <Link to={image_url} target="_blank">
