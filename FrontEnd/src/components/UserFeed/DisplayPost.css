@@ -131,6 +131,7 @@ video {
 /* CONTENT DESCRIPTION */
 .content-description-info {
   margin-bottom: 1rem;
+  text-align: left;
 }
 
 .display-comments-container {
