@@ -13,7 +13,12 @@ const IconMap = {
 const DisplaySocials = ({ socialInfo }) => {
   return (
     <span className="social-icons-spacing">
-      <a className="social-icon" href={socialInfo.link_url}>
+      <a
+        className="social-icon"
+        href={socialInfo.link_url}
+        rel="noopener"
+        target="_blank"
+      >
         {IconMap[socialInfo.link_platform]}
       </a>
     </span>
