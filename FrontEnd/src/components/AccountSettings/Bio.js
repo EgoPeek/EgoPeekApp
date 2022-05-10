@@ -51,7 +51,11 @@ const AccountBio = ({ setBio, userBio, avatar, isEditting, userID }) => {
               defaultValue={userBio}
               inputProps={{ maxLength: 200 }}
             />
-            <GreenButton onClick={updateBio}>Submit Bio</GreenButton>
+            <div className="submit-bio">
+              <GreenButton onClick={updateBio} variant="outlined">
+                Save New Bio
+              </GreenButton>
+            </div>
           </>
         )}
       </div>

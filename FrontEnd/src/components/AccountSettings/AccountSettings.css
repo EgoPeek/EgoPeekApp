@@ -21,6 +21,10 @@
   width: 55%;
 }
 
+.submit-bio {
+  margin-top: 3%;
+}
+
 .right-side-settings {
   display: flex;
   flex-direction: column;
@@ -57,9 +61,9 @@
 }
 
 .bio-styling {
-  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .settings-interests {
-  margin: 2rem;
+  margin-top: 5%;
 }
