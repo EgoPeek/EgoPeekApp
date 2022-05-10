@@ -164,7 +164,7 @@ const DisplayPost = ({ post, closeDisplay, likePost, likeCount, timeout, userDid
                                     </div>
                                     <div className='post-info-details'>
                                         <p>
-                                            posted: {`${dateObj.getFullYear()}/${dateObj.getMonth()}/${dateObj.getDate()}`}
+                                            posted: {`${dateObj.getFullYear()}/${dateObj.getMonth()+1}/${dateObj.getDate()}`}
                                         </p>
                                     </div>
                                 </div>
