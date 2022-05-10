@@ -9,18 +9,31 @@ const authHeader =
   window.localStorage.getItem("token");
 
 const ImagePreview = ({ post }) => {
+  const {
+    post_id,
+    comments,
+    liked_by,
+    content_path_type,
+    title,
+    message,
+    timestamp,
+    user,
+    video_url,
+    image_url,
+    hashtag_group,
+  } = post;
   const userID = window.localStorage.getItem("userID");
   const username = window.localStorage.getItem("userName");
   const [showPost, setShowPost] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.liked_by?.length);
+  const [likeCount, setLikeCount] = useState(liked_by?.length);
   const [timeout, setTimeout] = useState(false);
   const [userDidLike, setUserDidLike] = useState(() => {
-    const liked = post.liked_by?.find((x) => x.user.id === parseInt(userID));
+    const liked = liked_by?.find((x) => x.user.id === parseInt(userID));
     return liked ? true : false;
   });
 
   const updateLikes = async () => {
-    console.log(post?.post_id);
+    console.log(post_id);
     setTimeout(true);
     setUserDidLike(!userDidLike);
 
@@ -35,15 +48,13 @@ const ImagePreview = ({ post }) => {
           },
           method: "DELETE",
           body: JSON.stringify({
-            post_id: post.post_id,
+            post_id: post_id,
             user_id: parseInt(userID),
             username: username,
           }),
         });
-        const index = post.liked_by.findIndex(
-          (x) => x.user.id === parseInt(userID)
-        );
-        post.liked_by.splice(index, 1);
+        const index = liked_by.findIndex((x) => x.user.id === parseInt(userID));
+        liked_by.splice(index, 1);
       } catch (e) {
         console.log(e);
       }
@@ -55,13 +66,13 @@ const ImagePreview = ({ post }) => {
           username: username,
         },
       };
-      post.liked_by.push(obj);
+      liked_by.push(obj);
 
       try {
         const res = await axios.post(
           "/api/v1/likes/",
           {
-            post_id: post.post_id,
+            post_id: post_id,
             user_id: userID,
             username: username,
           },
@@ -102,7 +113,7 @@ const ImagePreview = ({ post }) => {
       <div>
         <img
           className="discover-preview-image"
-          src={post.image_url}
+          src={image_url}
           onClick={displayPost}
         ></img>
       </div>
