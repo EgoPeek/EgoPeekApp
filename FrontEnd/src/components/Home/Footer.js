@@ -13,7 +13,7 @@ const Footer = () => {
               Our goal was to connect people with a passion for gaming. Similar to other Social Media Platforms
               EgoPeek allows users to create posts, connect with friends, and personalize their own feed. Our 
               <s><i><strong style={{fontSize:'1.5rem'}}>"very"</strong></i></s>
-              sophisticatedalgorithm knows exactly what type of content to provide every user based on their chosen interests.
+              sophisticated algorithm knows exactly what type of content to provide every user based on their chosen interests.
             </p>
           </div>
           <div className='footer-link footer-box'>
