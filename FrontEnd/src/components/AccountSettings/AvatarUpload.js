@@ -14,9 +14,9 @@ const AvatarUpload = ({
   avatar,
 }) => {
   const fileSomethingidk = useRef(null);
-  const {updateAvatarCache} = useAvatar()
-  const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
-  
+
+  const { updateAvatarCache } = useAvatar()
+
   const fileChangedHandler = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -63,6 +63,8 @@ const AvatarUpload = ({
 };
 
 const avatarrandom = async (avatar_path, user_id, userBio) => {
+  const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
+
   const payload = {
     user_id: user_id,
     bio: userBio,
@@ -81,6 +83,7 @@ const avatarrandom = async (avatar_path, user_id, userBio) => {
 const postFormData = async (url, formData) => {
   let res = null;
   let error = null;
+  const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
 
   try {
     const response = await axios.post(url, formData, {
