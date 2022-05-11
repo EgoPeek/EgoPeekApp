@@ -9,10 +9,6 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 
-const authHeader =
-  window.localStorage.getItem("token_type") +
-  " " +
-  window.localStorage.getItem("token");
 
 const IconMap = {
   Instagram: <InstagramIcon />,
@@ -21,6 +17,10 @@ const IconMap = {
 };
 
 const Socials = ({ userSocials, setUserSocials, isEditting, user_id }) => {
+  const authHeader =
+    window.localStorage.getItem("token_type") +
+    " " +
+    window.localStorage.getItem("token");
   const [newSocials, setNewSocials] = useState([]);
   useEffect(() => {
     setNewSocials([]);

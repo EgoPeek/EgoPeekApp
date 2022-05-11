@@ -5,7 +5,6 @@ import { IconBubble } from "../Misc/CustomComponents/IconBubble";
 import './AvatarUpload.css'
 import useAvatar from "../../hooks/useAvatar";
 
-const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
 
 const AvatarUpload = ({
   setAvatar,
@@ -16,7 +15,8 @@ const AvatarUpload = ({
 }) => {
   const fileSomethingidk = useRef(null);
   const {updateAvatarCache} = useAvatar()
-
+  const authHeader = window.localStorage.getItem('token_type') + " " + window.localStorage.getItem('token')
+  
   const fileChangedHandler = (e) => {
     e.preventDefault()
     e.stopPropagation()

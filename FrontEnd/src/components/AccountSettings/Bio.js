@@ -5,12 +5,12 @@ import axios from "axios";
 import { GreenButton } from "../Misc/Input/Buttons";
 import "./AccountSettings.css";
 
-const authHeader =
-  window.localStorage.getItem("token_type") +
-  " " +
-  window.localStorage.getItem("token");
-
 const AccountBio = ({ setBio, userBio, avatar, isEditting, userID }) => {
+  
+  const authHeader =
+    window.localStorage.getItem("token_type") +
+    " " +
+    window.localStorage.getItem("token");
   const [newBio, setNewBio] = useState("");
 
   const saveBio = (event) => {

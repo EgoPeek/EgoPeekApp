@@ -8,12 +8,12 @@ import AddIcon from "@mui/icons-material/Add";
 
 const imageMap = env.imageMap;
 
-const authHeader =
-  window.localStorage.getItem("token_type") +
-  " " +
-  window.localStorage.getItem("token");
 
 const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
+  const authHeader =
+    window.localStorage.getItem("token_type") +
+    " " +
+    window.localStorage.getItem("token");
   const [newGame, setNewGame] = useState([]);
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const Games = ({ userGames, setUserGames, isEditting, user_id, setGames }) => {
                   onChange={(e) => changeGame(e, i)}
                   key={i}
                   className="settings-dropdown"
-                  // defaultValue="Select"
+                // defaultValue="Select"
                 >
                   <option value="Current">{item.game_title}</option>
                   <option value="Rocket League">Rocket League</option>
