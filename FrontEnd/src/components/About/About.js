@@ -13,7 +13,7 @@ import EGOPEEK from '../../images/EGOPEEK.png'
 const descriptions = {
     steve:'Computer science major attending CSUSB',
     nate:'Computer Science major - CSUSB. Hoping to touch grass again someday.',
-    sam:'Kay baby pic it is',
+    sam:'I would say I outdid myself, but I’m always this good. So I simply did myself.',
     kevin:'live laugh love',
     gio:'I’m Giovanni and I am 21 years old. Attending CSUSB and majoring in Computer Systems',
     axel:'This is fine.'
@@ -49,7 +49,7 @@ const About = () => {
                     />
                     <MemberCard description={descriptions.sam}
                         memberName={'Sam'}
-                        email={'sam@gmail.com'}
+                        email={'sam100299@gmail.com'}
                         imgSrc={sam}
                         jobTitle={'Software Engineer (Backend)'}
                         github={'https://github.com/SamMC55'}
