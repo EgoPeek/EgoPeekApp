@@ -8,12 +8,9 @@ import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import IconButton from "@mui/material/IconButton";
 import "./AddFriend.css";
 
-const authHeader =
-  window.localStorage.getItem("token_type") +
-  " " +
-  window.localStorage.getItem("token");
 
 const AddFriend = ({ Profile }) => {
+  const authHeader =window.localStorage.getItem("token_type") + " " +window.localStorage.getItem("token");
   const [friends, setFriends] = useState([]);
   const [friend, setFriend] = useState(false);
   const [stranger, setStranger] = useState(true);
