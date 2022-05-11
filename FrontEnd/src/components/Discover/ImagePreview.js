@@ -4,12 +4,12 @@ import DisplayPost from "../UserFeed/DisplayPost";
 import "./Discover.css";
 import EGOPEEKIMG from "../../images/EGOPEEK.png";
 
-const authHeader =
-  window.localStorage.getItem("token_type") +
-  " " +
-  window.localStorage.getItem("token");
 
 const ImagePreview = ({ post }) => {
+  const authHeader =
+    window.localStorage.getItem("token_type") +
+    " " +
+    window.localStorage.getItem("token");
   const {
     post_id,
     comments,

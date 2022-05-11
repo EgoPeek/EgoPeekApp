@@ -6,12 +6,12 @@ import "./Discover.css";
 import Popup from "./Popup";
 import ImagePreview from "./ImagePreview";
 
-const authHeader =
-  window.localStorage.getItem("token_type") +
-  " " +
-  window.localStorage.getItem("token");
 
 const DiscoverComponent = ({ Hashtags }) => {
+  const authHeader =
+    window.localStorage.getItem("token_type") +
+    " " +
+    window.localStorage.getItem("token");
   const [post, setPost] = useState([]);
   const [postErr, setPostErr] = useState(false);
   const [postPending, setPostPending] = useState(true);
